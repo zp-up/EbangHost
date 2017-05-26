@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_comment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sctjsj.ebanghost.activity.CommentActivity">
+
+    <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/activity_comment_iv_back"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_back"
+            android:layout_width="30dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/app_white"
+            android:layout_centerInParent="true"
+            android:text="评价查询"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <q.rorbin.qrefreshlayout.QRefreshLayout
+            android:id="@+id/activity_comment_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_comment_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </q.rorbin.qrefreshlayout.QRefreshLayout>
+
+       <LinearLayout
+           android:visibility="gone"
+           android:id="@+id/act_comment_ll_remind"
+           android:orientation="vertical"
+           android:layout_centerInParent="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+           <ImageView
+
+               android:layout_gravity="center"
+               android:src="@mipmap/icon_no_comment_gray"
+               android:layout_width="50dp"
+               android:layout_height="50dp" />
+           <TextView
+               android:text="暂无评价"
+               android:gravity="center"
+               android:layout_gravity="center"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <TextView
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:text="(大图浏览)"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/big_pic_dialog_vp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/big_pic_dialog_layout_iv_to_left"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_to_left"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/big_pic_dialog_layout_iv_to_right"
+            android:src="@mipmap/icon_to_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+
+</RelativeLayout>

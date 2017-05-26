@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--头部-->
+    <RelativeLayout
+        android:background="@color/app_green"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:id="@+id/activity_set_back_ll"
+            android:orientation="horizontal"
+            android:layout_width="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@mipmap/icon_right_back"
+                    android:layout_gravity="center"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:text="返回"
+                    android:layout_gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/app_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:text="配送设置"
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/app_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ToggleButton
+            android:textOn=""
+            android:textOff=""
+            android:layout_gravity="center"
+            android:background="@drawable/togglebutten"
+            android:layout_marginLeft="20dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="默认使用异邦传送"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

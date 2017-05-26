@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/app_white"
+    android:id="@+id/activity_shop_info_ll_parent"
+    android:backgroundTint="@color/app_gray"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/activity_shop_info_iv_back"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_back"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/app_white"
+            android:text="修改店家信息"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/activity_shop_info_tv_save"
+            android:textSize="18sp"
+            android:textColor="@color/app_white"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="保存"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <!--滚动组件-->
+    <android.support.v4.widget.NestedScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+            <!--logo预览-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+                <ImageView
+                    android:id="@+id/activity_shop_info_iv_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/activity_shop_info_iv_add_pic"
+                    android:src="@mipmap/icon_add_commod_bt"
+                    android:layout_centerInParent="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:id="@+id/activity_shop_info_tv_remind"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/activity_shop_info_iv_add_pic"
+                    android:gravity="center"
+                    android:text="更换商家封面"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <!--店家名称-->
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="店家名称："
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/input_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/activity_shop_info_et_shop_name"
+                        android:background="@null"
+                        android:text=""
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--店家地址-->
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="店家地址："
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/input_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/activity_shop_info_et_shop_address"
+                        android:background="@null"
+                        android:text=""
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--商家电话-->
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="联系电话："
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/input_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:phoneNumber="true"
+                        android:id="@+id/activity_shop_info_et_tel"
+                        android:background="@null"
+                        android:text=""
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <!--设置起送范围-->
+            <LinearLayout
+                android:id="@+id/act_shop_info_least_delivery_ll_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="多少起送："
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/input_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:inputType="numberDecimal"
+                        android:id="@+id/activity_shop_info_et_least_to_delivery"
+                        android:background="@null"
+                        android:text=""
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+            <LinearLayout
+                android:id="@+id/act_shop_info_delivery_time_ll_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:text="配送时间："
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
+
+                        android:background="@drawable/input_border"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/activity_shop_info_tv_begin_time"
+                            android:gravity="center"
+                            android:text="起送时间"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text=":"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                       <RelativeLayout
+                           android:background="@drawable/input_border"
+                           android:layout_weight="1"
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent">
+                           <TextView
+                               android:id="@+id/activity_shop_info_tv_end_time"
+                               android:gravity="center"
+                               android:text="终止时间"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent" />
+                       </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:background="@color/app_white"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
+

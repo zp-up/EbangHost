@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--自定义图片轮播中小圆点选中的图片-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+     >
+    <solid android:color="#f12020" />
+    <corners android:radius="1dip" />
+</shape>

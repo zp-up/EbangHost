@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/activity_modify_commodity_ll_parent"
+    android:layout_height="match_parent">
+    <!--头部-->
+    <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/activity_modify_commodity_iv_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_back"
+            android:layout_width="30dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/activity_add_or_modify_commodity_tv_title"
+            android:text="修改商品信息"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/app_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+                <ImageView
+                    android:id="@+id/activity_modify_commodity_iv_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#504e4e"
+                    android:scaleType="fitXY">
+
+                </ImageView>
+                <!--添加按钮-->
+                <ImageView
+                    android:id="@+id/activity_modify_commodity_iv_add_pic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/icon_add_commod_bt"></ImageView>
+
+                <TextView
+                    android:id="@+id/activity_modify_commodity_tv_remind_to_add_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_modify_commodity_iv_add_pic"
+                    android:layout_centerHorizontal="true"
+                    android:text="添加商品图片"
+                    android:textColor="@color/app_white"
+                    android:textSize="20sp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <!--商品名称-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/advice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="商品名称:"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <EditText
+                    android:id="@+id/activity_modify_commodity_et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp">
+
+                </EditText>
+            </LinearLayout>
+            <!--赏评简介-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="left|top"
+                        android:text="商品简介:"
+                        android:textColor="@color/app_white"
+                        android:textSize="15sp">
+
+                    </TextView>
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/activity_modify_commodity_et_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@null"
+                    android:gravity="left|top"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp">
+
+                </EditText>
+            </LinearLayout>
+            <!--商品价格-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="商品价格(元):"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <EditText
+                    android:id="@+id/activity_modify_commodity_et_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp">
+
+                </EditText>
+            </LinearLayout>
+
+            <!--商品折扣-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="优惠金额(元):"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <EditText
+                    android:id="@+id/activity_modify_commodity_et_disprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp">
+
+                </EditText>
+            </LinearLayout>
+            <!--添加分类-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice">
+
+                <TextView
+                    android:id="@+id/activity_add_commodity_tv_type_belong_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="所属类型:"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <TextView
+                    android:id="@+id/activity_modify_commodity_tv_type_belong_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/activity_add_commodity_tv_type_belong_left"
+                    android:text=""
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <Button
+                    android:id="@+id/activity_modify_commodity_btn_choose_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/activity_add_commod_bt"
+                    android:text="选择类型"
+                    android:textColor="@color/app_green">
+
+                </Button>
+
+            </RelativeLayout>
+            <!--添加分类-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="商品分类:"
+                    android:textColor="@color/app_white"
+                    android:textSize="15sp"></TextView>
+
+                <Button
+                    android:id="@+id/activity_modify_commodity_btn_add_classify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/activity_add_commod_bt"
+                    android:text="选择分类"
+                    android:textColor="@color/app_green">
+
+                </Button>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <com.sctjsj.ebanghost.util.HorizontalListView
+                    android:id="@+id/activity_modify_commodity_hlv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/app_gray"></com.sctjsj.ebanghost.util.HorizontalListView>
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/activity_modify_commodity_btn_confirm"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/advice"
+                android:text="保存修改"
+                android:textColor="@color/app_white"
+                android:textSize="20sp"></Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

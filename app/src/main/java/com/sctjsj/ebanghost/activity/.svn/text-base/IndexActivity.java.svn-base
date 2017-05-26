@@ -1,0 +1,242 @@
+package com.sctjsj.ebanghost.activity;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.application.MyApp;
+import com.sctjsj.ebanghost.fragment.OrderQueryFg;
+import com.sctjsj.ebanghost.fragment.ProcessOrderFg;
+import com.sctjsj.ebanghost.fragment.SettingFg;
+import com.sctjsj.ebanghost.fragment.ShopMagFg;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class IndexActivity extends AppCompatActivity {
+    //图标
+    @Bind(R.id.activity_index_iv_process_order)ImageView mIVProcessOrder;
+    @Bind(R.id.activity_index_iv_search_order)ImageView mIVSearchOrder;
+    @Bind(R.id.activity_index_iv_shop_mag)ImageView mIVShopMag;
+    @Bind(R.id.activity_index_iv_setting)ImageView mIVSetting;
+    //文字
+    @Bind(R.id.activity_index_tv_process_order)TextView mTVProcessOrder;
+    @Bind(R.id.activity_index_tv_search_order)TextView mTVSearchOrder;
+    @Bind(R.id.activity_index_tv_shop_mag)TextView mTVShopMag;
+    @Bind(R.id.activity_index_tv_setting)TextView mTVSetting;
+
+
+    private String TAG="IndexActivity";
+    private boolean isExited=false;//标志是否已经退出
+    private Handler mHandler;
+    private MyApp app;
+    /**
+     * 碎片
+     * @param savedInstanceState
+     */
+    private FragmentManager fgManager;
+    private ProcessOrderFg processOrderFg;
+    private OrderQueryFg orderQueryFg;
+    private ShopMagFg shopMagFg;
+    private SettingFg settingFg;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_index);
+        ButterKnife.bind(this);
+        app= (MyApp) getApplication();
+        app.addActivity(this);
+        //实例碎片管理器
+        fgManager=getSupportFragmentManager();
+        //默认加载首页
+        if(processOrderFg==null){
+            processOrderFg=new ProcessOrderFg();
+        }
+        fgManager.beginTransaction().add(R.id.activity_index_rl_content,processOrderFg).show(processOrderFg).commit();
+
+
+
+        mHandler=new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 0:
+                        isExited=false;
+                        break;
+                }
+            }
+        };
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},0);//自定义的code
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        app.removeActivity(this);
+    }
+
+    /**
+     * 清除导航栏所有的选中状态
+     */
+    private void setNavbarNotSelected(){
+        //灰色字体
+        int colorGray= Color.parseColor("#80000000");
+        //1.所有图标设置为未选中状态
+        mIVProcessOrder.setImageResource(R.mipmap.icon_process_order);
+        mIVSearchOrder.setImageResource(R.mipmap.icon_search_order);
+        mIVShopMag.setImageResource(R.mipmap.icon_shop_mag);
+        mIVSetting.setImageResource(R.mipmap.icon_setting);
+
+        //2.设置所有文字为未选中的颜色
+        mTVProcessOrder.setTextColor(colorGray);
+        mTVSearchOrder.setTextColor(colorGray);
+        mTVShopMag.setTextColor(colorGray);
+        mTVSetting.setTextColor(colorGray);
+
+    }
+
+    /**
+     * 隐藏所有fragment
+     */
+    private void hideAllFgIfNotNull(){
+        FragmentTransaction transaction=fgManager.beginTransaction();
+        if(processOrderFg!=null){
+            transaction.hide(processOrderFg);
+        }
+        if(orderQueryFg!=null){
+            transaction.hide(orderQueryFg);
+        }
+        if(shopMagFg !=null){
+            transaction.hide(shopMagFg);
+        }
+        if(settingFg!=null){
+            transaction.hide(settingFg);
+        }
+
+        //提交
+        transaction.commit();
+    }
+
+    @OnClick({R.id.activity_index_ll_process_order,R.id.activity_index_ll_search_order,
+            R.id.activity_index_ll_order_shop_mag,R.id.activity_index_ll_setting})
+    public void IndexActivityClick(View view){
+        int colorGreen=Color.parseColor("#33aab4");
+        //1.隐藏所有碎片
+        hideAllFgIfNotNull();
+        //2.图片和文字设置为未选中
+        setNavbarNotSelected();
+        //3.设置选中导航状态
+        switch (view.getId()){
+            //处理订单
+            case R.id.activity_index_ll_process_order:
+                mIVProcessOrder.setImageResource(R.mipmap.icon_process_order_selected);
+                mTVProcessOrder.setTextColor(colorGreen);
+                if(processOrderFg==null){
+                    processOrderFg=new ProcessOrderFg();
+                    fgManager.beginTransaction().add(R.id.activity_index_rl_content,processOrderFg).
+                            show(processOrderFg).commit();
+                }else{
+                    fgManager.beginTransaction().show(processOrderFg).commit();
+                }
+
+                break;
+            //查询订单
+            case R.id.activity_index_ll_search_order:
+                mIVSearchOrder.setImageResource(R.mipmap.icon_search_order_selected);
+                mTVSearchOrder.setTextColor(colorGreen);
+                if(orderQueryFg==null){
+                    orderQueryFg=new OrderQueryFg();
+                    fgManager.beginTransaction().add(R.id.activity_index_rl_content,orderQueryFg).
+                            show(orderQueryFg).commit();
+                }else{
+                    fgManager.beginTransaction().show(orderQueryFg).commit();
+                }
+                break;
+            //店铺管理
+            case R.id.activity_index_ll_order_shop_mag:
+                mIVShopMag.setImageResource(R.mipmap.icon_shop_mag_selected);
+                mTVShopMag.setTextColor(colorGreen);
+
+                if(shopMagFg==null){
+                    shopMagFg=new ShopMagFg();
+                    fgManager.beginTransaction().add(R.id.activity_index_rl_content,shopMagFg).
+                            show(shopMagFg).commit();
+                }else{
+                    fgManager.beginTransaction().show(shopMagFg).commit();
+                }
+                break;
+            //设置
+            case R.id.activity_index_ll_setting:
+                mIVSetting.setImageResource(R.mipmap.icon_setting_selectd);
+                mTVSetting.setTextColor(colorGreen);
+
+                if(settingFg==null){
+                    settingFg=new SettingFg();
+                    fgManager.beginTransaction().add(R.id.activity_index_rl_content,settingFg).
+                            show(settingFg).commit();
+                }else{
+                    fgManager.beginTransaction().show(settingFg).commit();
+                }
+                break;
+
+        }
+    }
+
+    /**
+     * 重写返回键
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //物理返回键值
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            //连续点击两次返回键退出程序
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
+    /**
+     * 退出程序
+     */
+    private void exit(){
+        if (!isExited) {
+            isExited = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            Message msg=new Message();
+            msg.what=0;
+            mHandler.sendMessageDelayed(msg,2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+}

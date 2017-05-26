@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.IndexActivity"
+    android:orientation="vertical">
+
+    <!--碎片容器-->
+    <RelativeLayout
+        android:id="@+id/activity_index_rl_content"
+        android:layout_weight="12"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </RelativeLayout>
+
+    <View
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"></View>
+    <!--底部导航栏-->
+    <LinearLayout
+        android:background="@color/app_gray"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <!--1.订单处理-->
+        <LinearLayout
+            android:id="@+id/activity_index_ll_process_order"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@mipmap/icon_process_order_selected"
+                android:id="@+id/activity_index_iv_process_order"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/activity_index_tv_process_order"
+                android:textColor="@color/app_green"
+                android:text="订单处理"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <!--2.订单查询-->
+        <LinearLayout
+            android:id="@+id/activity_index_ll_search_order"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/activity_index_iv_search_order"
+                android:src="@mipmap/icon_search_order"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/activity_index_tv_search_order"
+                android:textColor="@color/text_black"
+                android:text="订单查询"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <!--4.店铺管理-->
+        <LinearLayout
+            android:id="@+id/activity_index_ll_order_shop_mag"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/activity_index_iv_shop_mag"
+                android:src="@mipmap/icon_shop_mag"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/activity_index_tv_shop_mag"
+                android:textColor="@color/text_black"
+                android:text="店铺管理"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <!--1.设置-->
+        <LinearLayout
+            android:id="@+id/activity_index_ll_setting"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@mipmap/icon_setting"
+                android:id="@+id/activity_index_iv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/activity_index_tv_setting"
+                android:textColor="@color/text_black"
+                android:text="设置"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

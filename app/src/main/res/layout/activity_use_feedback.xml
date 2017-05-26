@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/activity_use_feedback_ll_parent"
+    android:layout_height="match_parent">
+    <!--头部-->
+    <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent">
+           <LinearLayout
+               android:id="@+id/activity_advice_back"
+               android:layout_width="60dp"
+               android:layout_height="match_parent">
+               <ImageView
+                   android:src="@mipmap/icon_right_back"
+                   android:layout_gravity="center"
+                   android:layout_width="25dp"
+                   android:layout_height="25dp" />
+
+               <TextView
+                   android:text="返回"
+                   android:layout_gravity="center"
+                   android:textSize="16sp"
+                   android:textColor="@color/app_white"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/textView2" />
+           </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:text="使用反馈"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/app_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/activity_use_feedback_et_content"
+        android:background="@drawable/edittext"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:hint="请输入您使用的反馈，8个字以上"
+        android:gravity="top"
+        android:textColor="@color/app_GRAY"
+        android:textColorHint="@color/app_GRAY"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    <Button
+        android:id="@+id/activity_use_feedback_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="确认提交"
+        android:textSize="20sp"
+        android:textColor="@color/app_white"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/advice"
+        android:layout_height="40dp" />
+</LinearLayout>

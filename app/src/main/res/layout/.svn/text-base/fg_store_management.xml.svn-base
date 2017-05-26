@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#EFEFEF"
+    android:layout_height="match_parent">
+    <!--头部-->
+<RelativeLayout
+    android:background="@color/app_green"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+    <TextView
+        android:text="店铺管理"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
+        android:textColor="@color/app_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <!--店铺信息-->
+    <LinearLayout
+        android:background="@color/app_white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <!--大块统计-->
+        <LinearLayout
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="今日营业统计"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="营业额"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <!--分割线-->
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="今日订单统计"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="查看详情"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--分割线-->
+        <View
+            android:background="@color/app_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+        <!--小块统计-->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+          <LinearLayout
+              android:layout_weight="1"
+              android:orientation="horizontal"
+              android:layout_width="0dp"
+              android:layout_height="match_parent">
+              <TextView
+                  android:text="账户余额"
+                  android:layout_gravity="center"
+                  android:textColor="#000000"
+                  android:layout_marginLeft="20dp"
+                  android:textSize="15sp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+              <TextView
+                  android:text="￥10000"
+                  android:layout_marginLeft="5dp"
+                  android:textColor="@color/app_green"
+                  android:textSize="15sp"
+                  android:maxWidth="80dp"
+                  android:layout_gravity="center"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+          </LinearLayout>
+            <!--分割线-->
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <RelativeLayout
+                android:id="@+id/fg_store_mangment_delviery_rl"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="配送设置"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000000"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+    <LinearLayout
+        android:background="@color/app_white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <!--1-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_printer_ll"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_printer"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imageView" />
+                <TextView
+                    android:text="打印机"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/fg_store_manager_printer_tv"
+                    android:text="未选择"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/app_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <!--2-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_evalutation_ll"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:src="@mipmap/icon_evalutation"
+                    android:layout_gravity="center"
+                    android:layout_width="38dp"
+                    android:layout_height="35dp"
+                    />
+                <TextView
+                    android:text="评价管理"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/fg_store_manager_evalutation_tv"
+                    android:text="10个评价"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/app_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <!--3-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_state_ll"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_operating_state"
+                    android:layout_gravity="center"
+                    android:layout_width="37dp"
+                    android:layout_height="39dp"
+                    />
+
+                <TextView
+                    android:text="营业状态"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/fg_store_manager_state_tv"
+                    android:text=""
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/app_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/app_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <!--4-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_msg_ll"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_stor"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                     />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="店铺信息"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <!--5-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_commod_ll"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_classiciation"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imageView3" />
+
+                <TextView
+                    android:text="商品管理"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <View
+                android:background="@color/app_gray"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <!--6-->
+            <LinearLayout
+                android:id="@+id/fg_store_manager_preview_ll"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/icon_stor_stor"
+                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    />
+                <TextView
+                    android:text="店铺预览"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+</LinearLayout>

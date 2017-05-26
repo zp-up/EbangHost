@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/half_transparent"
+    android:orientation="vertical" >
+
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--中间标题栏-->
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+         android:gravity="center"
+        android:background="@color/half_transparent" >
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/caution_scan_qr"
+            android:textColor="@color/app_white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <!--扫描框-->
+    <RelativeLayout
+        android:id="@+id/layout_contain"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="35dp"
+
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="145dp" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/half_theme_green" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/half_theme_green" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/half_theme_green" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/half_theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_height"
+            android:layout_height="@dimen/scan_frame_width"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_width"
+            android:layout_height="@dimen/scan_frame_height"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_height"
+            android:layout_height="@dimen/scan_frame_width"
+            android:layout_alignParentRight="true"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_width"
+            android:layout_height="@dimen/scan_frame_height"
+            android:layout_alignParentRight="true"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_height"
+            android:layout_height="@dimen/scan_frame_width"
+            android:layout_alignParentBottom="true"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_width"
+            android:layout_height="@dimen/scan_frame_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_height"
+            android:layout_height="@dimen/scan_frame_width"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/theme_green" />
+
+        <View
+            android:layout_width="@dimen/scan_frame_width"
+            android:layout_height="@dimen/scan_frame_height"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/theme_green" />
+        
+         <com.sctjsj.weixue.selfdefine.view.ScanLineView
+             android:id="@+id/scanline"
+             android:layout_width="match_parent"
+             android:layout_height="2dp" />
+        
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,796 @@
+package com.sctjsj.ebanghost.fragment;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.application.MyApp;
+import com.sctjsj.ebanghost.bean.CityBean;
+import com.sctjsj.ebanghost.bean.DeliveryAddressBean;
+import com.sctjsj.ebanghost.bean.DistrictBean;
+import com.sctjsj.ebanghost.bean.GoodsBean;
+import com.sctjsj.ebanghost.bean.OrderBean;
+import com.sctjsj.ebanghost.bean.ProvinceBean;
+import com.sctjsj.ebanghost.url.BnUrl;
+import com.sctjsj.ebanghost.util.ListViewUtil;
+import com.sctjsj.ebanghost.util.LogUtil;
+import com.sctjsj.ebanghost.util.ProgressUtil;
+
+import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.nio.DoubleBuffer;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import q.rorbin.qrefreshlayout.QRefreshLayout;
+import q.rorbin.qrefreshlayout.RefreshHandler;
+
+/**
+ * Created by Chris-Jason on 2016/11/9.
+ */
+public class TodayOrderFg extends Fragment {
+    @Bind(R.id.fg_order_dispose_refresh_layout)QRefreshLayout refreshLayout;
+    @Bind(R.id.fg_order_dispose_rv)RecyclerView mRV;
+    private int pageIndex=1;
+    private MyApp app;
+    private List<OrderBean> data;
+    private Handler mHandler;
+    private ProgressUtil pUtil;
+    private MyAdapter adapter;
+    //定位
+    private AMapLocationClient mLocationClient;
+    private AMapLocationListener mLocationListener;
+    private AMapLocationClientOption mLocationClientOption;
+    private double longT;
+    private double lanT;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fg_today_order,null);
+        ButterKnife.bind(this,view);
+        app= (MyApp) getActivity().getApplication();
+        pUtil=new ProgressUtil(getActivity());
+        data=new ArrayList<>();
+        refreshLayout.setLoadMoreEnable(true);
+        refreshLayout.setRefreshHandler(new RefreshHandler() {
+            @Override
+            public void onRefresh(QRefreshLayout refresh) {
+                refresh();
+            }
+
+            @Override
+            public void onLoadMore(QRefreshLayout refresh) {
+                loadMoreData();
+            }
+        });
+
+        mHandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 99:
+                        initData();
+                        break;
+                }
+            }
+        };
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},0);//自定义的code
+        }else{
+            //启动定位
+            initLocation();
+        }
+        return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
+    /**
+     * 高德定位
+     */
+    private void initLocation() {
+        if(mLocationClient==null){
+            mLocationClient=new AMapLocationClient(getActivity());
+        }
+        //初始化定位监听器
+        mLocationListener=new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if(aMapLocation!=null){
+                    //获取定位错误码
+                    int errorCode=aMapLocation.getErrorCode();
+                    switch (errorCode){
+                        //定位成功
+                        case 0:
+                            /**
+                             * 解析地址
+                             */
+                            //当前经纬度
+                            longT=aMapLocation.getLongitude();
+                            lanT=aMapLocation.getLatitude();
+                            LogUtil.e("经度："+longT);
+                            mHandler.sendEmptyMessage(99);
+                            break;
+                        //网络链路异常
+                        case 4:
+                            Toast.makeText(getActivity(), "定位失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                            break;
+                        //定位客户端初始化失败
+                        case 9:
+                            Toast.makeText(getActivity(), "定位失败，请重启定位客户端", Toast.LENGTH_SHORT).show();
+                            break;
+                        //无定位权限
+                        case 12:
+                            Toast.makeText(getActivity(), "定位失败，请检查定位权限", Toast.LENGTH_LONG).show();
+                            break;
+                    }
+
+                }else{
+                    LogUtil.e("aMapLocation==null");
+                }
+            }
+        };
+        //定位客户端设置定位监听器
+        mLocationClient.setLocationListener(mLocationListener);
+        /**
+         * 配置定位参数
+         */
+        mLocationClientOption=new AMapLocationClientOption();
+        //设置定位模式：高精度定位模式
+        mLocationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息
+        mLocationClientOption.setNeedAddress(true);
+        //设置是否指定位一次
+        mLocationClientOption.setOnceLocation(false);
+        //如果设置了只定位一次，将获取3s内经度最高的一次定位结果
+        if(mLocationClientOption.isOnceLocation()){
+            mLocationClientOption.setOnceLocationLatest(true);
+        }
+        //设置是否强制刷新wifi
+        mLocationClientOption.setWifiActiveScan(true);
+        //设置是否允许模拟位置
+        mLocationClientOption.setMockEnable(false);
+        //设置定位时间间隔3min
+        mLocationClientOption.setInterval(1000*60*3);
+        mLocationClient.setLocationOption(mLocationClientOption);
+        mLocationClient.startLocation();
+    }
+
+    /**
+     * 初始化订单列表
+     */
+
+    public void initData(){
+        data.clear();
+        pageIndex=1;
+        //http://211.149.230.194:9000/lpkd/pageSearch$ajax.htm?ctype=orderform&cond={store:{id:1}}&jf=user|addr
+        RequestParams params=new RequestParams(BnUrl.pullShopOrderById);
+        params.setUseCookie(false);
+        params.addBodyParameter("size","10");
+        params.addBodyParameter("pageIndex",String.valueOf(pageIndex));
+        params.addBodyParameter("ctype","orderform");
+        params.addBodyParameter("cond","{store:{id:"+app.getCurrentUser().getShopId()+"}}");
+        params.addBodyParameter("jf","goodscart|goods|addr|area|parent");
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                if(response!=null){
+                    try {
+                        org.json.JSONArray resultList=response.getJSONArray("resultList");
+                        if(resultList.length()>0){
+                            //循环订单的条数
+                            for (int i=0;i<resultList.length();i++){
+                                //每一条订单购买商品的集合
+                                List<GoodsBean> gbList=new ArrayList<GoodsBean>();
+
+                                JSONObject x=resultList.getJSONObject(i);
+                                //订单信息
+                                int id=x.getInt("id");//订单 id
+                                String name=x.getString("name");//给用户看的订单号
+                                String buyerRemark=x.getString("buyerRemark");//买家备注
+                                String paytime=x.getString("paytime");//下单时间
+                                double shipPrice=x.getDouble("shipPrice");//运费
+                                double totalPrice=x.getDouble("totalprice");//总价
+                                int num=x.getInt("num");//商品总数量
+                                int state=x.getInt("state");//订单状态
+                                //购买的商品列表
+                                JSONArray goodscart=x.getJSONArray("goodscart");
+                                for (int j=0;j<goodscart.length();j++){
+                                    JSONObject g=goodscart.getJSONObject(j);
+                                    int goodsId=g.getJSONObject("goods").getInt("id");//商品 id
+                                    String goodsName=g.getJSONObject("goods").getString("name");//商品名称
+                                    int goodsNum=g.getInt("num");//商品数量
+                                    double price=g.getDouble("price");//单价
+                                    GoodsBean gb=new GoodsBean();
+                                    gb.setId(goodsId);
+                                    gb.setName(goodsName);
+                                    gb.setCount(goodsNum);
+                                    gb.setPrice(price);
+                                    gbList.add(gb);
+                                }
+                                //收货信息
+                                JSONObject addr=x.getJSONObject("addr");
+                                int deliveryId=addr.getInt("id");//收货地址 id
+                                String recName=addr.getString("recName");//收货人
+                                String consigneeTel=addr.getString("mobile");//收货人电话
+                                String areaInfo=addr.getString("areaInfo");//详细地址
+
+                                JSONObject area=addr.getJSONObject("area");//区
+                                String districtName=area.getString("areaname");//区县名称
+                                int districtId=area.getInt("id");//区县 id
+                                DistrictBean districtBean=new DistrictBean();
+                                districtBean.setId(districtId);
+                                districtBean.setName(districtName);
+
+                                JSONObject city=area.getJSONObject("parent");//市
+                                String cityName=city.getString("areaname");//城市名
+                                int cityId=city.getInt("id");//城市 id
+                                CityBean cityBean=new CityBean();
+                                cityBean.setId(cityId);
+                                cityBean.setName(cityName);
+
+                                JSONObject province =city.getJSONObject("parent");//省
+                                String provinceName=province.getString("areaname");//省名
+                                int provinceId=province.getInt("id");//省 id
+                                ProvinceBean provinceBean=new ProvinceBean();
+                                provinceBean.setId(provinceId);
+                                provinceBean.setName(provinceName);
+
+                                DeliveryAddressBean dab=new DeliveryAddressBean();
+                                dab.setId(deliveryId);
+                                dab.setProvinceBean(provinceBean);
+                                dab.setCityBean(cityBean);
+                                dab.setDistrictBean(districtBean);
+                                dab.setConsignee(recName);
+                                dab.setDetail(areaInfo);
+                                dab.setTel(consigneeTel);
+
+                                OrderBean ob=new OrderBean();
+                                ob.setId(id);
+                                ob.setName(name);
+                                ob.setDeliveryAddressBean(dab);
+                                ob.setState(state);
+                                ob.setTotalprice(totalPrice);
+                                ob.setNum(num);
+                                ob.setBuyerRemark(buyerRemark);
+                                ob.setShipPrice(shipPrice);
+                                ob.setPayTime(paytime);
+                                ob.setGoodsBeanList(gbList);
+                                data.add(ob);
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        pageIndex++;
+                        if(adapter==null){
+                            adapter=new MyAdapter();
+                            mRV.setAdapter(adapter);
+                            mRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+            }
+        });
+    }
+
+    /**
+     * 下啦刷新
+     */
+    public void refresh(){
+        data.clear();
+        pageIndex=1;
+        //http://211.149.230.194:9000/lpkd/pageSearch$ajax.htm?ctype=orderform&cond={store:{id:1}}&jf=user|addr
+        RequestParams params=new RequestParams(BnUrl.pullShopOrderById);
+        params.setUseCookie(false);
+        params.addBodyParameter("size","10");
+        params.addBodyParameter("pageIndex",String.valueOf(pageIndex));
+        params.addBodyParameter("ctype","orderform");
+        params.addBodyParameter("cond","{store:{id:"+app.getCurrentUser().getShopId()+"}}");
+        params.addBodyParameter("jf","goodscart|goods|addr|area|parent");
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                if(response!=null){
+                    try {
+                        org.json.JSONArray resultList=response.getJSONArray("resultList");
+                        if(resultList.length()>0){
+                            //循环订单的条数
+                            for (int i=0;i<resultList.length();i++){
+                                //每一条订单购买商品的集合
+                                List<GoodsBean> gbList=new ArrayList<GoodsBean>();
+
+                                JSONObject x=resultList.getJSONObject(i);
+                                //订单信息
+                                int id=x.getInt("id");//订单 id
+                                String name=x.getString("name");//给用户看的订单号
+                                String buyerRemark=x.getString("buyerRemark");//买家备注
+                                String paytime=x.getString("paytime");//下单时间
+                                double shipPrice=x.getDouble("shipPrice");//运费
+                                double totalPrice=x.getDouble("totalprice");//总价
+                                int num=x.getInt("num");//商品总数量
+                                int state=x.getInt("state");//订单状态
+                                //购买的商品列表
+                                JSONArray goodscart=x.getJSONArray("goodscart");
+                                for (int j=0;j<goodscart.length();j++){
+                                    JSONObject g=goodscart.getJSONObject(j);
+                                    int goodsId=g.getJSONObject("goods").getInt("id");//商品 id
+                                    String goodsName=g.getJSONObject("goods").getString("name");//商品名称
+                                    int goodsNum=g.getInt("num");//商品数量
+                                    double price=g.getDouble("price");//单价
+                                    GoodsBean gb=new GoodsBean();
+                                    gb.setId(goodsId);
+                                    gb.setName(goodsName);
+                                    gb.setCount(goodsNum);
+                                    gb.setPrice(price);
+                                    gbList.add(gb);
+                                }
+                                //收货信息
+                                JSONObject addr=x.getJSONObject("addr");
+                                int deliveryId=addr.getInt("id");//收货地址 id
+                                String recName=addr.getString("recName");//收货人
+                                String consigneeTel=addr.getString("mobile");//收货人电话
+                                String areaInfo=addr.getString("areaInfo");//详细地址
+
+                                JSONObject area=addr.getJSONObject("area");//区
+                                String districtName=area.getString("areaname");//区县名称
+                                int districtId=area.getInt("id");//区县 id
+                                DistrictBean districtBean=new DistrictBean();
+                                districtBean.setId(districtId);
+                                districtBean.setName(districtName);
+
+                                JSONObject city=area.getJSONObject("parent");//市
+                                String cityName=city.getString("areaname");//城市名
+                                int cityId=city.getInt("id");//城市 id
+                                CityBean cityBean=new CityBean();
+                                cityBean.setId(cityId);
+                                cityBean.setName(cityName);
+
+                                JSONObject province =city.getJSONObject("parent");//省
+                                String provinceName=province.getString("areaname");//省名
+                                int provinceId=province.getInt("id");//省 id
+                                ProvinceBean provinceBean=new ProvinceBean();
+                                provinceBean.setId(provinceId);
+                                provinceBean.setName(provinceName);
+
+                                DeliveryAddressBean dab=new DeliveryAddressBean();
+                                dab.setId(deliveryId);
+                                dab.setProvinceBean(provinceBean);
+                                dab.setCityBean(cityBean);
+                                dab.setDistrictBean(districtBean);
+                                dab.setConsignee(recName);
+                                dab.setDetail(areaInfo);
+                                dab.setTel(consigneeTel);
+
+                                OrderBean ob=new OrderBean();
+                                ob.setId(id);
+                                ob.setName(name);
+                                ob.setDeliveryAddressBean(dab);
+                                ob.setState(state);
+                                ob.setTotalprice(totalPrice);
+                                ob.setNum(num);
+                                ob.setBuyerRemark(buyerRemark);
+                                ob.setShipPrice(shipPrice);
+                                ob.setPayTime(paytime);
+                                ob.setGoodsBeanList(gbList);
+                                data.add(ob);
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        pageIndex++;
+                        if(adapter==null){
+                            adapter=new MyAdapter();
+                            mRV.setAdapter(adapter);
+                            mRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+                refreshLayout.refreshComplete();
+            }
+        });
+    }
+
+    /**
+     * 上啦加载
+     */
+    public void loadMoreData(){
+        //http://211.149.230.194:9000/lpkd/pageSearch$ajax.htm?ctype=orderform&cond={store:{id:1}}&jf=user|addr
+        RequestParams params=new RequestParams(BnUrl.pullShopOrderById);
+        params.setUseCookie(false);
+        params.addBodyParameter("size","10");
+        params.addBodyParameter("pageIndex",String.valueOf(pageIndex));
+        params.addBodyParameter("ctype","orderform");
+        params.addBodyParameter("cond","{store:{id:"+app.getCurrentUser().getShopId()+"}}");
+        params.addBodyParameter("jf","goodscart|goods|addr|area|parent");
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                if(response!=null){
+                    try {
+                        org.json.JSONArray resultList=response.getJSONArray("resultList");
+                        if(resultList.length()>0){
+                            //循环订单的条数
+                            for (int i=0;i<resultList.length();i++){
+                                //每一条订单购买商品的集合
+                                List<GoodsBean> gbList=new ArrayList<GoodsBean>();
+
+                                JSONObject x=resultList.getJSONObject(i);
+                                //订单信息
+                                int id=x.getInt("id");//订单 id
+                                String name=x.getString("name");//给用户看的订单号
+                                String buyerRemark=x.getString("buyerRemark");//买家备注
+                                String paytime=x.getString("paytime");//下单时间
+                                double shipPrice=x.getDouble("shipPrice");//运费
+                                double totalPrice=x.getDouble("totalprice");//总价
+                                int num=x.getInt("num");//商品总数量
+                                int state=x.getInt("state");//订单状态
+                                //购买的商品列表
+                                JSONArray goodscart=x.getJSONArray("goodscart");
+                                for (int j=0;j<goodscart.length();j++){
+                                    JSONObject g=goodscart.getJSONObject(j);
+                                    int goodsId=g.getJSONObject("goods").getInt("id");//商品 id
+                                    String goodsName=g.getJSONObject("goods").getString("name");//商品名称
+                                    int goodsNum=g.getInt("num");//商品数量
+                                    double price=g.getDouble("price");//单价
+                                    GoodsBean gb=new GoodsBean();
+                                    gb.setId(goodsId);
+                                    gb.setName(goodsName);
+                                    gb.setCount(goodsNum);
+                                    gb.setPrice(price);
+                                    gbList.add(gb);
+                                }
+                                //收货信息
+                                JSONObject addr=x.getJSONObject("addr");
+                                int deliveryId=addr.getInt("id");//收货地址 id
+                                String recName=addr.getString("recName");//收货人
+                                String consigneeTel=addr.getString("mobile");//收货人电话
+                                String areaInfo=addr.getString("areaInfo");//详细地址
+
+                                JSONObject area=addr.getJSONObject("area");//区
+                                String districtName=area.getString("areaname");//区县名称
+                                int districtId=area.getInt("id");//区县 id
+                                DistrictBean districtBean=new DistrictBean();
+                                districtBean.setId(districtId);
+                                districtBean.setName(districtName);
+
+                                JSONObject city=area.getJSONObject("parent");//市
+                                String cityName=city.getString("areaname");//城市名
+                                int cityId=city.getInt("id");//城市 id
+                                CityBean cityBean=new CityBean();
+                                cityBean.setId(cityId);
+                                cityBean.setName(cityName);
+
+                                JSONObject province =city.getJSONObject("parent");//省
+                                String provinceName=province.getString("areaname");//省名
+                                int provinceId=province.getInt("id");//省 id
+                                ProvinceBean provinceBean=new ProvinceBean();
+                                provinceBean.setId(provinceId);
+                                provinceBean.setName(provinceName);
+
+                                DeliveryAddressBean dab=new DeliveryAddressBean();
+                                dab.setId(deliveryId);
+                                dab.setProvinceBean(provinceBean);
+                                dab.setCityBean(cityBean);
+                                dab.setDistrictBean(districtBean);
+                                dab.setConsignee(recName);
+                                dab.setDetail(areaInfo);
+                                dab.setTel(consigneeTel);
+
+                                OrderBean ob=new OrderBean();
+                                ob.setId(id);
+                                ob.setName(name);
+                                ob.setDeliveryAddressBean(dab);
+                                ob.setState(state);
+                                ob.setTotalprice(totalPrice);
+                                ob.setNum(num);
+                                ob.setBuyerRemark(buyerRemark);
+                                ob.setShipPrice(shipPrice);
+                                ob.setPayTime(paytime);
+                                ob.setGoodsBeanList(gbList);
+                                data.add(ob);
+                            }
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }finally {
+                        pageIndex++;
+                        if(adapter==null){
+                            adapter=new MyAdapter();
+                            mRV.setAdapter(adapter);
+                            mRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+                refreshLayout.LoadMoreComplete();
+            }
+        });
+    }
+
+
+    class MyAdapter extends RecyclerView.Adapter<XHolder>{
+
+        @Override
+        public XHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View item=LayoutInflater.from(getActivity()).inflate(R.layout.item_of_fg_dispose_order,null);
+            XHolder holder=new XHolder(item);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(XHolder holder, int position) {
+            //设置收货地址
+            holder.mTVAddress.setText(data.get(position).getDeliveryAddressBean().getProvinceBean().getName()+
+                    data.get(position).getDeliveryAddressBean().getCityBean().getName()+
+                    data.get(position).getDeliveryAddressBean().getDetail());
+            //设置收货人
+            holder.mTVConsignee.setText(data.get(position).getDeliveryAddressBean().getConsignee()+"  "+
+                    data.get(position).getDeliveryAddressBean().getTel());
+            //设置下单时间
+            holder.mTVPaytime.setText(data.get(position).getPayTime());
+            //设置订单编号
+            holder.mTVOrderNum.setText(data.get(position).getName());
+            //设置购买的商品列表
+            MyLVAdapter myLVAdapter=new MyLVAdapter(data.get(position).getGoodsBeanList());
+            holder.mLV.setAdapter(myLVAdapter);
+            ListViewUtil.setListViewHeightBasedOnChildren(holder.mLV);
+            //设置商品价格
+            holder.mTVGoodsPay.setText(String.valueOf(data.get(position).getTotalprice()-data.get(position).getShipPrice()));
+            //设置配送费
+            holder.mTVShipprice.setText(String.valueOf(data.get(position).getShipPrice()));
+            //设置总价
+            holder.mTVTotalPay.setText(String.valueOf(data.get(position).getTotalprice()));
+            //设置备注
+            holder.mTVBuyerRemark.setText(TextUtils.isEmpty(data.get(position).getBuyerRemark())?"无特殊要求":data.get(position).getBuyerRemark());
+            //设置订单状态
+            switch (data.get(position).getState()){
+                //已经付款，等待商家接单
+                case 10:
+                    holder.mLLDealOrderParent.setVisibility(View.VISIBLE);
+                    holder.mLLDisposeOrder.setVisibility(View.GONE);
+                    holder.mTVOrderFinished.setVisibility(View.GONE);
+                    break;
+                //商家已经接单
+                case 15:
+                    holder.mLLDealOrderParent.setVisibility(View.GONE);
+                    holder.mLLDisposeOrder.setVisibility(View.VISIBLE);
+                    holder.mTVOrderFinished.setVisibility(View.GONE);
+                    break;
+                //订单已送达
+                case 18:
+                    holder.mLLDealOrderParent.setVisibility(View.GONE);
+                    holder.mLLDisposeOrder.setVisibility(View.GONE);
+                    holder.mTVOrderFinished.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.mLLDealOrderParent.setVisibility(View.VISIBLE);
+                    holder.mLLDisposeOrder.setVisibility(View.GONE);
+                    holder.mTVOrderFinished.setVisibility(View.GONE);
+                    break;
+
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
+    }
+
+    class XHolder extends ViewHolder {
+        TextView mTVAddress,mTVConsignee,mTVPaytime,mTVOrderNum,mTVShipprice,
+                mTVGoodsPay,mTVTotalPay,mTVBuyerRemark,mTVOrderFinished;
+        ListView mLV;
+        LinearLayout mLLDealOrderParent,mLLDisposeOrder;
+
+        public XHolder(View itemView) {
+            super(itemView);
+            mTVAddress= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_delivery_address);
+            mTVConsignee= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_consignee);
+            mTVPaytime= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_paytime);
+            mTVOrderNum= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_order_num);
+            mLV= (ListView) itemView.findViewById(R.id.item_of_fg_dispose_lv_goods_list);
+            mTVShipprice= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_shipprice);
+            mTVGoodsPay= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_goods_pay);
+            mTVTotalPay= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_total_pay);
+            mTVBuyerRemark= (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_buyer_remark);
+
+            mTVOrderFinished= (TextView) itemView.findViewById(R.id.tv_order_finished);
+            mLLDealOrderParent= (LinearLayout) itemView.findViewById(R.id.ll_deal_order_parent);
+            mLLDisposeOrder= (LinearLayout) itemView.findViewById(R.id.ll_dispose_order);
+        }
+    }
+
+    class MyLVAdapter extends BaseAdapter{
+        List <GoodsBean> gbList;
+        MyLVAdapter(List<GoodsBean> gbList){
+            this.gbList=gbList;
+        }
+
+        @Override
+        public int getCount() {
+            return gbList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return gbList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            Holder h;
+
+            if(convertView==null){
+                convertView=LayoutInflater.from(getActivity()).inflate(R.layout.item_goods_list_in_order,null);
+                h=new Holder();
+                h.mTVName= (TextView) convertView.findViewById(R.id.item_goods_list_in_order_tv_name);
+                h.mTVCount= (TextView) convertView.findViewById(R.id.item_goods_list_in_order_tv_count);
+                h.mTVPrice= (TextView) convertView.findViewById(R.id.item_goods_list_in_order_tv_price);
+                convertView.setTag(h);
+            }else{
+                h= (Holder) convertView.getTag();
+            }
+
+            h.mTVName.setText(gbList.get(position).getName());
+            h.mTVCount.setText("*"+gbList.get(position).getCount());
+            h.mTVPrice.setText("￥"+String.valueOf(gbList.get(position).getCount()*gbList.get(position).getPrice()));
+
+            return convertView;
+        }
+
+        class Holder{
+            TextView mTVName,mTVCount,mTVPrice;
+        }
+
+    }
+
+
+}

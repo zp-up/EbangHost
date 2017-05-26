@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--头部-->
+    <RelativeLayout
+        android:background="@color/app_green"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/activity_add_classfiy_back_ll"
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@mipmap/icon_right_back"
+                    android:layout_gravity="center"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:text="返回"
+                    android:layout_gravity="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/app_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:text="修改分类"
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/app_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <ListView
+                android:id="@+id/activity_add_classfiy_lv"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
+        </LinearLayout>
+        <View
+            android:background="#868484"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"></View>
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <Button
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:text="添加分类"
+                android:textSize="20sp"
+                android:textColor="@color/app_white"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/advice"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/button"></Button>
+
+            <Button
+                android:layout_weight="1"
+                android:text="删除分类"
+                android:textSize="20sp"
+                android:textColor="@color/app_white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/advice"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"></Button>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

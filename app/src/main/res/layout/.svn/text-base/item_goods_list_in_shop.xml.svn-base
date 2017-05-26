@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/item_goods_list_in_shop_ll_parent"
+    android:layout_width="match_parent"
+    android:background="@color/app_gray"
+    android:layout_height="100dp">
+
+    <!--左边商品图片-->
+    <RelativeLayout
+        android:layout_marginLeft="5dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp">
+        <ImageView
+            android:src="@mipmap/img_shop"
+            android:id="@+id/item_goods_list_in_shop_iv_icon"
+            android:scaleType="fitXY"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:id="@+id/right_dish_name"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="红烧排骨盖浇饭"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:maxEms="10"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:id="@+id/item_goods_list_in_shop_tv_salenum"
+                android:gravity="center_vertical"
+                android:text="售:1345"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/right_dish_remove"
+                    android:src="@mipmap/icon_reduce"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp" />
+                <TextView
+                    android:id="@+id/right_dish_account"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/right_dish_add"
+                    android:src="@mipmap/icon_add"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/right_dish_dis_price"
+                android:textColor="@color/app_green"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:text="￥45"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:singleLine="true"
+                android:id="@+id/right_dish_ori_price"
+                android:textColor="@color/app_deep_gray"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="￥55"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

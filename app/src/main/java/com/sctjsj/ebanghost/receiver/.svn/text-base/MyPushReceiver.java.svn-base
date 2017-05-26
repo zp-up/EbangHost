@@ -1,0 +1,71 @@
+package com.sctjsj.ebanghost.receiver;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.igexin.sdk.PushConsts;
+import com.sctjsj.ebanghost.application.MyApp;
+
+
+/**
+ * Created by mayikang on 16/12/1.
+ */
+
+public class MyPushReceiver extends BroadcastReceiver {
+    private String TAG="BroadcastReceiver";
+    private MyApp app;
+    private static OnGetPushMessageListener onGetPushMessageListener;
+
+    /**
+     * 接收到消息
+     * @param context
+     * @param intent
+     */
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Bundle bundle = intent.getExtras();
+        app= (MyApp) context.getApplicationContext();
+        switch (bundle.getInt(PushConsts.CMD_ACTION)) {
+            // TODO:处理cid返回
+            case PushConsts.GET_CLIENTID:
+                String cid = bundle.getString("clientid");
+                Log.e(TAG,"cid:"+cid);
+                //保存 cid 到本地
+                app.getSpf().edit().putString("cid",cid).commit();
+                onGetPushMessageListener.onReceivedMessage("cid:"+cid);
+                break;
+            // TODO:接收处理透传（payload）数据
+            case PushConsts.GET_MSG_DATA:
+                String taskid = bundle.getString("taskid");
+                String messageid = bundle.getString("messageid");
+                byte[] payload = bundle.getByteArray("payload");
+                if (payload != null) {
+                    String data = new String(payload);
+                    Log.e(TAG,"透传式:"+data);
+                    //回调消息
+                    onGetPushMessageListener.onReceivedMessage("透传："+data);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 暴露回调接口给前台使用
+     * @param onGetPushMessageListener
+     */
+    public static void setOnGetPushMessageListener(OnGetPushMessageListener onGetPushMessageListener) {
+        MyPushReceiver.onGetPushMessageListener = onGetPushMessageListener;
+    }
+
+    //回调接口
+    public interface OnGetPushMessageListener{
+        //当接收到推送消息时
+        public void onReceivedMessage(String message);
+    }
+
+
+}

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_white">
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+
+            <!--&lt;!&ndash;评分栏&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp">-->
+                <!--&lt;!&ndash;左侧评分&ndash;&gt;-->
+                <!--<LinearLayout-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent">-->
+                    <!--<TextView-->
+                        <!--android:textSize="30sp"-->
+                        <!--android:textColor="@color/text_orange"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="4.9"-->
+                        <!--android:layout_weight="2"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp" />-->
+                    <!--<TextView-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="综合评分"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp" />-->
+                    <!--<TextView-->
+                        <!--android:textColor="@color/text_black"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="商家好评率95%"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp" />-->
+                <!--</LinearLayout>-->
+                <!--&lt;!&ndash;分割线&ndash;&gt;-->
+                <!--<TextView-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:layout_marginBottom="15dp"-->
+                    <!--android:background="@color/app_gray"-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="match_parent" />-->
+                <!--&lt;!&ndash;右侧评分&ndash;&gt;-->
+                <!--<LinearLayout-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_weight="2"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent">-->
+                    <!--&lt;!&ndash;第一排服务评分&ndash;&gt;-->
+                    <!--<LinearLayout-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp">-->
+                        <!--<TextView-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:textColor="@color/text_black"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="服务评分"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="match_parent" />-->
+                        <!--<com.github.ornolfr.ratingview.RatingView-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--app:drawable_empty="@mipmap/icon_star_empty"-->
+                            <!--app:drawable_filled="@mipmap/icon_star_full"-->
+                            <!--app:drawable_margin="2dp"-->
+                            <!--app:drawable_size="20dp"-->
+                            <!--app:is_indicator="false"-->
+                            <!--app:max_count="5"-->
+                            <!--app:rating="5" />-->
+                        <!--<TextView-->
+                            <!--android:layout_weight="0.5"-->
+                            <!--android:textSize="18sp"-->
+                            <!--android:textColor="@color/text_orange"-->
+                            <!--android:text="4.8"-->
+                            <!--android:gravity="center"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="match_parent" />-->
+                    <!--</LinearLayout>-->
+
+                    <!--&lt;!&ndash;第二排商品评分&ndash;&gt;-->
+                    <!--<LinearLayout-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp">-->
+
+                        <!--<TextView-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:textColor="@color/text_black"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="商品评分"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="match_parent" />-->
+                        <!--<com.github.ornolfr.ratingview.RatingView-->
+                            <!--android:layout_gravity="center_vertical"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--app:drawable_empty="@mipmap/icon_star_empty"-->
+                            <!--app:drawable_filled="@mipmap/icon_star_full"-->
+                            <!--app:drawable_margin="2dp"-->
+                            <!--app:drawable_size="20dp"-->
+                            <!--app:is_indicator="false"-->
+                            <!--app:max_count="5"-->
+                            <!--app:rating="5" />-->
+                        <!--<TextView-->
+                            <!--android:layout_weight="0.5"-->
+                            <!--android:textSize="18sp"-->
+                            <!--android:textColor="@color/text_orange"-->
+                            <!--android:text="5.0"-->
+                            <!--android:gravity="center"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="match_parent" />-->
+
+                    <!--</LinearLayout>-->
+
+
+                <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash;分割线&ndash;&gt;-->
+            <!--<TextView-->
+                <!--android:background="@color/app_gray"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="5dp" />-->
+
+            <!--&lt;!&ndash;分割线&ndash;&gt;-->
+            <!--<TextView-->
+                <!--android:background="@color/app_gray"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="5dp" />-->
+            <!--&lt;!&ndash;评论内容列表&ndash;&gt;-->
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:id="@+id/fg_comment_in_shop_rv_comment_list"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+            <!--</android.support.v7.widget.RecyclerView>-->
+
+
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+
+    <TextView
+       android:layout_marginTop="150dp"
+        android:textSize="18sp"
+       android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="预览店铺暂不支持查看评论"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/item_bluetooth_device_list_tv_name"
+            android:textSize="18sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginLeft="10dp"
+            android:text="设备名:AD-128"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/item_bluetooth_device_list_tv_mac"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:text="MAC地址:60:90:90:90:90:90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/item_bluetooth_device_list_tv_state"
+            android:layout_centerVertical="true"
+            android:text="state"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>

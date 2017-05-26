@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">蓝胖商户</string>
+    <string name="get_verify_code_txt">获取验证码</string>
+
+    <string name="caution_scan_qr">将二维码置于框内</string>
+    <string name="qr_scan_title">扫描二维码</string>
+</resources>

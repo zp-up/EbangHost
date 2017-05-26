@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_announce_mag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sctjsj.ebanghost.activity.AnnounceMagActivity">
+
+    <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/act_announce_mag_iv_back"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_back"
+            android:layout_width="30dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:textSize="22sp"
+            android:textColor="@color/app_white"
+            android:text="商家公告"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/act_announce_mag_iv_add"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_add_white"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <q.rorbin.qrefreshlayout.QRefreshLayout
+            android:id="@+id/act_announce_mag_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/act_announce_mag_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </q.rorbin.qrefreshlayout.QRefreshLayout>
+
+
+        <LinearLayout
+            android:id="@+id/act_announce_mag_ll_remind"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/icon_no_announce_gray"
+                android:layout_gravity="center"
+                android:layout_width="65dp"
+                android:layout_height="65dp" />
+            <TextView
+                android:textSize="18sp"
+                android:text="暂无任何公告"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</LinearLayout>

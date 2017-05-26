@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--我的颜色-->
+    <!--主题绿色-->
+    <color name="app_green">#33aab4</color>
+    <!--浅灰色-->
+    <color name="app_gray">#efefef</color>
+
+    <color name="app_deep_gray">#bfbfbf</color>
+    <!--纯白色-->
+    <color name="app_white">#ffffff</color>
+
+    <!--分隔线-->
+    <color name="app_divider">#60000000</color>
+
+    <!--字体颜色-->
+    <color name="text_black">#80000000</color>
+
+    <color name="text_blue">#4483e3</color>
+
+    <color name="text_orange">#e48d30</color>
+
+    <!--分割线_灰-->
+    <color name="app_GRAY">#767171</color>
+
+    <!--popDialog-->
+    <color name="popup_dialog_listview_bg">#eeffffff</color>
+    <color name="popup_dialog_list_pressed">#10000000</color>
+    <color name="popup_dialog_list_normal">#00000000</color>
+    <color name="popup_dialog_btn_pressed">#30000000</color>
+    <color name="popup_dialog_btn_normal">#eeffffff</color>
+    <color name="popup_dialog_list_text_color">#5FA7F7</color>
+    <color name="popup_dialog_btn_text_color">#f15522</color>
+    <color name="popup_dialog_divider_color">#66000000</color>
+
+</resources>

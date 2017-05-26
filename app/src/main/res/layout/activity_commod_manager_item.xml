@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/activity_commodity_ll_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <RelativeLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/item_commodity_mag_iv_goods_logo"
+                android:src="@mipmap/ic_test_img"
+                android:layout_centerInParent="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/item_commodity_mag_tv_goods_name"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:text="红烧猪蹄"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/item_commodity_mag_tv_price"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/app_green"
+                    android:text="￥34.4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.zcw.togglebutton.ToggleButton
+                        android:visibility="gone"
+                        android:id="@+id/item_commodity_mag_toggle"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/item_commodity_mag_tv_status"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:text="未上架"
+                        android:layout_toLeftOf="@+id/item_commodity_mag_toggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/item_activity_commend_mag_tv_certify"
+                        android:text="审核中"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+            <TextView
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:id="@+id/item_commodity_mag_tv_details"
+                android:gravity="left|center_vertical"
+                android:text="非常好吃的猪蹄哦"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="#ebebeb"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <com.sctjsj.ebanghost.util.HorizontalListView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/my_horizontal_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.sctjsj.ebanghost.util.HorizontalListView>
+    </LinearLayout>
+
+    <View
+        android:background="@color/app_green"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"></View>
+
+</LinearLayout>
+
+</LinearLayout>

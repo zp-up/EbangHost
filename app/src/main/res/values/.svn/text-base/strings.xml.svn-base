@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">蓝胖商户</string>
+    <string name="get_verify_code_txt">获取验证码</string>
+</resources>

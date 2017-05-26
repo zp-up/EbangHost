@@ -1,0 +1,164 @@
+package com.sctjsj.ebanghost.fragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.activity.CommodityManagementActivity;
+import com.sctjsj.ebanghost.activity.DeliverySetActivity;
+import com.sctjsj.ebanghost.activity.MainShopActivity;
+import com.sctjsj.ebanghost.activity.SetStateActivity;
+import com.sctjsj.ebanghost.application.MyApp;
+import com.sctjsj.ebanghost.url.BnUrl;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Created by Chris-Jason on 2016/11/9.
+ */
+public class ShopMagFg extends Fragment {
+    private MyApp app;
+
+    @Bind(R.id.fg_store_manager_state_tv)TextView mTVShopStatus;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fg_store_management,null);
+        ButterKnife.bind(this,view);
+        app= (MyApp) getActivity().getApplication();
+
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        queryShopState();
+    }
+
+    //
+    @OnClick({R.id.fg_store_manager_printer_ll,R.id.fg_store_manager_evalutation_ll,R.id.fg_store_manager_state_ll,
+    R.id.fg_store_manager_msg_ll,R.id.fg_store_manager_commod_ll,R.id.fg_store_manager_preview_ll,R.id.fg_store_mangment_delviery_rl})
+    public void shopMsgListen(View view){
+        switch (view.getId()){
+            //打印机
+            case R.id.fg_store_manager_printer_ll:
+                break;
+            //评价管理
+            case R.id.fg_store_manager_evalutation_ll:
+                break;
+            //营业状态
+            case R.id.fg_store_manager_state_ll:
+                Intent intent3=new Intent(getActivity(), SetStateActivity.class);
+                startActivity(intent3);
+                getActivity().overridePendingTransition(R.anim.activity_anim_start,R.anim.activity_anim_end);
+                break;
+            //店铺信息
+            case R.id.fg_store_manager_msg_ll:
+                break;
+            //商品管理
+            case R.id.fg_store_manager_commod_ll:
+                Intent intent5=new Intent(getActivity(), CommodityManagementActivity.class);
+                startActivity(intent5);
+                getActivity().overridePendingTransition(R.anim.activity_anim_start,R.anim.activity_anim_end);
+                break;
+            //店铺预览
+            case R.id.fg_store_manager_preview_ll:
+                Intent intent=new Intent(getActivity(), MainShopActivity.class);
+                intent.putExtra("shopId",app.getCurrentUser().getShopId());
+                intent.putExtra("shopType",app.getCurrentUser().getShopType());
+                startActivity(intent);
+                break;
+            //配送设置
+            case R.id.fg_store_mangment_delviery_rl:
+                Intent intent7=new Intent(getActivity(), DeliverySetActivity.class);
+                startActivity(intent7);
+                getActivity().overridePendingTransition(R.anim.activity_anim_start,R.anim.activity_anim_end);
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+
+    /**
+     * 查询当前店铺状态
+     */
+    private void queryShopState(){
+        RequestParams paramas=new RequestParams(BnUrl.queryShopStateUrl);
+        paramas.setUseCookie(false);
+        paramas.addHeader("Cookie",app.getSpf().getString("cookie","none-cookie"));
+        paramas.addBodyParameter("storeId",String.valueOf(app.getCurrentUser().getShopId()));
+        x.http().post(paramas, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                try {
+                    int storeStatus=result.getInt("storeStatus");
+                    app.getSpf().edit().putInt("shopStatus",storeStatus).commit();
+
+                    if(2==storeStatus){
+                       mTVShopStatus.setText("正在营业中");
+                    }
+                    if(3==storeStatus){
+                       mTVShopStatus.setText("已打烊");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+        });
+    }
+}
