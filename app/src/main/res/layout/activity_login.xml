@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:id="@+id/activity_login_ll_parent"
     android:layout_width="match_parent"
-    android:background="@color/app_green"
+    android:background="#ed4b4d"
     android:layout_height="match_parent">
     <ImageView
         android:src="@mipmap/pic_login_logo"
@@ -114,6 +114,7 @@
         android:layout_height="40dp" />
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView

@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context="com.sctjsj.ebanghost.activity.RefundMagActivity">
+    tools:context="com.sctjsj.lazyhost.activity.RefundMagActivity">
 
-
+    <include layout="@layout/status_bar_layout"></include>
     <!--头部-->
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"

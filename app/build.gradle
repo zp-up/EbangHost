@@ -3,30 +3,39 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            keyAlias 'EbangHost'
-            keyPassword 'CD85118384'
-            storeFile file('/Users/mayikang/android/keystore/EbangHost.jks')
-            storePassword 'CD85118384'
+            keyAlias 'lazyhost'
+            keyPassword 'CD812416'
+            storeFile file('/Users/mayikang/github/ebang/EBangHost/lazyhost.jks')
+            storePassword 'CD812416'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
     defaultConfig {
-        applicationId "com.sctjsj.ebanghost"
+        applicationId "com.sctjsj.lazyhost"
         minSdkVersion 19
-        targetSdkVersion 24
-        versionCode 25
-        versionName "1.2.5"
+        targetSdkVersion 26
+        versionCode 18
+        versionName "1.1.8"
+        multiDexEnabled true
 
         //参数说明
         manifestPlaceholders = [
-                GETUI_APP_ID : "qTvpvE58bvAlvO9xvETiz",
-                GETUI_APP_KEY : "6JdWSjUQGa8j3htY8rfYX6",
-                GETUI_APP_SECRET : "TswMm5EzOp54bakq2VoOH5",
-                PACKAGE_NAME : "com.sctjsj.ebanghost"
+                GETUI_APP_ID : "FBFohL0QUu9lAFib8uibhA",
+                GETUI_APP_KEY : "yJpIhpP9kN6wcvwM7FaP66",
+                GETUI_APP_SECRET : "gdo0W4mPnv68Rt6pCF2YL5",
+                PACKAGE_NAME : "com.sctjsj.lazyhost",
+                JPUSH_PKGNAME : "com.sctjsj.lazyhost",
+                JPUSH_APPKEY : "77349ed31ab335b77b21f346", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                XIAOMI_APPKEY:"MI-5331790072247",//小米平台注册的 appkey
+                XIAOMI_APPID:"MI-2882303761517900247",//小米平台注册的 appid
+                HUAWEI_APPID:"100513207",
+                MEIZU_APPKEY:"MZ-0961f9750c944aeeb6c1ea36ddc60cb5",//魅族平台注册的 appkey
+                MEIZU_APPID:"MZ-117111",//魅族平台注册的 appid
         ]
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "mips", "mips64", "x86", "x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
 
     }
@@ -40,34 +49,53 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+    }
 }
+repositories {
+    mavenCentral()
 
+    flatDir {
+        dirs 'libs'
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile files('libs/butterknife-7.0.1.jar')
     compile files('libs/picasso-2.5.2.jar')
+
     //support-design
     compile 'com.android.support:design:24.2.1'
+
     //recyclerview
     compile('com.android.support:recyclerview-v7:24.2.1') {
         exclude module: 'surpport-v4'
     }
+
     //pullToRefresh
     compile 'q.rorbin:QRefreshLayout:1.1.3'
+
     //v4
     compile 'com.android.support:support-v4:24.2.1'
+
     //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
     //xUtils3
     compile 'org.xutils:xutils:3.3.36'
+
     //okHttp
     compile 'com.squareup.okhttp:okhttp:2.4.0'
+
     //okIo
     compile 'com.squareup.okio:okio:1.5.0'
+
     //takePhoto
     compile 'com.jph.takephoto:takephoto_library:3.0.2'
+
     //toggle button
     compile 'com.zcw:togglebutton-library:1.0.0'
     compile 'com.android.support:cardview-v7:24.2.1'
@@ -75,25 +103,51 @@ dependencies {
 
     //photoview
     compile 'com.bm.photoview:library:1.4.1'
+
     //rating
     compile 'com.github.ornolfr:rating-view:0.1.2@aar'
     compile files('libs/AMap3DMap_4.1.2_AMapLocation_3.1.0_20161104.jar')
+
     //takePhoto
     compile 'com.jph.takephoto:takephoto_library:3.0.2'
+
     //pickview
     compile 'com.airsaid.library:pickerview:1.0.2'
+
     //QR
     compile 'com.github.XuDaojie:QRCode-Android:v0.4.2'
-    //个推
-    compile 'com.getui:sdk:2.9.0.0'
 
+    //个推
+    compile 'com.getui:sdk:2.11.1.0'
 
     //横向进度条
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
+
     //sweet-alert-dialog
     compile 'cn.pedant.sweetalert:library:1.3'
     compile 'com.zxy.android:recovery:0.0.8'
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    compile 'com.jaeger.statusbaruitl:library:1.3.0'
+    compile 'cn.jiguang.sdk:jpush:3.1.7'
+
+    // 此处以JPush 3.1.6 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.2.6'
+
+    // 此处以JCore 1.2.5 版本为例。
+    compile 'cn.jiguang.sdk.plugin:xiaomi:3.1.6'
+
+    //此版本插件仅支持 JPushSDK3.1.5 及以上版本
+    compile 'cn.jiguang.sdk.plugin:meizu:3.1.6'
+
+    //此版本插件仅支持 JPushSDK3.1.5 及以上版本
+    compile 'cn.jiguang.sdk.plugin:huawei:3.1.6'
+
+    //此版本插件仅支持 JPushSDK3.1.5 及以上版本
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.17'
+    compile 'com.android.support:multidex:1.0.0'
 }

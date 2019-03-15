@@ -1,0 +1,285 @@
+package com.sctjsj.ebanghost.activity;
+
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.jph.takephoto.app.TakePhoto;
+import com.jph.takephoto.app.TakePhotoImpl;
+import com.jph.takephoto.model.CropOptions;
+import com.jph.takephoto.model.InvokeParam;
+import com.jph.takephoto.model.TContextWrap;
+import com.jph.takephoto.model.TResult;
+import com.jph.takephoto.permission.InvokeListener;
+import com.jph.takephoto.permission.PermissionManager;
+import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.application.MyApp;
+import com.sctjsj.ebanghost.url.BnUrl;
+import com.sctjsj.ebanghost.util.LogUtil;
+import com.sctjsj.ebanghost.util.ProgressUtil;
+import com.sctjsj.ebanghost.widget.PopupDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Created by Admin on 2016/11/16.
+ */
+
+public class AddCommodityActivity extends AppCompatActivity implements TakePhoto.TakeResultListener,InvokeListener {
+    private int id;//
+    private String op;
+    private MyApp app;
+    private ProgressUtil pUtil;
+    private TakePhoto takePhoto;
+    private InvokeParam invokeParam;
+    @Bind(R.id.activity_add_or_modify_commodity_tv_title)TextView mTVTitle;
+    @Bind(R.id.activity_add_commodity_iv_preview)ImageView mIVPreview;
+
+    @Bind(R.id.activity_add_commodity_ll_parent)LinearLayout mLLParent;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_commodity);
+        app= (MyApp) getApplication();
+        app.addActivity(this);
+        ButterKnife.bind(this);
+        pUtil=new ProgressUtil(this);
+
+        op=getIntent().getStringExtra("op");
+        id=getIntent().getIntExtra("id",-1);
+        /**
+         * 判断是修改商品信息还是新增商品信息
+         */
+        if("update".equals(op)){
+            mTVTitle.setText("修改商品信息");
+        }
+
+        if("add".equals(op)){
+            mTVTitle.setText("新增商品");
+        }
+
+        //实例化 Takephoto
+        //实例化takePhoto对象
+        getTakePhoto().onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        app.removeActivity(this);
+    }
+
+    @OnClick({R.id.activity_commod_back_ll,R.id.activity_add_commodity_iv_add_pic})
+    public void thisActivtyListen(View view){
+        switch (view.getId()){
+            //返回
+            case R.id.activity_commod_back_ll:
+                finish();
+                this.overridePendingTransition(R.anim.activity_anim_start,R.anim.activity_anim_end);
+                break;
+            //添加商品照片
+            case R.id.activity_add_commodity_iv_add_pic:
+                createPop();
+                break;
+        }
+    }
+
+    @Override
+    public void takeSuccess(TResult result) {
+        //获取选中的文件
+        File file=new File(result.getImage().getPath());
+        mIVPreview.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
+        LogUtil.e("图片路径："+file.getName()+":"+file.getPath());
+    }
+
+    @Override
+    public void takeFail(TResult result, String msg) {
+
+    }
+
+    @Override
+    public void takeCancel() {
+
+    }
+
+    @Override
+    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
+        PermissionManager.TPermissionType type=PermissionManager.checkPermission(TContextWrap.of(this),invokeParam.getMethod());
+        if(PermissionManager.TPermissionType.WAIT.equals(type)){
+            this.invokeParam=invokeParam;
+        }
+        return type;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //创建TakePhoto实例
+        getTakePhoto().onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * 权限申请回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //处理运行时权限
+        PermissionManager.TPermissionType type=PermissionManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        PermissionManager.handlePermissionsResult(this,type,invokeParam,this);
+    }
+
+    /**
+     *  获取TakePhoto实例
+     * @return
+     */
+    public TakePhoto getTakePhoto(){
+        if (takePhoto==null){
+            takePhoto= (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this,this));
+        }
+        return takePhoto;
+    }
+
+    /**
+     * 图片保存路径
+     * @return
+     */
+    private Uri getUri(){
+        File file=new File(Environment.getExternalStorageDirectory(), "/ebanghost/images/"+System.currentTimeMillis() + ".jpg");
+        if (!file.getParentFile().exists())file.getParentFile().mkdirs();
+        Uri imageUri = Uri.fromFile(file);
+        return imageUri;
+    }
+
+    /**
+     * 弹出头像修改提示框
+     */
+    public void createPop(){
+        List<String> data=new ArrayList<>();
+        data.add("拍照");
+        data.add("手机相册");
+        final PopupDialog popDialog=new PopupDialog(AddCommodityActivity.this,data);
+        popDialog.setOnItemClickListener(new PopupDialog.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                switch (position){
+                    //拍照
+                    case 0:
+                        //裁剪参数
+                        CropOptions cropOptions=new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(true).create();
+                        getTakePhoto().onPickFromCaptureWithCrop(getUri(),cropOptions);
+                        break;
+                    //手機相冊
+                    case 1:
+                        //裁剪参数
+                        CropOptions cropOptions1=new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(true).create();
+                        //裁剪后的输出
+                        //系统ui
+                        getTakePhoto().onPickFromGalleryWithCrop(getUri(),cropOptions1);
+                        //自定义ui
+                        // getTakePhoto().onPickMultipleWithCrop(1,cropOptions1);
+                        break;
+                    //取消
+                    case 2:
+                        popDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        popDialog.show();
+    }
+
+
+    /**
+     * 上传文件
+     * @param file
+     */
+    public void upload(File file){
+        RequestParams params=new RequestParams(BnUrl.uploadFileUrl);
+        params.setUseCookie(false);
+        params.addHeader("Cookie",app.getSpf().getString("cookie","none-cookie"));
+        params.addBodyParameter("file",file);
+        params.setMultipart(true);
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    boolean result=response.getBoolean("result");
+                    if(result){
+                        String resultData=response.getString("resultData");
+                        JSONArray ja=new JSONArray(resultData);
+                        if(ja!=null && ja.length()>0){
+                            JSONObject jo=ja.getJSONObject(0);
+                            String acyId=jo.getString("acyId");
+
+                        }
+                    }else{
+                        Snackbar.make(mLLParent,"图片上传失败",Snackbar.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                LogUtil.e("error："+ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+            }
+
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+        });
+    }
+
+
+}

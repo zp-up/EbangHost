@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sctjsj.ebanghost.activity.AnnounceMagActivity">
-
+    tools:context="com.sctjsj.lazyhost.activity.AnnounceMagActivity">
+    <include layout="@layout/status_bar_layout">
+    </include>
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"
         android:layout_width="match_parent"

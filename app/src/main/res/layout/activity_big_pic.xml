@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sctjsj.ebanghost.activity.BigPicActivity">
+    tools:context="com.sctjsj.lazyhost.activity.BigPicActivity">
 
     <com.bm.library.PhotoView
         android:id="@+id/photo_view"

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <q.rorbin.qrefreshlayout.QRefreshLayout
     android:id="@+id/fg_shop_mag_refresh"
+    android:background="@color/app_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
+        android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,6 +29,16 @@
                     android:text="店铺管理"
                     android:textColor="@color/app_white"
                     android:textSize="20sp" />
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/tv_to_package"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp"
+                    android:text="我的钱包"
+                    android:textColor="@color/app_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
             <!--店铺信息-->
             <LinearLayout

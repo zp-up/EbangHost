@@ -1,4 +1,4 @@
-<com.sctjsj.ebanghost.widget.swipelayout.SwipeListLayout
+<com.sctjsj.lazyhost.widget.swipelayout.SwipeListLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sll_main"
     android:layout_width="match_parent"
@@ -47,4 +47,4 @@
             android:text="" />
     </LinearLayout>
 
-</com.sctjsj.ebanghost.widget.swipelayout.SwipeListLayout>
+</com.sctjsj.lazyhost.widget.swipelayout.SwipeListLayout>

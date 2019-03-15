@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#EFEFEF"
+    android:background="#ffffff"
     android:layout_height="match_parent">
     <!--title-->
    <RelativeLayout
@@ -25,7 +25,57 @@
         android:layout_height="30dp">
     </android.support.design.widget.TabLayout>
 
+    <!--订单搜索框-->
+    <RelativeLayout
+        android:id="@+id/rl_search_box"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/search_box_stroke_bg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:imeOptions="actionSearch"
+            android:id="@+id/input"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/iv_search"
+            android:background="@null"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:id="@+id/rl_clear_search_input"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_clear_search"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/icon_clear_all"
+                android:layout_centerVertical="true"
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
     <android.support.v4.view.ViewPager
+        android:background="@color/app_white"
         android:id="@+id/fg_order_query_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

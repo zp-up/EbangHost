@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_white"
+    >
+    <include layout="@layout/status_bar_layout"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_settle_red_stripe">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_centerInParent="true"
+            android:text="提现"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="提现金额(余额￥:0.00)"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_notice"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="余额不足"
+            android:textColor="#ff7d66"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+    <EditText
+        android:inputType="numberDecimal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/et_price"
+        android:hint="请输入提现金额"
+        android:textSize="14sp"
+        android:textColor="#636363"
+        android:paddingLeft="15dp"
+        android:background="@color/app_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:text="提现账号"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="6dp"
+            android:text=""
+            android:textColor="#ff7d66"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+    <EditText
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/et_account"
+        android:hint="请输入支付宝账号"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:paddingLeft="15dp"
+        android:background="@color/app_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+    <EditText
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/et_real_name"
+        android:hint="请输入真实姓名"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:paddingLeft="15dp"
+        android:background="@color/app_white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/app_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_btn_wx"
+        android:background="@drawable/bg_settle_green_stripe_cornor"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:textSize="16sp"
+            android:text="提现到微信"
+            android:textColor="@color/app_white"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="注意:请输入正确的账号，否则会导致提现失败。
+提现到账时间为每周二。"
+        android:textColor="#ff7d66"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/rl_btn_alipay"
+            android:background="@drawable/bg_settle_red_stripe_cornor"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:textSize="16sp"
+                android:text="提现到支付宝"
+                android:textColor="@color/app_white"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

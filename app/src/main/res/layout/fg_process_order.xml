@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/fg_process_order_ll_parent"
-    android:background="@color/app_gray"
+    android:background="@color/app_white"
     android:layout_height="match_parent">
     <!--头部-->
     <RelativeLayout
@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <TextView
-            android:text="订单处理"
+            android:text="待处理订单"
             android:layout_centerInParent="true"
             android:textSize="20sp"
             android:textColor="@color/app_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
+            android:visibility="gone"
             android:id="@+id/fg_process_order_iv_qr_code"
             android:src="@mipmap/icon_qrcode"
             android:layout_marginRight="10dp"
@@ -58,7 +59,18 @@
         </RelativeLayout>
 
 
-
+        <TextView
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:visibility="gone"
+            android:id="@+id/remind"
+            android:textSize="12sp"
+            android:background="#F5DEB3"
+            android:gravity="center"
+            android:text="所有订单数据都已加载完啦"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 

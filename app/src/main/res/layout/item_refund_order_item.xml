@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="下单时间:"
+                android:text="支付时间:"
                 android:textSize="18sp" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="下单时间"
+                android:text="支付时间"
                 android:textSize="18sp" />
         </LinearLayout>
 

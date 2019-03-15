@@ -17,7 +17,7 @@
                 android:padding="5dp"
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/icon_default_portrait"
+                android:src="@mipmap/icon_app_start"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>

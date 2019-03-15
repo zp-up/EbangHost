@@ -6,7 +6,7 @@
     android:backgroundTint="@color/app_gray"
     android:orientation="vertical"
     android:layout_height="match_parent">
-
+    <include layout="@layout/status_bar_layout"></include>
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"
         android:layout_width="match_parent"

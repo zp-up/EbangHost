@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/activity_add_commodity_ll_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/status_bar_layout"></include>
     <!--头部-->
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"
@@ -169,6 +170,7 @@
 
             <!--优惠金额-->
             <LinearLayout
+                android:visibility="gone"
                 android:background="@drawable/advice"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -272,14 +274,14 @@
                 </Button>
             </RelativeLayout>
 
-            <com.sctjsj.ebanghost.util.HorizontalListView
+            <com.sctjsj.lazyhost.util.HorizontalListView
                 android:layout_gravity="center_vertical"
                 android:background="@color/app_gray"
                 android:id="@+id/activity_add_commodity_hlv"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
-            </com.sctjsj.ebanghost.util.HorizontalListView>
+            </com.sctjsj.lazyhost.util.HorizontalListView>
 
             <Button
                 android:id="@+id/activity_add_commodity_btn_confirm"

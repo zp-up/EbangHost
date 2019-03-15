@@ -4,6 +4,7 @@
     android:background="@color/app_white"
     android:id="@+id/activity_commodity_manage_ll_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/status_bar_layout"></include>
     <!--头部-->
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"

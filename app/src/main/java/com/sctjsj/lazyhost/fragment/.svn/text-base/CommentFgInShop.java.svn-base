@@ -1,0 +1,140 @@
+package com.sctjsj.ebanghost.fragment;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.adapter.CommentListRVAdapter;
+import com.sctjsj.ebanghost.adapter.CommentTagRVAdapter;
+import com.sctjsj.ebanghost.bean.CommentBean;
+import com.sctjsj.ebanghost.bean.CommentTagBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+/**
+ * Created by Chris-Jason on 2016/11/4.
+ */
+
+/**
+ * 展示评论
+ */
+public class CommentFgInShop extends Fragment {
+    //评论标签RV
+    @Bind(R.id.fg_comment_in_shop_rv_comment_tag)
+    RecyclerView mRVCommentTag;
+
+    //评论列表RV
+    @Bind(R.id.fg_comment_in_shop_rv_comment_list)RecyclerView mRVCommentList;
+
+
+    private List<CommentTagBean> commentTagList;
+    private CommentTagRVAdapter commentTagAdapter;
+
+    private List<CommentBean> commentList;
+    private CommentListRVAdapter commentListAdapter;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fg_comment_in_shop,null);
+        ButterKnife.bind(this,view);
+
+        //1.加载评论标签
+        initCommentTagRV();
+        //2.加载默认评论内容
+        initCommentListRV();
+
+
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+    /****************************************评论标签**************************************************/
+    /**
+     * 初始化评论标签RV
+     */
+    private void initCommentTagRV(){
+        //1.初始化评论标签数据
+        initCommentTagData();
+        //2.设置适配器
+        initCommentTagAdapter();
+    }
+
+    /**
+     * 初始化评论标签数据
+     */
+    private void initCommentTagData(){
+        if(commentTagList==null){
+            commentTagList=new ArrayList<>();
+        }
+        for (int i=0;i<5;i++){
+            commentTagList.add(new CommentTagBean());
+        }
+    }
+    /**
+     * 初始化评论标签适配器
+     */
+    private void initCommentTagAdapter(){
+        if(commentTagAdapter==null){
+            commentTagAdapter=new CommentTagRVAdapter(getActivity(),commentTagList);
+        }
+        mRVCommentTag.setAdapter(commentTagAdapter);
+        //mRVCommentTag.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
+
+        mRVCommentTag.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+
+    }
+
+    /***************************************评论内容*************************************************/
+    /**
+     * 初始化评论列表RV
+     */
+    private void initCommentListRV() {
+        //1.初始化评论标签数据
+        initCommentListData();
+        //2.设置适配器
+        initCommentListAdapter();
+    }
+
+    /**
+     * 初始化评论列表数据
+     */
+    private void initCommentListData() {
+        if(commentList==null){
+            commentList=new ArrayList<>();
+        }
+        for (int i=0;i<10;i++){
+            commentList.add(new CommentBean());
+        }
+    }
+
+    /**
+     * 初始化评论列表适配器
+     */
+    private void initCommentListAdapter() {
+        if(commentListAdapter==null){
+            commentListAdapter=new CommentListRVAdapter(getActivity(),commentList);
+        }
+        mRVCommentList.setAdapter(commentListAdapter);
+        mRVCommentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+
+
+
+
+}

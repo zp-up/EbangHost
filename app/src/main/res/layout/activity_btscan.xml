@@ -5,89 +5,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sctjsj.ebanghost.activity.BTScanActivity">
+    tools:context="com.sctjsj.lazyhost.activity.BTScanActivity">
 
+    <include layout="@layout/status_bar_layout"></include>
     <!--title-->
     <RelativeLayout
-        android:background="@drawable/bg_settle_red_stripe"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="@drawable/bg_settle_red_stripe">
 
         <ImageView
             android:id="@+id/act_bt_scan_back"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_back"
             android:layout_width="30dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_back" />
 
         <TextView
-            android:textSize="20sp"
-            android:textColor="@color/app_white"
-            android:text="连接打印机"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="连接打印机"
+            android:textColor="@color/app_white"
+            android:textSize="20sp" />
 
         <RelativeLayout
             android:id="@+id/act_bt_scan_rv_scan_device"
-            android:layout_alignParentRight="true"
             android:layout_width="40dp"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true">
+
             <ImageView
 
-                android:src="@mipmap/icon_scan_bt_white"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
                 android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_scan_bt_white" />
         </RelativeLayout>
-
 
 
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <!--已经配对过的蓝牙设备列表-->
         <LinearLayout
-            android:background="@color/app_deep_gray"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/app_deep_gray">
+
             <TextView
-                android:layout_marginLeft="10dp"
-                android:text="已配对设备-请选择已配对的设备进行连接"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="已配对设备-请选择已配对的设备进行连接" />
         </LinearLayout>
+
         <ListView
             android:id="@+id/lv_linked_device_list"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         </ListView>
 
 
         <!--其他可用的蓝牙设备列表-->
         <LinearLayout
-            android:background="@color/app_deep_gray"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/app_deep_gray">
+
             <TextView
-                android:layout_marginLeft="10dp"
-                android:text="其他设备"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="其他设备" />
         </LinearLayout>
+
         <ListView
             android:id="@+id/lv_extra_device_list"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
         </ListView>
 

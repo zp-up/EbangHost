@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sctjsj.ebanghost.activity.GalleryScanActivity">
+    tools:context="com.sctjsj.lazyhost.activity.GalleryScanActivity">
+    <include layout="@layout/status_bar_layout"></include>
     <RelativeLayout
+        android:background="@drawable/bg_settle_red_stripe"
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout

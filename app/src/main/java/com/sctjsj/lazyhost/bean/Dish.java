@@ -1,0 +1,118 @@
+package com.sctjsj.lazyhost.bean;
+
+import java.io.Serializable;
+
+/**
+ * Created by cheng on 16-11-10.
+ */
+public class Dish implements Serializable{
+
+    private int id;//商品 id
+
+
+
+    private String dishName;//商品名称
+    private double currentPrice;//商品价格
+
+    private double discount;//折扣
+    private int dishAmount;//最大允许购买量
+    private int dishRemain;//购买数量 dishRemain<=dishAmount;
+    private String url;//商品 icon 连接
+    private int salenum;//已经售出数量
+
+    public int getSalenum() {
+        return salenum;
+    }
+
+    public void setSalenum(int salenum) {
+        this.salenum = salenum;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+
+    public Dish(){
+
+    }
+
+
+    public Dish(int id,String dishName, double dishPrice, int dishAmount){
+        this.id=id;
+        this.dishName = dishName;
+        this.currentPrice = dishPrice;
+        this.dishAmount = dishAmount;
+        this.dishRemain = dishAmount;
+    }
+
+
+    public String getDishName() {
+        return dishName;
+    }
+
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public int getDishAmount() {
+        return dishAmount;
+    }
+
+    public void setDishAmount(int dishAmount) {
+        this.dishAmount = dishAmount;
+    }
+
+    public int getDishRemain() {
+        return dishRemain;
+    }
+
+    public void setDishRemain(int dishRemain) {
+        this.dishRemain = dishRemain;
+    }
+
+    public int hashCode(){
+        int code = this.dishName.hashCode()+(int)this.currentPrice;
+        return code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==this)return true;
+
+        return obj instanceof Dish &&
+                this.dishName.equals(((Dish)obj).dishName) &&
+                this.currentPrice ==  ((Dish)obj).currentPrice &&
+                this.dishAmount == ((Dish)obj).dishAmount &&
+                this.dishRemain == ((Dish)obj).dishRemain;
+    }
+}

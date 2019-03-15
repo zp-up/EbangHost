@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/activity_modify_commodity_ll_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/status_bar_layout"></include>
     <!--头部-->
     <RelativeLayout
         android:background="@drawable/bg_settle_red_stripe"
@@ -288,13 +289,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
 
-                <com.sctjsj.ebanghost.util.HorizontalListView
+                <com.sctjsj.lazyhost.util.HorizontalListView
                     android:id="@+id/activity_modify_commodity_hlv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="15dp"
-                    android:background="@color/app_gray"></com.sctjsj.ebanghost.util.HorizontalListView>
+                    android:background="@color/app_gray"></com.sctjsj.lazyhost.util.HorizontalListView>
             </RelativeLayout>
 
 

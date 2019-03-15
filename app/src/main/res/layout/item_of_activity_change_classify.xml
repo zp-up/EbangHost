@@ -13,7 +13,7 @@
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp">
-     <com.sctjsj.ebanghost.util.SmoothCheckBox
+     <com.sctjsj.lazyhost.util.SmoothCheckBox
          android:id="@+id/item_of_activity_classify_mag_cb_selected"
          android:layout_gravity="center"
          android:layout_marginLeft="10dp"

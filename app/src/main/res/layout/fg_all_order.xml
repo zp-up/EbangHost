@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/fg_all_order_ll_parent"
-    android:background="@color/app_gray"
+    android:background="@color/app_white"
     android:layout_height="match_parent">
     <q.rorbin.qrefreshlayout.QRefreshLayout
         android:id="@+id/fg_order_dispose_refresh_layout"
@@ -30,4 +30,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:visibility="gone"
+        android:id="@+id/remind"
+        android:textSize="12sp"
+        android:background="#F5DEB3"
+        android:gravity="center"
+        android:text="所有订单数据都已加载完啦"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -1,0 +1,100 @@
+package com.sctjsj.ebanghost.fragment;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.sctjsj.ebanghost.R;
+import com.sctjsj.ebanghost.adapter.FgOrderQueryVPAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+/**
+ * Created by Chris-Jason on 2016/11/9.
+ */
+public class OrderQueryFg extends Fragment {
+    private List<String> tabList;
+    private List<Fragment>fgList;
+    private TodayOrderFg todayOrderFg;
+    private AllOrderFg allOrderFg;
+    private FgOrderQueryVPAdapter vpAdapter;
+
+
+
+
+    @Bind(R.id.fg_order_query_title_tab)TabLayout mTitleTab;
+    @Bind(R.id.fg_order_query_view_pager)ViewPager mVP;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fg_order_query,null);
+        ButterKnife.bind(this,view);
+        initVP();
+        return view;
+    }
+
+    /**
+     * 初始化 viewpager
+     */
+    private void initVP() {
+        //1.初始化 tab 指示器
+        initTablayout();
+        //2.初始化 vp
+        initViewpagerData();
+        initVPAdapter();
+        //3.关联 tab 和 vp
+        mTitleTab.setupWithViewPager(mVP);
+        mTitleTab.setTabsFromPagerAdapter(vpAdapter);
+        vpAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 初始化 tab
+     */
+    private void initTablayout(){
+        if(tabList==null){
+            tabList=new ArrayList<>();
+            tabList.add("今日订单");
+            tabList.add("全部订单");
+        }
+        //指示器选中颜色
+        mTitleTab.setSelectedTabIndicatorColor(Color.parseColor("#33aab4"));
+    }
+
+    /**
+     * 初始化viewpager数据
+     */
+    private void initViewpagerData(){
+        if(fgList==null){
+            fgList=new ArrayList<>();
+        }
+        todayOrderFg=new TodayOrderFg();
+        allOrderFg=new AllOrderFg();
+        fgList.add(todayOrderFg);
+        fgList.add(allOrderFg);
+    }
+
+    /**
+     * 初始化vp适配器
+     */
+    private void initVPAdapter(){
+        if(vpAdapter==null){
+            vpAdapter=new FgOrderQueryVPAdapter(getChildFragmentManager(),tabList,fgList);
+        }
+        mVP.setAdapter(vpAdapter);
+    }
+
+}
+

@@ -1,2 +1,2 @@
-#Ebanghost
+#lazyhost
 ##++商户端++

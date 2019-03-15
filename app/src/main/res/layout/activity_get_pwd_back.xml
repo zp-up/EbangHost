@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:background="@color/app_gray"
     android:id="@+id/activity_get_pwd_back_ll_parent"
-    tools:context="com.sctjsj.ebanghost.activity.GetPwdBackActivity">
+    tools:context="com.sctjsj.lazyhost.activity.GetPwdBackActivity">
+    <include layout="@layout/status_bar_layout"></include>
     <!--标题栏-->
     <LinearLayout
         android:layout_gravity="center_vertical"

@@ -1,0 +1,73 @@
+package com.sctjsj.ebanghost.url;
+
+/**
+ * Created by mayikang on 16/12/10.
+ */
+
+public class BnUrl {
+    //登录接口
+    public static String loginUrl="http://118.123.22.190:9000/lpkd/admin/login.htm?";
+    //userName=用户名&password=icon_pwd_blue
+
+    //退出
+    public static String logoutUrl="http://118.123.22.190:9000/lpkd/admin/logOutToApp$ajax.htm?";
+
+    //发送图片验证码
+    public static String getPicCodeUrl="http://118.123.22.190:9000/lpkd/verify_output$ajax.htm?";
+
+    //发送短信验证码
+    public static String getSmsCodeUrl="http://118.123.22.190:9000/lpkd/verify_sms$ajax.htm?";
+    //code：图片验证码 mobile：手机号
+
+    //找回密码
+    public static  String resetPwdUrl="http://118.123.22.190:9000/lpkd/forgetpassword$ajax.htm?";
+    //mobile=电话号码&code=验证码&password=密码
+
+    //根据店铺id查询店铺所有信息
+    public static String getShopInfoById="http://118.123.22.190:9000/lpkd/pageSearch$ajax.htm?";
+    //size=99999
+    //ctype=store
+    //cond={id:1}  店铺 id
+    //jf=storeLogo|usergoosclass|goods1|photo|ugc
+    //http://demo.sctjsj.com:30000/lpkd/pageSearch$ajax.htm?size=99999&ctype=store&cond={id:1}&jf=storeLogo|usergoosclass|goods1|photo|ugc
+
+    //判断是否在线
+    public static String isOnlineUrl="http://118.123.22.190:9000/lpkd/intf/isOnline$ajax.htm?";
+
+    //http://118.123.22.190:9000/lpkd/user/pageSearch$ajax.htm?ctype=user&jf=store&cond={id:8}
+    //查询用户信息
+    public static String pullUserInfo="http://118.123.22.190:9000/lpkd/user/pageSearch$ajax.htm?";
+    //ctype=user
+    // jf=photo
+    // size=999999
+    // cond={id:1}
+
+
+    //根据店铺 id 查询订单
+    public static String pullShopOrderById="http://118.123.22.190:9000/lpkd/pageSearch$ajax.htm?";
+    //ctype=orderform&cond={store:{id:1}}&jf=user|addr
+
+    //修改店铺营业状态
+    public static String changeShopStateUrl="http://118.123.22.190:9000/lpkd/user/dataModify$ajax.htm?";
+    //ctype=store&data={id:1,storeStatus:1}
+
+    //根据店铺 id 查询店铺营业状态
+    public static String queryShopStateUrl="http://118.123.22.190:9000/lpkd/obtion_storeStatus$ajax.htm?";
+    //StoreId=
+
+    //根据店铺 id 查询店铺下的商品列表
+    public static String queryGoodsListofShopUrl="http://118.123.22.190:9000/lpkd/pageSearch$ajax.htm?";
+    //ctype=store&jf=goods1|photo|ugc&cond={id:1}
+
+    //上传文件
+    public static String uploadFileUrl="http://118.123.22.190:9000/lpkd/upload/uploadImgByAccessory.htm?";
+
+    //查询商品状态
+    public static String queryGoodsStatusUrl="http://118.123.22.190:9000/lpkd/obtion_goods_status$ajax.htm?";
+    //goodsId=商品ID
+
+    //修改商品状态
+    public static String modifyGoodsStatusUrl="http://118.123.22.190:9000/lpkd/user/dataModify$ajax.htm?";
+    //ctype=goods1&data={id:1,status:1}
+
+}

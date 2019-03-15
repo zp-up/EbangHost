@@ -1,374 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_white"
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <View
-            android:background="@color/app_gray"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <TextView
-            android:id="@+id/item_all_tv_query_buyer"
-            android:textColor="@color/app_green"
-            android:textSize="18sp"
-            android:layout_marginLeft="10dp"
-            android:text="查看购买者信息"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-    <!--地址-->
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/item_of_fg_all_order_ll_address"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/item_of_fg_dispose_tv_delivery_address"
-                android:layout_marginTop="5dp"
-                android:ellipsize="end"
+                android:id="@+id/storeNum"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="26dp"
+                android:text="商家简号："
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:text="收货地址"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/item_of_fg_all_order_rl_name_and_tel"
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                android:id="@+id/item_of_fg_dispose_tv_consignee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text=""
-                android:textSize="18sp" />
-
+                android:layout_height="wrap_content" />
         </RelativeLayout>
-    </LinearLayout>
-    <!--分割线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/app_gray">
-    </View>
-    <!--下单时间-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_gray" />
 
             <TextView
+                android:id="@+id/item_all_tv_query_buyer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="下单时间:"
+                android:text="查看购买者信息"
+                android:textColor="@color/app_green"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/item_of_fg_dispose_tv_paytime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="下单时间"
-                android:textSize="18sp" />
         </LinearLayout>
-
+        <!--地址-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="订单编号:"
-                android:textSize="18sp" />
+            <LinearLayout
+                android:id="@+id/item_of_fg_all_order_ll_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/item_of_fg_dispose_tv_order_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="订单号"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_delivery_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:text="收货地址"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_of_fg_all_order_rl_name_and_tel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_consignee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
-
-    <!--预约取件时间-->
-    <LinearLayout
-        android:visibility="visible"
-        android:orientation="vertical"
-        android:id="@+id/take_and_delivery_ll_parent"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <RelativeLayout
-            android:id="@+id/act_commit_rl_take_time"
-            android:orientation="horizontal"
+        <!--分割线-->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                android:textColor="#000000"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:text="预约取件时间："
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tv_take_time"
-                    android:layout_gravity="center_vertical"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:src="@mipmap/icon_arrow_right_gray"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/app_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <RelativeLayout
-            android:id="@+id/act_commit_rl_send_time"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <TextView
-                android:textColor="#000000"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:text="预约送件时间："
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tv_send_time"
-                    android:layout_gravity="center_vertical"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:src="@mipmap/icon_arrow_right_gray"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <TextView
+            android:layout_height="2dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/app_gray"
+            android:background="@color/app_gray"></View>
+        <!--下单时间-->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
-    </LinearLayout>
+            android:layout_height="60dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="支付时间:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_paytime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="订单编号:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_order_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="订单号"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
 
 
-    <!--商品信息-->
-    <ListView
-        android:divider="@null"
-        android:id="@+id/item_of_fg_dispose_lv_goods_list"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-    </ListView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/app_gray">
-
-    </View>
-    <!--配送费-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="vertical">
-
-        <!--商品小计-->
-        <RelativeLayout
+        <!--预约取件时间-->
+        <LinearLayout
+            android:id="@+id/take_and_delivery_ll_parent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/act_commit_rl_take_time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="预约取件时间："
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_take_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_arrow_right_gray" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
-                android:text="小计"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/item_of_fg_dispose_tv_goods_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="￥"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
-        </RelativeLayout>
+                android:background="@color/app_divider" />
+
+            <RelativeLayout
+                android:id="@+id/act_commit_rl_send_time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="预约送件时间："
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_send_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_arrow_right_gray" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/app_gray" />
+        </LinearLayout>
+
+
+        <!--商品信息-->
+        <ListView
+            android:id="@+id/item_of_fg_dispose_lv_goods_list"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:divider="@null"></ListView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/app_gray">
+
+        </View>
         <!--配送费-->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="配送费"
-                android:textSize="18sp" />
+            <!--商品小计-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/item_of_fg_dispose_tv_shipprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="￥"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
-        </RelativeLayout>
-        <!--优惠-->
-        <RelativeLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="小计"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_goods_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="￥"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+            <!--配送费-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="配送费"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_shipprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="￥"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="包装费"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_dispose_tv_packagePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="￥"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+            <!--优惠-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="优惠"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/item_of_fg_all_tv_disprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="￥"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="优惠"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/item_of_fg_all_tv_disprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="￥"
-                android:textColor="@color/text_black"
-                android:textSize="18sp" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/app_gray"></View>
-    <!--本单收入-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="本单收入"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/item_of_fg_dispose_tv_total_pay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="￥"
-            android:textColor="@color/app_green"
-            android:textSize="22sp" />
-    </RelativeLayout>
+            android:background="@color/app_gray"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/app_gray"/>
-    <!--通用的订单状态提示-->
-    <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:visibility="visible"
-        android:id="@+id/item_fg_dispose_rl_general_remind_parent"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-        <TextView
-            android:textColor="@color/app_green"
-            android:textSize="20sp"
-            android:id="@+id/item_fg_dispose_tv_general_remind"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/app_gray"/>
+            <TextView
+                android:id="@+id/tv_remark_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="备注信息:"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-</LinearLayout>
+            <TextView
+                android:layout_toRightOf="@+id/tv_remark_title"
+                android:id="@+id/item_of_fg_dispose_tv_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text=""
+                android:textColor="@color/app_green"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--本单收入-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="本单收入"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/item_of_fg_dispose_tv_total_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="￥"
+                android:textColor="@color/app_green"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_gray" />
+        <!--通用的订单状态提示-->
+        <RelativeLayout
+            android:id="@+id/item_fg_dispose_rl_general_remind_parent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/item_fg_dispose_tv_general_remind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/app_green"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/app_gray" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_error"
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon_error_info"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+</RelativeLayout>
