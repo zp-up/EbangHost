@@ -1,4 +1,4 @@
-package com.sctjsj.lazyhost.event.btScanEvent;
+package com.sctjsj.lazyhost.event.btEvent;
 
 import android.content.Context;
 import android.content.Intent;

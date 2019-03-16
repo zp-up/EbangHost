@@ -36,7 +36,8 @@ import com.sctjsj.lazyhost.bean.ProvinceBean;
 import com.sctjsj.lazyhost.bean.ShopBean;
 import com.sctjsj.lazyhost.constant.JumpCode;
 import com.sctjsj.lazyhost.constant.OtherConstant;
-import com.sctjsj.lazyhost.event.btScanEvent.BTStateChangeEvent;
+import com.sctjsj.lazyhost.event.btEvent.BTStateChangeEvent;
+import com.sctjsj.lazyhost.event.btEvent.ToConnectBTEvent;
 import com.sctjsj.lazyhost.fragment.OrderQueryFg;
 import com.sctjsj.lazyhost.fragment.ProcessOrderFg;
 import com.sctjsj.lazyhost.fragment.SettingFg;
@@ -48,7 +49,6 @@ import com.sctjsj.lazyhost.receiver.MyPushReceiver;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.RingtoneUtil;
-import com.sctjsj.lazyhost.util.UpdateUtil;
 import com.sctjsj.lazyhost.util.bt.BluetoothService;
 import com.sctjsj.lazyhost.widget.PopBTScanDialog;
 
@@ -141,6 +141,10 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
     private BluetoothReceiver btReceiver;
     private IntentFilter intentFilter;
 
+    private List<BluetoothDevice> pairedList=new ArrayList<>();
+    private List<BluetoothDevice> unPairedList=new ArrayList<>();
+    private PopBTScanDialog popBTScanDialog =null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,6 +170,20 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
         }
         fgManager.beginTransaction().add(R.id.activity_index_rl_content, processOrderFg).show(processOrderFg).commit();
 
+
+        //初始化蓝牙广播接收器
+        btReceiver = new BluetoothReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
+        intentFilter.addAction("android.bluetooth.adapter.action.DISCOVERY_STARTED");
+        intentFilter.addAction("android.bluetooth.adapter.action.DISCOVERY_FINISHED");
+        intentFilter.addAction("android.bluetooth.device.action.ACL_CONNECTED");
+        intentFilter.addAction("android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED");
+        intentFilter.addAction("android.bluetooth.device.action.ACL_DISCONNECTED");
+
+
         //初始化蓝牙
         initBT();
 
@@ -174,7 +192,9 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //页面销毁，取消注册
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -1079,37 +1099,24 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
         //该设备之前没有连接过蓝牙打印机，主动开始搜寻附近的设备
         //提示正在搜寻附近的蓝牙设备
+        if(popBTScanDialog==null){
+            popBTScanDialog = new PopBTScanDialog(IndexActivity.this);
+        }
 
-//        PopBTScanDialog pop = new PopBTScanDialog(this);
-//        pop.show();
+        popBTScanDialog.show();
+
         scan();
     }
 
     private void scan() {
 
-        if (btReceiver == null) {
-            btReceiver = new BluetoothReceiver();
-        }
-        if (intentFilter == null) {
-            intentFilter = new IntentFilter();
-        }
-
-        //添加蓝牙状态广播监听
-        intentFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
-        intentFilter.addAction("android.bluetooth.adapter.action.DISCOVERY_STARTED");
-        intentFilter.addAction("android.bluetooth.adapter.action.DISCOVERY_FINISHED");
-        intentFilter.addAction("android.bluetooth.device.action.ACL_CONNECTED");
-        intentFilter.addAction("android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED");
-        intentFilter.addAction("android.bluetooth.device.action.ACL_DISCONNECTED");
 
         //不支持蓝牙
         if (bluetoothAdapter == null) {
             return;
         }
         //蓝牙未打开
-        if (bluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isEnabled()) {
             return;
         }
 
@@ -1120,7 +1127,8 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
         }
 
         //开始扫描蓝牙设备
-        bluetoothAdapter.startDiscovery();
+        boolean res=bluetoothAdapter.startDiscovery();
+        Log.e("gg","蓝牙扫描开启"+res);
     }
 
     @Subscribe
@@ -1130,9 +1138,18 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
             String action = intent.getAction();
             //扫描开始
             if ("android.bluetooth.adapter.action.DISCOVERY_STARTED".equals(action)) {
+
                 LogUtil.e("开始扫描");
 
+                //蓝牙开始扫描，清空数据
+                pairedList.clear();
+                unPairedList.clear();
+                if(popBTScanDialog!=null){
+                    popBTScanDialog.setScanProgress(1);
+                }
+
             }
+
             //扫描结束
             if ("android.bluetooth.adapter.action.DISCOVERY_FINISHED".equals(action)) {
                 //取消注册监听
@@ -1140,6 +1157,13 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                     unregisterReceiver(btReceiver);
                 } catch (Exception e) {
                     LogUtil.e("扫描结束异常", e.toString());
+                }finally{
+
+                    if(popBTScanDialog!=null){
+                        popBTScanDialog.setDeviceList(pairedList,unPairedList);
+                        popBTScanDialog.setScanProgress(2);
+                    }
+
                 }
 
                 return;
@@ -1151,13 +1175,14 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if (device != null) {
                     int state = device.getBondState();
-                    //已配对设备
-                    if (12 == state) {
 
+                    //已配对设备
+                    if (12 == state && !pairedList.contains(device)) {
+                        pairedList.add(device);
                     }
                     //未配对设备
-                    if (10 == state) {
-
+                    if (10 == state && !unPairedList.contains(device)) {
+                        unPairedList.add(device);
                     }
 
                 }
@@ -1165,7 +1190,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                 return;
             }
 
-            //绑定设备
+            //绑定设备（配对）
             if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
                 int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1);
 
@@ -1187,13 +1212,40 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
 
             if (action.equals("android.bluetooth.device.action.ACL_DISCONNECTED")) {
-
+                Log.e("gg","android.bluetooth.device.action.ACL_DISCONNECTED");
             }
+
+            if(action.equals("android.bluetooth.device.action.ACL_CONNECTED")){
+                Log.e("gg","android.bluetooth.device.action.ACL_CONNECTED");
+            }
+
+            if(action.equals("android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED")){
+                Log.e("gg","android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED");
+            }
+
 
         }
     }
 
 
+    @Subscribe
+    public void onBTEvent(ToConnectBTEvent event){
+        if(event!=null){
+            //连接
+            if(1==event.getOp()){
+                if(bluetoothService!=null && event.getDevice()!=null){
+                    bluetoothService.connect(event.getDevice());
+                }
+            }
+
+            //断开连接
+            if(2==event.getOp()){
+                if(bluetoothService!=null){
+                    //bluetoothService.ca
+                }
+            }
+        }
+    }
 
 
 

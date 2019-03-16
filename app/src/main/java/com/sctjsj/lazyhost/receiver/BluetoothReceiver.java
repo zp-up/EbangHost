@@ -4,13 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.sctjsj.lazyhost.activity.BTScanActivity;
-import com.sctjsj.lazyhost.event.btScanEvent.BTStateChangeEvent;
+import com.sctjsj.lazyhost.event.btEvent.BTStateChangeEvent;
 import com.sctjsj.lazyhost.util.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class BluetoothReceiver extends BroadcastReceiver{
 

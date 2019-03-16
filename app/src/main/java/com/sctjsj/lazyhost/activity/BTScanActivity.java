@@ -2,12 +2,8 @@ package com.sctjsj.lazyhost.activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +19,7 @@ import android.widget.Toast;
 import com.jaeger.library.StatusBarUtil;
 import com.sctjsj.lazyhost.R;
 import com.sctjsj.lazyhost.application.MyApp;
-import com.sctjsj.lazyhost.event.btScanEvent.BTStateChangeEvent;
+import com.sctjsj.lazyhost.event.btEvent.BTStateChangeEvent;
 import com.sctjsj.lazyhost.receiver.BluetoothReceiver;
 import com.sctjsj.lazyhost.util.LogUtil;
 
