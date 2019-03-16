@@ -69,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //todo 这里应该先申请定位 和读写权限 否则部分机型会出问题
+
+
         pHuaweiPushInterface = new JPluginPlatformInterface(this.getApplicationContext());
         int flag = getIntent().getFlags();
         //首次启动 Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT 为 0
@@ -77,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         try {
             String tag = intent.getStringExtra("TAG");
-            Log.e("TAG", "接受到的消息:" + tag);
             try {
                 if (app.getSpf().getBoolean("vibrateOn", true)) {
                     final RingtoneUtil ringtoneUtil = new RingtoneUtil(this);
@@ -209,7 +212,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("login","CID获取失败");
                 return false;
             }
-
             app.getSpf().edit().putString("cid",cid).commit();
         }
 
@@ -230,36 +232,12 @@ public class LoginActivity extends AppCompatActivity {
      * 普通登录请求
      */
     public void submit() {
-        if ("none-cookie".equals(app.getSpf().getString("cid", "none-cookie"))) {
-            AlertDialog dialog = new AlertDialog.Builder(getApplicationContext())
-                    .setTitle("温馨提示")
-                    .setMessage("程序初始化错误，是否结束程序？")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            try {
-                                System.exit(0);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .create();
-            dialog.show();
-            return;
-        }
+
         RequestParams params = new RequestParams(BnUrl.loginUrl);
         params.setUseCookie(true);
         params.addBodyParameter("userName", mETAccount.getText().toString());
         params.addBodyParameter("password", mETPwd.getText().toString());
-        params.addBodyParameter("cid", app.getSpf().getString("cid", "none-cookie"));
+        params.addBodyParameter("cid", app.getSpf().getString("cid", ""));
 
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override

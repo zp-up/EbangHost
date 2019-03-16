@@ -65,6 +65,7 @@ import com.sctjsj.lazyhost.util.PushNotifyUtil;
 import com.sctjsj.lazyhost.util.RingtoneUtil;
 import com.sctjsj.lazyhost.util.UpdateUtil;
 import com.sctjsj.lazyhost.util.bt.BluetoothService;
+import com.sctjsj.lazyhost.widget.PopBTScanDialog;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Request;
 
@@ -798,9 +799,15 @@ public class ProcessOrderFg extends Fragment {
     }
 
 
-    @OnClick({R.id.fg_process_order_iv_qr_code})
+    @OnClick({R.id.fg_process_order_iv_qr_code,R.id.xxx})
     public void fgProcessClick(View view) {
         switch (view.getId()) {
+
+            case R.id.xxx:
+                PopBTScanDialog d= new PopBTScanDialog(getActivity());
+                d.show();
+                break;
+
             //扫描二维码
             case R.id.fg_process_order_iv_qr_code:
                 //1.先判断摄像头权限

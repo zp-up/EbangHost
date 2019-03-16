@@ -9,5 +9,6 @@ public class JumpCode {
     public static final int AddCommodityActivity_TO_ClassifyManageentActivity =2;
     public static final int JUMP_FROM_HOMEFRAGMENT_TO_QRSCANACTIVITY=3;
     public static final int REQUEST_QR_SCAN=4;
+    //跳转蓝牙搜索页面
     public static final int JUMP_FROM_Index_TO_BTSCANActivity=5;
 }
