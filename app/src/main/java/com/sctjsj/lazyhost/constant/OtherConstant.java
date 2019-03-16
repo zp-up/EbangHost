@@ -22,11 +22,12 @@ public class OtherConstant {
     public static final String TOAST = "toast";
 
     // Constants that indicate the current connection state
-    public static final int STATE_NONE = 6;       // we're doing nothing 连接断开
-    public static final int STATE_LISTEN = 7;     // now listening for incoming connections 等待其他设备连接我
-    public static final int STATE_CONNECTING = 8; // now initiating an outgoing connection 正在连接其他设备
-    public static final int STATE_CONNECTED = 9;  // now connected to a remote device 连接成功
-
+    public static final int STATE_NONE = 6;       // 初始状态
+    public static final int STATE_LISTEN = 7;     //  等待其他设备连接我
+    public static final int STATE_CONNECTING = 8; // 正在连接其他设备
+    public static final int STATE_CONNECTED = 9;  // 连接成功
+    public static final int STATE_DISCONNECTED =10;//蓝牙断开连接
+    public static final int STATE_CONNECT_FAILED=11;//蓝牙连接失败
 
 
 }

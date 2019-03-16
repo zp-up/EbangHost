@@ -84,6 +84,9 @@ public class BTScanActivity extends AppCompatActivity {
         StatusBarUtil.setTranslucentForImageViewInFragment(this,0,null);
         //注册事件总线
         EventBus.getDefault().register(this);
+
+        scanProgress = new SweetAlertDialog(BTScanActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+
         /**
          * 注册蓝牙适配器状态变化监听器
          */
@@ -436,9 +439,7 @@ public class BTScanActivity extends AppCompatActivity {
                 linkedDevice.clear();
                 extraDevice.clear();
                 //扫描进度
-                if (scanProgress == null) {
-                    scanProgress = new SweetAlertDialog(BTScanActivity.this, SweetAlertDialog.PROGRESS_TYPE);
-                }
+
 
                 scanProgress.setTitleText("正在扫描可用设备");
                 scanProgress.setCancelText("取消扫描");

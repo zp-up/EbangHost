@@ -25,6 +25,8 @@ import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_TOAST;
 import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_WRITE;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTED;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTING;
+import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECT_FAILED;
+import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_DISCONNECTED;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_LISTEN;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 import static com.sctjsj.lazyhost.constant.OtherConstant.TOAST;
@@ -243,6 +245,9 @@ public class BluetoothService {
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
+        //连接成功后，保存mac地址，用于下一次自动连接
+        app.getSpf().edit().putString("LinkedBTMAC",device.getAddress()).commit();
+
         setState(STATE_CONNECTED);
     }
 
@@ -278,7 +283,6 @@ public class BluetoothService {
      * Indicate that the connection attempt failed and notify the UI Activity.
      */
     private void connectionFailed() {
-        setState(STATE_LISTEN);
 
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(MESSAGE_TOAST);
@@ -286,13 +290,13 @@ public class BluetoothService {
         bundle.putString(TOAST, "Unable to connect device");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
+        setState(STATE_CONNECT_FAILED);
     }
 
     /**
      * Indicate that the connection was lost and notify the UI Activity.
      */
     private void connectionLost() {
-        //setState(STATE_LISTEN);
 
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(MESSAGE_TOAST);
@@ -300,6 +304,7 @@ public class BluetoothService {
         bundle.putString(TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
+        setState(STATE_DISCONNECTED);
     }
 
     /**
@@ -478,36 +483,39 @@ public class BluetoothService {
                     byte[] buffer = new byte[256];
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
-                    if(bytes>0)
-                    {
+
+                    //当bytes=-1表示蓝牙断开连接，并且会抛出异常
+
+                    if(bytes>0) {
                         // Send the obtained bytes to the UI Activity
                         mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
                                 .sendToTarget();
-                    }
-                    else
-                    {
-                        Log.e(TAG, "disconnected");
+                    } else {
+                        Log.e(TAG, "蓝牙断开连接");
                         connectionLost();
 
-                        //add by chongqing jinou
-                        if(mState != STATE_NONE)
-                        {
-                            Log.e(TAG, "disconnected");
-                            // Start the service over to restart listening mode
-                            BluetoothService.this.start();
-                        }
+                        //不用再尝试重连了
+//                        if(mState != STATE_NONE)
+//                        {
+//                            Log.e(TAG, "disconnected");
+//                            // Start the service over to restart listening mode
+//                            BluetoothService.this.start();
+//                        }
+
                         break;
                     }
                 } catch (IOException e) {
-                    Log.e(TAG, "disconnected", e);
+                    Log.e(TAG, "蓝牙断开连接", e);
+
                     connectionLost();
+                    //不用再尝试重连了
 
                     //add by chongqing jinou
-                    if(mState != STATE_NONE)
-                    {
-                        // Start the service over to restart listening mode
-                        BluetoothService.this.start();
-                    }
+//                    if(mState != STATE_NONE)
+//                    {
+//                        // Start the service over to restart listening mode
+//                        BluetoothService.this.start();
+//                    }
                     break;
                 }
             }

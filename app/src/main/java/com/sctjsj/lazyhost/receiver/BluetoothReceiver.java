@@ -13,7 +13,6 @@ public class BluetoothReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        LogUtil.e("接收到蓝牙广播");
         //利用事件总线传递广播
         EventBus.getDefault().post(new BTStateChangeEvent(context,intent));
     }

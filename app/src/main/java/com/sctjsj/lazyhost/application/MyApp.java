@@ -306,6 +306,7 @@ public class MyApp extends Application {
     //回调蓝牙连接状态改变
     public synchronized void setSocketState(int socketState) {
         this.socketState = socketState;
+
         //当前设备没有蓝牙模块，或者没有开启蓝牙 不用回调
         if (BluetoothAdapter.getDefaultAdapter() == null || !BluetoothAdapter.getDefaultAdapter().isEnabled()) {
             return;

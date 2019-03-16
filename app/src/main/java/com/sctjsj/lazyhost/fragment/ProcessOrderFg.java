@@ -804,8 +804,8 @@ public class ProcessOrderFg extends Fragment {
         switch (view.getId()) {
 
             case R.id.xxx:
-                PopBTScanDialog d= new PopBTScanDialog(getActivity());
-                d.show();
+//                PopBTScanDialog d= new PopBTScanDialog(getActivity());
+//                d.show();
                 break;
 
             //扫描二维码

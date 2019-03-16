@@ -80,6 +80,8 @@ import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_WRITE;
 import static com.sctjsj.lazyhost.constant.OtherConstant.REQUEST_ENABLE_BT;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTED;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTING;
+import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECT_FAILED;
+import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_DISCONNECTED;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_LISTEN;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 
@@ -494,28 +496,37 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                             connectProgress.show();
                             break;
 
-                        //连接失败
+                        //等待别人链接我
                         case STATE_LISTEN:
                             if (connectProgress != null) {
                                 connectProgress.dismiss();
                             }
                             break;
-                        case STATE_NONE:
-                            Toast.makeText(IndexActivity.this, "断开连接", Toast.LENGTH_SHORT).show();
+                            //蓝牙连接失败
+
+                        case STATE_CONNECT_FAILED:
+                            Toast.makeText(IndexActivity.this, "蓝牙连接失败", Toast.LENGTH_SHORT).show();
+
+                            break;
+                            //蓝牙断开链接
+                        case STATE_DISCONNECTED:
+                            Toast.makeText(IndexActivity.this, "蓝牙断开连接", Toast.LENGTH_SHORT).show();
                             if (connectProgress != null) {
                                 connectProgress.dismiss();
                             }
 
-                            new Handler().postDelayed(new Runnable() {
+                            new Handler().post(new Runnable() {
                                 @Override
                                 public void run() {
                                     playNoConnection();
                                 }
-                            }, 1000);
+                            });
 
                             break;
                     }
                     break;
+
+
 
                 case MESSAGE_WRITE:
                     byte[] writeBuf = (byte[]) msg.obj;
@@ -654,6 +665,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
         super.onSaveInstanceState(outState, outPersistentState);
 
     }
+
 
     public BluetoothService getBTService() {
         return bluetoothService;
@@ -1073,7 +1085,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
         /**1.获取之前是否有连接过蓝牙设备**/
 
         //获取上一次连接的蓝牙打印机设备mac地址
-        String pairedMAC =app.getSpf().getString("pairedMAC",null);
+        String pairedMAC =app.getSpf().getString("LinkedBTMAC",null);
         //获取已经配对的设备列表
         Set<BluetoothDevice> pairedDeviceList = bluetoothAdapter.getBondedDevices();
 
@@ -1128,7 +1140,6 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
         //开始扫描蓝牙设备
         boolean res=bluetoothAdapter.startDiscovery();
-        Log.e("gg","蓝牙扫描开启"+res);
     }
 
     @Subscribe
@@ -1154,7 +1165,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
             if ("android.bluetooth.adapter.action.DISCOVERY_FINISHED".equals(action)) {
                 //取消注册监听
                 try {
-                    unregisterReceiver(btReceiver);
+                   // unregisterReceiver(btReceiver);
                 } catch (Exception e) {
                     LogUtil.e("扫描结束异常", e.toString());
                 }finally{

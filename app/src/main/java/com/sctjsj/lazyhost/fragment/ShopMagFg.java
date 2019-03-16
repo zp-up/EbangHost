@@ -65,7 +65,7 @@ import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 /**
  * Created by Chris-Jason on 2016/11/9.
  */
-public class ShopMagFg extends Fragment {
+public class ShopMagFg extends BaseFragment {
     private MyApp app;
     private ProgressUtil pUtil;
 
@@ -86,11 +86,16 @@ public class ShopMagFg extends Fragment {
 
     @Bind(R.id.fg_shop_mag_ll_refund_mag)LinearLayout mLLRefund;
 
-    @Nullable
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fg_store_management,null);
-        ButterKnife.bind(this,view);
+    protected void initData() {
+
+    }
+
+    @Override
+    public void initView() {
+        ButterKnife.bind(this,mRootView);
         app= (MyApp) getActivity().getApplication();
         pUtil=new ProgressUtil(getActivity());
         app.setOnBTStateChangedListener(new MyApp.onBTStateChangedListener() {
@@ -116,7 +121,7 @@ public class ShopMagFg extends Fragment {
                                 mTVBTState.setText("蓝牙已连接");
                                 break;
                             default:
-                                //mTVBTState.setText("蓝牙未连接");
+                                mTVBTState.setText("蓝牙未连接");
                                 break;
 
                         }
@@ -138,14 +143,23 @@ public class ShopMagFg extends Fragment {
 
             }
         });
-        view.findViewById(R.id.tv_to_package).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.tv_to_package).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MywalletActivity.class);
                 startActivity(intent);
             }
         });
-        return view;
+    }
+
+    @Override
+    protected boolean setLazyLod() {
+        return true;
+    }
+
+    @Override
+    protected int setLayoutResource() {
+        return R.layout.fg_store_management;
     }
 
     @Override
@@ -163,6 +177,28 @@ public class ShopMagFg extends Fragment {
         }else {
             mLLRefund.setVisibility(View.VISIBLE);
         }
+
+
+
+        switch (app.getSocketState()){
+            case STATE_NONE:
+                mTVBTState.setText("蓝牙未连接");
+                break;
+            case STATE_LISTEN:
+                mTVBTState.setText("等待连接蓝牙");
+                break;
+            case STATE_CONNECTING:
+                mTVBTState.setText("蓝牙连接中");
+                break;
+            case STATE_CONNECTED:
+                mTVBTState.setText("蓝牙已连接");
+                break;
+            default:
+                mTVBTState.setText("蓝牙未连接");
+                break;
+
+        }
+
     }
 
     //
