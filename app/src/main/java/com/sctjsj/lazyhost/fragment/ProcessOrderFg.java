@@ -1937,8 +1937,6 @@ public class ProcessOrderFg extends Fragment {
                 return;
             }
 
-
-
             for (int x = 0; x < count; x++) {
                 //title
                 String start = "*** 懒购外卖 ***\n\n";
@@ -1953,10 +1951,12 @@ public class ProcessOrderFg extends Fragment {
                 act.sendPrintMessage( service, StoreOrderNo);
 
                 //店铺名字
-                String storeName = orderBean.getShopBean().getName() + "\n\n";
-                service.printCenter();
-                service.printSize(1);
-                act.sendPrintMessage( service, storeName);
+                if(orderBean.getShopBean()!=null){
+                    String storeName = orderBean.getShopBean().getName() + "\n\n";
+                    service.printCenter();
+                    service.printSize(1);
+                    act.sendPrintMessage( service, storeName);
+                }
 
                 //订单号
                 String orderNum = "订单号:" + orderBean.getName() + "\n\n";

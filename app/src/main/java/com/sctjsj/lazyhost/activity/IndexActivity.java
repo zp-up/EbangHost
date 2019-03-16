@@ -475,7 +475,12 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                                 connectProgress.dismiss();
                             }
                             Toast.makeText(IndexActivity.this, "蓝牙连接成功", Toast.LENGTH_SHORT).show();
-
+                            new Handler().post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    playNotice(3);
+                                }
+                            });
                             break;
                         //正在连接
                         case STATE_CONNECTING:
@@ -506,7 +511,15 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
                         case STATE_CONNECT_FAILED:
                             Toast.makeText(IndexActivity.this, "蓝牙连接失败", Toast.LENGTH_SHORT).show();
-
+                            if (connectProgress != null) {
+                                connectProgress.dismiss();
+                            }
+                            new Handler().post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    playNotice(2);
+                                }
+                            });
                             break;
                             //蓝牙断开链接
                         case STATE_DISCONNECTED:
@@ -514,14 +527,12 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                             if (connectProgress != null) {
                                 connectProgress.dismiss();
                             }
-
                             new Handler().post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    playNoConnection();
+                                    playNotice(1);
                                 }
                             });
-
                             break;
                     }
                     break;
@@ -550,9 +561,23 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
     };
 
-    private void playNoConnection() {
+    private void playNotice(int type) {
+        MediaPlayer player = null;
+
         try {
-            MediaPlayer player = MediaPlayer.create(this, R.raw.bt_disconnect);
+            //蓝牙断开连接
+            if(1==type){
+                player = MediaPlayer.create(this, R.raw.v_bt_disconnect);
+            }
+            //蓝牙连接失败
+            if(2==type){
+                player = MediaPlayer.create(this, R.raw.v_bt_cant_connect);
+            }
+            //蓝牙连接成功
+            if(3==type){
+                player = MediaPlayer.create(this, R.raw.v_bt_connect_success);
+            }
+
             if (player != null && !player.isPlaying()) {
                 player.start();
             }
@@ -560,6 +585,8 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
             e.printStackTrace();
         }
     }
+
+
 
     /**
      * 打印

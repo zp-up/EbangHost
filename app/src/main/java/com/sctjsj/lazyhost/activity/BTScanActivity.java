@@ -466,7 +466,7 @@ public class BTScanActivity extends AppCompatActivity {
                 linkedAdapter.notifyDataSetChanged();
                 extraAdapter.notifyDataSetChanged();
                 try {
-                    this.unregisterReceiver(bluetoothReceiver);
+                    //this.unregisterReceiver(bluetoothReceiver);
                 } catch (Exception e) {
                     LogUtil.e("扫描结束异常", e.toString());
                 }

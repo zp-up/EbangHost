@@ -87,7 +87,6 @@ public class ShopMagFg extends BaseFragment {
     @Bind(R.id.fg_shop_mag_ll_refund_mag)LinearLayout mLLRefund;
 
 
-
     @Override
     protected void initData() {
 

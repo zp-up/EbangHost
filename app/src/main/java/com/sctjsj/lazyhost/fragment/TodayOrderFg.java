@@ -1,6 +1,7 @@
 package com.sctjsj.lazyhost.fragment;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,6 +28,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bumptech.glide.Glide;
 import com.sctjsj.lazyhost.R;
+import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.activity.LoginActivity;
 import com.sctjsj.lazyhost.application.MyApp;
 import com.sctjsj.lazyhost.bean.CityBean;
@@ -41,10 +44,12 @@ import com.sctjsj.lazyhost.util.ListViewUtil;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.NumformatUtil;
 import com.sctjsj.lazyhost.util.ProgressUtil;
+import com.sctjsj.lazyhost.util.bt.BluetoothService;
 import com.squareup.picasso.Picasso;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,6 +73,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import q.rorbin.qrefreshlayout.QRefreshLayout;
 import q.rorbin.qrefreshlayout.RefreshHandler;
+
+import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 
 /**
  * Created by Chris-Jason on 2016/11/9.
@@ -96,13 +103,14 @@ public class TodayOrderFg extends Fragment {
 
     private volatile boolean isLoading = false;
     private LinearLayoutManager mLayoutManager;
-
+    private IndexActivity act;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_today_order, null);
         ButterKnife.bind(this, view);
         app = (MyApp) getActivity().getApplication();
+        act = (IndexActivity) getActivity();
         mLayoutManager = new LinearLayoutManager(getActivity());
         if (adapter == null) {
             adapter = new MyAdapter();
@@ -828,6 +836,48 @@ public class TodayOrderFg extends Fragment {
                 holder.mLLTime.setVisibility(View.GONE);
             }
 
+            //默认打印2份
+            final int[] printCount = {-1};
+            //打印订单
+            holder.mBtnPrintOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //弹出选择框，让商家选择打印订单的分数
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle("请选择打印份数");
+                    String[] items = new String[]{"打印1份", "打印2份"};
+                    builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //打印一份
+                            if (0 == which) {
+                                printCount[0] = 1;
+                            }
+                            //打印两份
+                            if (1 == which) {
+                                printCount[0] = 2;
+                            }
+
+                        }
+                    });
+                    builder.setPositiveButton("确认打印", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            if (printCount[0] < 1) {
+                                Toast.makeText(getActivity(), "请选择打印份数", Toast.LENGTH_SHORT).show();
+                            } else {
+                                printOrder(printCount[0], data.get(position));
+                            }
+
+                            printCount[0] = -1;
+                        }
+                    });
+                    builder.show();
+                }
+            });
 
             if (data.get(position).getDeliveryAddressBean() != null) {
                 //设置收货地址
@@ -991,10 +1041,11 @@ public class TodayOrderFg extends Fragment {
         TextView storeNum;
         ImageView ivError;
         TextView tvRemark;
-
+        Button mBtnPrintOrder;
         public XHolder(View itemView) {
             super(itemView);
             storeNum=itemView.findViewById(R.id.storeNum);
+            mBtnPrintOrder = (Button) itemView.findViewById(R.id.item_of_fg_dispose_order_print_order_info);
             mTVDisprice = (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_disprice);
             mTVShipprice = (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_shipprice);
             mLLConsigneeParent = (LinearLayout) itemView.findViewById(R.id.item_of_fg_today_order_ll_consignee_parent);
@@ -1143,5 +1194,139 @@ public class TodayOrderFg extends Fragment {
             }
         });
     }
+
+    private void printOrder(int count, OrderBean orderBean) {
+
+        if (orderBean != null) {
+            BluetoothService service = act.getBTService();
+            if(service==null){
+                app.setSocketState(STATE_NONE);
+                return;
+            }
+
+            for (int x = 0; x < count; x++) {
+                //title
+                String start = "*** 懒购外卖 ***\n\n";
+                service.printCenter();
+                service.printSize(1);
+                act.sendPrintMessage(service, start);
+
+                //订单小号
+                String  StoreOrderNo =orderBean.getStoreOrderNo()+"\n\n";
+                service.printCenter();
+                service.printSize(1);
+                act.sendPrintMessage( service, StoreOrderNo);
+
+                //店铺名字
+                if(orderBean.getShopBean()!=null){
+                    String storeName = orderBean.getShopBean().getName() + "\n\n";
+                    service.printCenter();
+                    service.printSize(1);
+                    act.sendPrintMessage( service, storeName);
+                }
+
+                //订单号
+                String orderNum = "订单号:" + orderBean.getName() + "\n\n";
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage( service, orderNum);
+
+                //下单时间
+                String payTime = "支付时间:" + orderBean.getInsertTime() + "\n\n";
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage( service, payTime);
+
+                //循环商品信息
+                List<GoodsBean> gbList = orderBean.getGoodsBeanList();
+                double oriAll = 0;
+                if (gbList != null && gbList.size() > 0) {
+                    for (int i = 0; i < gbList.size(); i++) {
+                        //商品名称
+                        String goodsName = gbList.get(i).getName();
+                        //购买数量
+                        int goodsNum = gbList.get(i).getCount();
+                        //原价
+                        double goodsPrice = gbList.get(i).getPrice();
+                        oriAll = oriAll + (goodsNum * goodsPrice);
+                        //优惠价
+                        double goodsDisPrice = gbList.get(i).getDisPrice();
+                        String goods = goodsName + "    " + "*" + " " + goodsNum + "  " + goodsPrice + "\n\n";
+                        service.printLeft();
+                        service.printSize(0);
+                        act.sendPrintMessage( service, goods);
+                    }
+                }
+
+                //配送费
+                String shipPrice = "配送费:" + orderBean.getShipPrice() + "\n\n";
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage(service, shipPrice);
+
+                //包装费
+                String packagePrice = "包装费:"+ orderBean.getPackagePrice();
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage( service, packagePrice);
+
+                //原本应付的总额
+                String oriTotal = "总额:" + (oriAll + orderBean.getShipPrice()) + "\n\n";
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage(service, oriTotal);
+
+                //优惠信息
+                String disInfo = "优惠:" + orderBean.getDisvalue() + "\n\n";
+                service.printLeft();
+                service.printSize(0);
+                act.sendPrintMessage( service, disInfo);
+
+
+                //总价
+                String totalPay = "实付:" + orderBean.getTotalprice() + "\n\n";
+                service.printLeft();
+                service.printSize(2);
+                act.sendPrintMessage( service, totalPay);
+
+                //收货信息
+                String address = orderBean.getDeliveryAddressBean().getProvinceBean().getName() +
+                        orderBean.getDeliveryAddressBean().getCityBean().getName() +
+                        orderBean.getDeliveryAddressBean().getDistrictBean().getName() +
+                        orderBean.getDeliveryAddressBean().getDetail() + "\n\n";
+
+                service.printLeft();
+                service.printSize(2);
+                act.sendPrintMessage( service, address);
+
+                String consignee = "收货人:" + orderBean.getDeliveryAddressBean().getConsignee() + "\n\n";
+                service.printLeft();
+                service.printSize(2);
+                act.sendPrintMessage(service, consignee);
+
+                String tel = "联系电话:" + orderBean.getDeliveryAddressBean().getTel() + "\n\n\n\n";
+                service.printLeft();
+                service.printSize(2);
+                act.sendPrintMessage( service, tel);
+
+                //备注信息
+                String remarkInfo = "备注:" + orderBean.getBuyerRemark() + "\n\n\n\n";
+                service.printLeft();
+                service.printSize(2);
+                act.sendPrintMessage( service, remarkInfo);
+
+                String end = "*** END ***\n\n\n\n\n";
+                service.printCenter();
+                service.printSize(1);
+                act.sendPrintMessage(service, end);
+            }
+
+        } else {
+            Toast.makeText(act, "打印信息有误", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 
 }
