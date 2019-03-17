@@ -6,31 +6,17 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.igexin.sdk.PushManager;
 import com.sctjsj.lazyhost.BuildConfig;
-import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.bean.UserBean;
-import com.sctjsj.lazyhost.receiver.IsForegroundReceiver;
-import com.sctjsj.lazyhost.receiver.MyNetworkReceiver;
-import com.sctjsj.lazyhost.service.DemoIntentService;
-import com.sctjsj.lazyhost.service.DemoPushService;
 import com.sctjsj.lazyhost.service.SessionFlushService;
-import com.sctjsj.lazyhost.util.bt.BluetoothService;
 import com.tencent.bugly.Bugly;
-import com.xiaomi.mipush.sdk.HWPushHelper;
-import com.zxy.recovery.core.Recovery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,18 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.thirdpush.huawei.HWPushManager;
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import dalvik.system.DexClassLoader;
 
-import static com.sctjsj.lazyhost.constant.OtherConstant.DEVICE_NAME;
-import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_DEVICE_NAME;
-import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_READ;
-import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_STATE_CHANGE;
-import static com.sctjsj.lazyhost.constant.OtherConstant.MESSAGE_WRITE;
-import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTED;
-import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTING;
-import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_LISTEN;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 
 /**

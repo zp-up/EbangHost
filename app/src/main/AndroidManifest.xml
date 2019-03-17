@@ -51,14 +51,6 @@
 
         <service android:name="com.amap.api.location.APSService" />
         <!-- 个推广播接收器 -->
-        <receiver
-            android:name=".receiver.MyPushReceiver"
-            android:exported="false">
-            <intent-filter>
-                <!-- APPID需要替换为相应的个推应用ID -->
-                <action android:name="com.igexin.sdk.action.FBFohL0QUu9lAFib8uibhA" />
-            </intent-filter>
-        </receiver>
 
         <service android:name=".service.DemoIntentService"
             android:exported="true"
@@ -66,16 +58,6 @@
             android:process=":pushservice" >
 
         </service>
-
-        <service android:name=".service.DemoPushService"
-            android:exported="true"
-            android:label="NotificationCenter"
-            android:process=":pushservice" >
-
-        </service>
-
-
-
 
 
         <!-- 注册网络监听 -->

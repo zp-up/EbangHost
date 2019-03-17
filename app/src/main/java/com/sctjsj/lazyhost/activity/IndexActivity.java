@@ -45,7 +45,6 @@ import com.sctjsj.lazyhost.fragment.ShopMagFg;
 
 import com.sctjsj.lazyhost.receiver.BluetoothReceiver;
 import com.sctjsj.lazyhost.receiver.JPushReveivedHostReceiver;
-import com.sctjsj.lazyhost.receiver.MyPushReceiver;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.RingtoneUtil;
@@ -207,7 +206,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
             fgManager = getSupportFragmentManager();
         }
         //注册极光推送监听
-        JPushReveivedHostReceiver.setOnGetPushMessageListener(new MyPushReceiver.OnGetPushMessageListener() {
+        JPushReveivedHostReceiver.setOnGetPushMessageListener(new JPushReveivedHostReceiver.OnGetPushMessageListener() {
             @Override
             public void onReceivedMessage(int type, String message) {
 
@@ -497,7 +496,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                                     bluetoothService.stop();
                                 }
                             });
-                            connectProgress.setContentText("正在连接设备");
+                            connectProgress.setTitleText("正在连接蓝牙打印机");
                             connectProgress.show();
                             break;
 
@@ -1108,7 +1107,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
     }
 
     //自动连接蓝牙设备
-    private void invokeAutoLinkDevice() {
+    public void invokeAutoLinkDevice() {
         /**1.获取之前是否有连接过蓝牙设备**/
 
         //获取上一次连接的蓝牙打印机设备mac地址
@@ -1176,9 +1175,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
             String action = intent.getAction();
             //扫描开始
             if ("android.bluetooth.adapter.action.DISCOVERY_STARTED".equals(action)) {
-
                 LogUtil.e("开始扫描");
-
                 //蓝牙开始扫描，清空数据
                 pairedList.clear();
                 unPairedList.clear();
@@ -1233,16 +1230,18 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                 int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1);
 
                 switch (state) {
+                    //配对失败
                     case BluetoothDevice.BOND_NONE:
-
+                        scan();
                         break;
+                        //正在配对中
                     case BluetoothDevice.BOND_BONDING:
 
                         break;
+                        //配对成功
                     case BluetoothDevice.BOND_BONDED:
-
+                        scan();
                         break;
-
                 }
 
                 return;

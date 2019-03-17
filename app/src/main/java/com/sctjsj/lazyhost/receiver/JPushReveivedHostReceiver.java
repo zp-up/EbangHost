@@ -14,10 +14,10 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 import com.sctjsj.lazyhost.R;
 import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.activity.LoginActivity;
+import com.sctjsj.lazyhost.application.MyApp;
 
 import org.json.JSONObject;
 
@@ -34,11 +34,12 @@ public class JPushReveivedHostReceiver extends BroadcastReceiver {
     final String CHANNEL_ID = "channel_id_2";
     final String CHANNEL_NAME = "channel_name_2";
 
-    public static void setOnGetPushMessageListener(MyPushReceiver.OnGetPushMessageListener onGetPushMessageListener) {
-        JPushReveivedHostReceiver.onGetPushMessageListener = onGetPushMessageListener;
+    private static OnGetPushMessageListener listener;
+
+    public static void setOnGetPushMessageListener(OnGetPushMessageListener onGetPushMessageListener) {
+        listener = onGetPushMessageListener;
     }
 
-    private static MyPushReceiver.OnGetPushMessageListener onGetPushMessageListener;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -51,6 +52,8 @@ public class JPushReveivedHostReceiver extends BroadcastReceiver {
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             Log.e(TAG, "JPush用户注册成功");
+            String cid = JPushInterface.getRegistrationID(context);
+            ((MyApp)context.getApplicationContext()).getSpf().edit().putString("cid",cid).commit();
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             Log.e(TAG, "接受到推送下来的自定义消息:" + bundle.getString(JPushInterface.EXTRA_MESSAGE));
@@ -81,23 +84,8 @@ public class JPushReveivedHostReceiver extends BroadcastReceiver {
         Log.e(TAG, "extras : " + extras);
         message = extras;
         try {
-            if (onGetPushMessageListener != null) {
-                onGetPushMessageListener.onReceivedMessage(2, message);
-                if (message != null && message.contains("您有新订单")) {
-                    //processCustomMessage(context,bundle,1);
-                }
-                if (message != null && message.contains("买家已确认收货")) {
-                    //processCustomMessage(context,bundle,5);
-                }
-                if (message != null && message.contains("配送员已接单")) {
-                    //processCustomMessage(context,bundle,3);
-                }
-                if (message != null && message.contains("配送员已送达")) {
-                    //processCustomMessage(context,bundle,4);
-                }
-                if (message != null && message.contains("买家支付成功")) {
-                    //processCustomMessage(context,bundle,2);
-                }
+            if (listener != null) {
+                listener.onReceivedMessage(2,message);
             } else {
                 Intent start = context.getPackageManager().getLaunchIntentForPackage("com.sctjsj.lazyhost");
                 start.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -230,6 +218,10 @@ public class JPushReveivedHostReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
         nm.notify(NOTIFICATION_SHOW_SHOW_AT_MOST, notification.build());  //id随意，正好使用定义的常量做id，0除外，0为默认的Notification
+    }
+
+    public interface OnGetPushMessageListener{
+         void onReceivedMessage(int type, String message);
     }
 
 }

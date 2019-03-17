@@ -130,7 +130,7 @@ public class BTScanActivity extends AppCompatActivity {
 
                 final SweetAlertDialog dialog = new SweetAlertDialog(BTScanActivity.this, SweetAlertDialog.WARNING_TYPE);
                 dialog.setTitleText("");
-                dialog.setContentText("取消和该设备的配对？");
+                dialog.setTitleText("取消和该设备的配对？");
                 dialog.setConfirmText("确认");
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override

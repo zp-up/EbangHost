@@ -1,6 +1,7 @@
 package com.sctjsj.lazyhost.widget;
 
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -16,7 +17,11 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.sctjsj.lazyhost.R;
+import com.sctjsj.lazyhost.activity.BTScanActivity;
+import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.bean.NotPairedEntity;
 import com.sctjsj.lazyhost.bean.PairedEntity;
 import com.sctjsj.lazyhost.event.btEvent.ToConnectBTEvent;
@@ -28,6 +33,8 @@ import com.sctjsj.lazyhost.util.DimenUtil;
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 /**
@@ -149,6 +156,28 @@ public class PopBTScanDialog extends Dialog implements View.OnClickListener {
                             //
                             EventBus.getDefault().post(new ToConnectBTEvent(1,bluetoothDevice));
                             dismiss();
+                        }else {
+                            //没有配对的设备，去配对
+                            final SweetAlertDialog dialog = new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE);
+                            dialog.setTitleText("");
+                            dialog.setContentText("确认和该设备的配对？");
+                            dialog.setConfirmText("确认");
+                            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    String address = bluetoothDevice.getAddress();
+                                    if(BluetoothAdapter.getDefaultAdapter()!=null && BluetoothAdapter.getDefaultAdapter().isEnabled()){
+                                        BluetoothDevice device =BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                                        device.createBond();
+                                        Toast.makeText(mContext, "开始创建蓝牙配对",Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        ((IndexActivity) mContext).invokeAutoLinkDevice();
+                                    }
+
+                                }
+                            });
+                            dialog.show();
+
                         }
 
                     }
@@ -200,7 +229,6 @@ public class PopBTScanDialog extends Dialog implements View.OnClickListener {
 
 
     }
-
 
 
     public void setScanProgress(int progress){

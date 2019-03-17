@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.igexin.sdk.PushManager;
 import com.jaeger.library.StatusBarUtil;
 import com.sctjsj.lazyhost.R;
 import com.sctjsj.lazyhost.application.MyApp;

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,23 +18,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.igexin.sdk.PushManager;
 import com.jaeger.library.StatusBarUtil;
 import com.sctjsj.lazyhost.R;
 import com.sctjsj.lazyhost.application.MyApp;
 import com.sctjsj.lazyhost.bean.UserBean;
-import com.sctjsj.lazyhost.receiver.MyPushReceiver;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.ProgressUtil;
 import com.sctjsj.lazyhost.util.RingtoneUtil;
 import com.sctjsj.lazyhost.util.SessionUtil;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -44,6 +39,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPluginPlatformInterface;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Chris-Jason on 2016/11/9.
@@ -140,27 +136,23 @@ public class LoginActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 0);//自定义的code
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);//自定义的code
         }
         //初始化个推
         //PushManager.getInstance().initialize(this.getApplicationContext());
         /**
          * 接收到 CID 消息回调
          */
-        MyPushReceiver.setOnGetPushMessageListener(new MyPushReceiver.OnGetPushMessageListener() {
-            @Override
-            public void onReceivedMessage(int type, String message) {
-                if (1 == type) {
-                    LogUtil.e("消息：" + message);
-                }
-            }
-        });
+
 
         progressUtil = new ProgressUtil(this);
         if (app.getCurrentUser() != null) {
             mETAccount.setText(app.getCurrentUser().getAccount());
             mETPwd.setText(app.getCurrentUser().getPwd());
-            oneKeyLogin();
+            if(checkBeforeLogin()){
+                oneKeyLogin();
+            }
+
         }
 
 
@@ -205,15 +197,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkBeforeLogin() {
 
-        if (PushManager.getInstance().isPushTurnedOn(this)) {
 
-            String cid = PushManager.getInstance().getClientid(this);
-            if(TextUtils.isEmpty(cid)){
-                Log.e("login","CID获取失败");
+        String cid = JPushInterface.getRegistrationID(this);
+        if(TextUtils.isEmpty(cid)){
+            String cid2 = app.getSpf().getString("cid","");
+            if(TextUtils.isEmpty(cid2)){
+                Toast.makeText(this, "CID获取失败", Toast.LENGTH_SHORT).show();
                 return false;
             }
+        }else {
             app.getSpf().edit().putString("cid",cid).commit();
         }
+
 
         if (TextUtils.isEmpty(mETAccount.getText().toString())) {
             Snackbar.make(mLLParent, "账户名为空", Snackbar.LENGTH_SHORT).show();
@@ -232,13 +227,10 @@ public class LoginActivity extends AppCompatActivity {
      * 普通登录请求
      */
     public void submit() {
-
         RequestParams params = new RequestParams(BnUrl.loginUrl);
-        params.setUseCookie(true);
         params.addBodyParameter("userName", mETAccount.getText().toString());
         params.addBodyParameter("password", mETPwd.getText().toString());
         params.addBodyParameter("cid", app.getSpf().getString("cid", ""));
-
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -313,6 +305,7 @@ public class LoginActivity extends AppCompatActivity {
      * 一键登录
      */
     private void oneKeyLogin() {
+        
 
         if (app.getCurrentUser() == null) {
             return;
@@ -334,7 +327,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(app.getSpf().getString("cid", "none-cid"))) {
+        if (TextUtils.isEmpty(app.getSpf().getString("cid", ""))) {
             AlertDialog dialog = new AlertDialog.Builder(getApplicationContext())
                     .setTitle("温馨提示")
                     .setMessage("程序初始化错误，是否结束程序？")
@@ -430,7 +423,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
 
     /**
      * 根据用户 id 查询个人信息

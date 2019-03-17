@@ -117,9 +117,6 @@ dependencies {
     //QR
     compile 'com.github.XuDaojie:QRCode-Android:v0.4.2'
 
-    //个推
-    compile 'com.getui:sdk:2.11.1.0'
-
     //横向进度条
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 

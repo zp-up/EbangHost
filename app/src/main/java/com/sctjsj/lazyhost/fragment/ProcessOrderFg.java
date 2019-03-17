@@ -34,12 +34,10 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bumptech.glide.Glide;
 import com.sctjsj.lazyhost.R;
-import com.sctjsj.lazyhost.activity.BTScanActivity;
 import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.activity.LoginActivity;
 import com.sctjsj.lazyhost.activity.MyQRResultActivity;
 import com.sctjsj.lazyhost.application.MyApp;
-import com.sctjsj.lazyhost.bean.BuyerBean;
 import com.sctjsj.lazyhost.bean.CityBean;
 import com.sctjsj.lazyhost.bean.DeliveryAddressBean;
 import com.sctjsj.lazyhost.bean.DeliveryBean;
@@ -48,26 +46,17 @@ import com.sctjsj.lazyhost.bean.GoodsBean;
 import com.sctjsj.lazyhost.bean.OrderBean;
 import com.sctjsj.lazyhost.bean.ProvinceBean;
 import com.sctjsj.lazyhost.bean.ShopBean;
-import com.sctjsj.lazyhost.bean.UserBean;
 import com.sctjsj.lazyhost.constant.JumpCode;
 import com.sctjsj.lazyhost.constant.OtherConstant;
-import com.sctjsj.lazyhost.receiver.JPushReveivedHostReceiver;
-import com.sctjsj.lazyhost.receiver.MyPushReceiver;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.AnimationUtil;
-import com.sctjsj.lazyhost.util.AutoPrintUtil;
-import com.sctjsj.lazyhost.util.DpUtils;
 import com.sctjsj.lazyhost.util.ListViewUtil;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.NumformatUtil;
 import com.sctjsj.lazyhost.util.ProgressUtil;
 import com.sctjsj.lazyhost.util.PushNotifyUtil;
 import com.sctjsj.lazyhost.util.RingtoneUtil;
-import com.sctjsj.lazyhost.util.UpdateUtil;
 import com.sctjsj.lazyhost.util.bt.BluetoothService;
-import com.sctjsj.lazyhost.widget.PopBTScanDialog;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Request;
 
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.widget.BaseAdapter;
@@ -87,7 +76,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +86,6 @@ import q.rorbin.qrefreshlayout.QRefreshLayout;
 import q.rorbin.qrefreshlayout.RefreshHandler;
 
 import static android.app.Activity.RESULT_OK;
-import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_CONNECTED;
 import static com.sctjsj.lazyhost.constant.OtherConstant.STATE_NONE;
 
 /**
