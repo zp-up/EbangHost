@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.sctjsj.lazyhost.R;
+import com.sctjsj.lazyhost.activity.IndexActivity;
 import com.sctjsj.lazyhost.activity.UseFeedbackActivity;
 import com.sctjsj.lazyhost.activity.WarningToneSetActivity;
 import com.sctjsj.lazyhost.application.MyApp;
@@ -135,6 +136,12 @@ public class SettingFg extends Fragment {
                 if (on) {
                     ToastUtils.showToas(getActivity(),"请确认手机与打印机蓝牙连接正常，否则无法打印。");
                     app.getSpf().edit().putBoolean("printer", true).commit();
+
+                    //调用自动打印
+                    IndexActivity act = (IndexActivity) getActivity();
+                    if(act!=null && isAdded()){
+                        act.invokeAutoLinkDevice();
+                    }
                 } else {
                     app.getSpf().edit().putBoolean("printer", false).commit();
                 }

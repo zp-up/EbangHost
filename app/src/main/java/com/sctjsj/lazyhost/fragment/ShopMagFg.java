@@ -53,6 +53,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import q.rorbin.qrefreshlayout.QRefreshLayout;
 import q.rorbin.qrefreshlayout.RefreshHandler;
 
@@ -208,9 +209,35 @@ public class ShopMagFg extends BaseFragment {
         switch (view.getId()){
             //连接打印机
             case R.id.fg_store_manager_printer_ll:
-                //用 IndexActivity 来接收
-                 Intent intent1=new Intent(getActivity(), BTScanActivity.class);
-                 getActivity().startActivityForResult(intent1, JumpCode.JUMP_FROM_Index_TO_BTSCANActivity);
+//                //用 IndexActivity 来接收
+//                 Intent intent1=new Intent(getActivity(), BTScanActivity.class);
+//                 getActivity().startActivityForResult(intent1, JumpCode.JUMP_FROM_Index_TO_BTSCANActivity);
+
+                int state= app.getSocketState();
+                //已经连接过了
+                if(STATE_CONNECTED == state){
+                    SweetAlertDialog dialog = new SweetAlertDialog(getActivity(),SweetAlertDialog.WARNING_TYPE);
+                    dialog.setTitleText("打印机已连接，是否重新扫描？");
+                    dialog.setConfirmText("重新扫描");
+                    dialog.setCancelText("取消");
+                    dialog.setContentText("");
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            if(getActivity()!=null && isAdded()){
+                                ((IndexActivity)getActivity()).invokeAutoLinkDevice();
+                            }
+                        }
+                    });
+                    dialog.show();
+                    return;
+                }
+
+                if(getActivity()!=null && isAdded()){
+                    ((IndexActivity)getActivity()).invokeAutoLinkDevice();
+                }
+
+
                 break;
             //评价管理
             case R.id.fg_store_manager_evalutation_ll:
