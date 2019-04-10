@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.sctjsj.lazyhost.BuildConfig;
 import com.sctjsj.lazyhost.bean.UserBean;
 import com.sctjsj.lazyhost.service.SessionFlushService;
+import com.sctjsj.lazyhost.util.CrashHandler;
 import com.tencent.bugly.Bugly;
 
 import org.json.JSONException;
@@ -100,6 +101,7 @@ public class MyApp extends Application {
         super.onCreate();
         //主进程中初始化
         if (isCurrentMainProcess()) {
+            Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance(this));
             //初始化bugly
             Bugly.init(getApplicationContext(), "2f6163f433", false);
             //初始化系统配置

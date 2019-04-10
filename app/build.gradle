@@ -5,7 +5,7 @@ android {
         release {
             keyAlias 'lazyhost'
             keyPassword 'CD812416'
-            storeFile file('/Users/mayikang/github/ebang/EBangHost/lazyhost.jks')
+            storeFile file('/Users/mayikang/github/lazy/EBangHost/lazyhost.jks')
             storePassword 'CD812416'
         }
     }
