@@ -61,16 +61,28 @@ public class SettingFg extends Fragment {
     @Bind(R.id.fg_set_btn_logout)
     Button mBtnLogout;
 
-    @Bind(R.id.fg_set_toggle)
-    ToggleButton vibrateToggle;
+    //自动打印
     @Bind(R.id.fg_set_auto_print)
     ToggleButton vibrateTogglePrint;
+
+    //商户自送
+    @Bind(R.id.toggle_self_delivery)
+    ToggleButton selfDeliveryToggle;
+
+
+    //震动
+    @Bind(R.id.fg_set_toggle)
+    ToggleButton vibrateToggle;
+
+
     //自动接单
     @Bind(R.id.toggle_auto_receive_Order)
     ToggleButton autoReceiveToggle;
+
     //自动配送
     @Bind(R.id.toggle_auto_delivery)
     ToggleButton autoDelivery;
+
 
     @Bind(R.id.fg_set_tv_version)
     TextView mTVVersion;
@@ -107,6 +119,16 @@ public class SettingFg extends Fragment {
         } else {
             vibrateTogglePrint.setToggleOff();
         }
+
+
+        //商户自送
+        if(app.getSpf().getBoolean("self_delivery",false)){
+            selfDeliveryToggle.setToggleOn();
+        }else {
+            selfDeliveryToggle.setToggleOff();
+        }
+
+
 
         //手机振动提醒
         if (app.getSpf().getBoolean("vibrateOn", true)) {
@@ -147,6 +169,20 @@ public class SettingFg extends Fragment {
                 }
             }
         });
+
+
+        //监听商户自送
+        selfDeliveryToggle.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean b) {
+
+
+
+            }
+        });
+
+
+
         //监听自动接单开关切换
         autoReceiveToggle.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override

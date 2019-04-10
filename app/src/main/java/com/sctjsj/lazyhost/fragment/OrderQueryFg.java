@@ -35,8 +35,11 @@ import butterknife.OnClick;
 public class OrderQueryFg extends Fragment {
     private List<String> tabList;
     private List<Fragment>fgList;
+
     private TodayOrderFg todayOrderFg;
     private AllOrderFg allOrderFg;
+    private WaitOrderFg waitOrderFg;
+
     private FgOrderQueryVPAdapter vpAdapter;
     private int current =1;
 
@@ -105,9 +108,15 @@ public class OrderQueryFg extends Fragment {
                     todayOrderFg.search(name);
                 }
                 break;
+
             case 2:
                 if(allOrderFg!=null){
                     allOrderFg.search(name);
+                }
+
+            case 3:
+                if(waitOrderFg!=null){
+                    waitOrderFg.search(name);
                 }
                 break;
         }
@@ -120,6 +129,7 @@ public class OrderQueryFg extends Fragment {
         //1.初始化 tab 指示器
         initTablayout();
         //2.初始化 vp
+        mVP.setOffscreenPageLimit(3);
         initViewpagerData();
         initVPAdapter();
         //3.关联 tab 和 vp
@@ -153,6 +163,7 @@ public class OrderQueryFg extends Fragment {
             tabList=new ArrayList<>();
             tabList.add("今日已完成订单");
             tabList.add("全部订单");
+            tabList.add("待送达订单");
         }
         //指示器选中颜色
         mTitleTab.setSelectedTabIndicatorColor(Color.parseColor("#FF4081"));
@@ -167,8 +178,11 @@ public class OrderQueryFg extends Fragment {
         }
         todayOrderFg=new TodayOrderFg();
         allOrderFg=new AllOrderFg();
+        waitOrderFg= new WaitOrderFg();
+
         fgList.add(todayOrderFg);
         fgList.add(allOrderFg);
+        fgList.add(waitOrderFg);
     }
 
     /**
@@ -180,10 +194,13 @@ public class OrderQueryFg extends Fragment {
         }
         mVP.setAdapter(vpAdapter);
     }
+
     @OnClick({R.id.rl_clear_search_input})
     public void onClick(View v){
+
         switch (v.getId()){
             case R.id.rl_clear_search_input:
+
                 if (mInput != null) {
                     mInput.setText("");
                     mIVClearSearch.setVisibility(View.GONE);
@@ -195,6 +212,10 @@ public class OrderQueryFg extends Fragment {
 
                 if(allOrderFg!=null){
                     allOrderFg.initData();
+                }
+
+                if(waitOrderFg!=null){
+                    waitOrderFg.initData();
                 }
 
                 break;
