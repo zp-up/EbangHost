@@ -122,13 +122,11 @@ public class SettingFg extends Fragment {
 
 
         //商户自送
-        if(app.getSpf().getBoolean("self_delivery",false)){
+        if (app.getSpf().getBoolean("self_delivery", false)) {
             selfDeliveryToggle.setToggleOn();
-        }else {
+        } else {
             selfDeliveryToggle.setToggleOff();
         }
-
-
 
         //手机振动提醒
         if (app.getSpf().getBoolean("vibrateOn", true)) {
@@ -136,7 +134,6 @@ public class SettingFg extends Fragment {
         } else {
             vibrateToggle.setToggleOff();
         }
-
 
 
         /*****监听切换按钮****/
@@ -156,12 +153,12 @@ public class SettingFg extends Fragment {
             @Override
             public void onToggle(boolean on) {
                 if (on) {
-                    ToastUtils.showToas(getActivity(),"请确认手机与打印机蓝牙连接正常，否则无法打印。");
+                    ToastUtils.showToas(getActivity(), "请确认手机与打印机蓝牙连接正常，否则无法打印。");
                     app.getSpf().edit().putBoolean("printer", true).commit();
 
                     //调用自动打印
                     IndexActivity act = (IndexActivity) getActivity();
-                    if(act!=null && isAdded()){
+                    if (act != null && isAdded()) {
                         act.invokeAutoLinkDevice();
                     }
                 } else {
@@ -175,12 +172,9 @@ public class SettingFg extends Fragment {
         selfDeliveryToggle.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean b) {
-
-
-
+                modifySelfDelivery(b?1:-1);
             }
         });
-
 
 
         //监听自动接单开关切换
@@ -247,18 +241,28 @@ public class SettingFg extends Fragment {
                             //store.isAutoSend = -1自动关闭 1开启（后台自动判断，如果当前为开启状态，将会关闭）
                             //自动接单
                             int isAuto = resultList.getJSONObject(0).getInt("isAuto");
-                            if(1==isAuto){
+                            if (1 == isAuto) {
                                 autoReceiveToggle.setToggleOn();
-                            }else {
+                            } else {
                                 autoReceiveToggle.setToggleOff();
                             }
                             //自动配送
-                            int isAutoSend=resultList.getJSONObject(0).getInt("isAutoSend");
-                            if(1==isAutoSend){
+                            int isAutoSend = resultList.getJSONObject(0).getInt("isAutoSend");
+                            if (1 == isAutoSend) {
                                 autoDelivery.setToggleOn();
-                            }else {
+                            } else {
                                 autoDelivery.setToggleOff();
                             }
+
+                            //商家自送
+                            int isSelfSend = resultList.getJSONObject(0).getInt("isSelfSend");
+                            app.getSpf().edit().putBoolean("self_delivery", isSelfSend == 1 ? true : false).commit();
+                            if (1 == isSelfSend) {
+                                selfDeliveryToggle.setToggleOn();
+                            } else {
+                                selfDeliveryToggle.setToggleOff();
+                            }
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -431,25 +435,25 @@ public class SettingFg extends Fragment {
         }
     }
 
-    private void modifyIsAuto(int isAuto){
+    private void modifyIsAuto(int isAuto) {
         RequestParams params = new RequestParams(BnUrl.modifyAutoReceiveOrder);
         params.setUseCookie(false);
         params.addHeader("Cookie", app.getSpf().getString("cookie", "none_cookie"));
-        params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
-        params.addBodyParameter("isAuto", isAuto+"");
+        params.addBodyParameter("sid", app.getCurrentUser().getShopId() + "");
+        params.addBodyParameter("isAuto", isAuto + "");
 
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject result) {
-                if(result!=null){
+                if (result != null) {
                     try {
                         JSONObject data = result.getJSONObject("data");
-                        if(data!=null){
+                        if (data != null) {
                             int isAuto = data.getInt("isAuto");
-                            if(1==isAuto){
+                            if (1 == isAuto) {
                                 autoReceiveToggle.setToggleOn();
-                            }else {
+                            } else {
                                 autoReceiveToggle.setToggleOff();
                             }
                         }
@@ -494,25 +498,25 @@ public class SettingFg extends Fragment {
 
     }
 
-    private void modifyIsAutoDelivery(int isAutoSend){
+    private void modifyIsAutoDelivery(int isAutoSend) {
         RequestParams params = new RequestParams(BnUrl.modifyAutoReceiveOrder);
         params.setUseCookie(false);
         params.addHeader("Cookie", app.getSpf().getString("cookie", "none_cookie"));
-        params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
-        params.addBodyParameter("isAutoSend", isAutoSend+"");
+        params.addBodyParameter("sid", app.getCurrentUser().getShopId() + "");
+        params.addBodyParameter("isAutoSend", isAutoSend + "");
 
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
 
             @Override
             public void onSuccess(JSONObject result) {
-                if(result!=null){
+                if (result != null) {
                     try {
                         JSONObject data = result.getJSONObject("data");
-                        if(data!=null){
+                        if (data != null) {
                             int isAutoSend = data.getInt("isAutoSend");
-                            if(1==isAutoSend){
+                            if (1 == isAutoSend) {
                                 autoDelivery.setToggleOn();
-                            }else {
+                            } else {
                                 autoDelivery.setToggleOff();
                             }
                         }
@@ -527,6 +531,73 @@ public class SettingFg extends Fragment {
             public void onError(Throwable ex, boolean isOnCallback) {
                 pUtil.dismissProgress();
                 autoDelivery.setToggleOff();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+            }
+
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+        });
+
+    }
+
+
+    //修改商家自送
+    private void modifySelfDelivery(int isSelfSend) {
+
+        RequestParams params = new RequestParams(BnUrl.modifyAutoReceiveOrder);
+        params.setUseCookie(false);
+        params.addHeader("Cookie", app.getSpf().getString("cookie", "none_cookie"));
+        params.addBodyParameter("sid", app.getCurrentUser().getShopId() + "");
+        params.addBodyParameter("isSelfSend", isSelfSend + "");
+
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+
+            @Override
+            public void onSuccess(JSONObject result) {
+                if (result != null) {
+                    try {
+                        JSONObject data = result.getJSONObject("data");
+                        if (data != null) {
+                            int isSelfSend = data.getInt("isSelfSend");
+                            app.getSpf().edit().putBoolean("self_delivery",isSelfSend==1?true:false).commit();
+                            if (1 == isSelfSend) {
+                                selfDeliveryToggle.setToggleOn();
+                            } else {
+                                selfDeliveryToggle.setToggleOff();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        selfDeliveryToggle.setToggleOff();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                pUtil.dismissProgress();
+                selfDeliveryToggle.setToggleOff();
             }
 
             @Override

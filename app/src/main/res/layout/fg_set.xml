@@ -122,36 +122,6 @@
     </RelativeLayout>
 
 
-    <!--商户自送-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
-        <ImageView
-            android:id="@+id/iv_self_delivery"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_auto_delivery"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
-        <TextView
-            android:text="商户自送"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/iv_self_delivery" />
-        <com.zcw.togglebutton.ToggleButton
-            android:id="@+id/toggle_self_delivery"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp" />
-    </RelativeLayout>
-
-
     <!--手机振动提醒-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -241,6 +211,36 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp" />
     </RelativeLayout>
+
+    <!--商家自送-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/iv_self_delivery"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_auto_delivery"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:text="商家自送"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_self_delivery" />
+        <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/toggle_self_delivery"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
+    </RelativeLayout>
+
 
     <!--联系客服-->
     <LinearLayout
