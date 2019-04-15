@@ -163,7 +163,7 @@ public class OrderQueryFg extends Fragment {
             tabList=new ArrayList<>();
             tabList.add("今日已完成订单");
             tabList.add("全部订单");
-            tabList.add("待送达订单");
+            tabList.add("自送订单");
         }
         //指示器选中颜色
         mTitleTab.setSelectedTabIndicatorColor(Color.parseColor("#FF4081"));

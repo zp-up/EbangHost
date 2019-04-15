@@ -815,7 +815,7 @@ public class WaitOrderFg extends Fragment {
 
         @Override
         public XHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View item = LayoutInflater.from(getActivity()).inflate(R.layout.item_of_fg_all_order, null);
+            View item = LayoutInflater.from(getActivity()).inflate(R.layout.item_of_fg_wait_order, null);
             XHolder holder = new XHolder(item);
             return holder;
         }

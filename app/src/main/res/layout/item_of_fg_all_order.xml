@@ -462,24 +462,6 @@
                 android:textSize="20sp" />
         </RelativeLayout>
 
-
-
-        <Button
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/btn_confirm_send"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/advice"
-            android:text="确认送达"
-            android:textColor="@color/app_white"
-            android:textSize="20sp"/>
-
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
