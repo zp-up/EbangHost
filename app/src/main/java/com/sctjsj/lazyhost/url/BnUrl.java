@@ -2,12 +2,15 @@ package com.sctjsj.lazyhost.url;
 
 import com.sctjsj.lazyhost.BuildConfig;
 
+import java.io.Serializable;
+
 /**
  * Created by mayikang on 16/12/10.
  */
 //www.lp-kd.com
 public class BnUrl {
-    public static String ServerIp = BuildConfig.DEBUG? "http://app.ilangou.com":"http://www.ilangou.com";//www.lp-kd.com
+    public static String ServerIp = !BuildConfig.DEBUG? "http://app.ilangou.com":"http://www.ilangou.com";//www.lp-kd.com
+
     //登录接口
     public static String loginUrl=ServerIp+"/admin/login.htm?";
     //userName=用户名&password=icon_pwd_blue
@@ -206,5 +209,11 @@ public class BnUrl {
     public static String getAllOrderUrl = ServerIp + "/obtain/storeOrder$ajax.htm";
 
     public static String singleSearchUrl = ServerIp +"/singleSearch$ajax.htm";
+
+    //查询商户自送订单
+    public static String selfDeliveryOrderUrl  = ServerIp +"/user/obtionIndelivery$ajax.htm";
+
+    //更新订单状态
+    public static String updateOrderUrl = ServerIp +"/updateOrderStatu$ajax.htm";
 
 }

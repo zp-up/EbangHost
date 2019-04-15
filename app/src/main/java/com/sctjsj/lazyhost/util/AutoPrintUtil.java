@@ -318,7 +318,7 @@ public class AutoPrintUtil {
                 print(bluetoothService, shipPrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getShipPrice()) + "\n\n";
+                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
                 bluetoothService.printLeft();
                 bluetoothService.printSize(0);
                 print(bluetoothService,  oriTotal);

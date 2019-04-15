@@ -1991,7 +1991,7 @@ public class ProcessOrderFg extends Fragment {
                 act.sendPrintMessage( service, packagePrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getShipPrice()) + "\n\n";
+                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 act.sendPrintMessage(service, oriTotal);

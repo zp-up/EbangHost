@@ -64,6 +64,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import q.rorbin.qrefreshlayout.QRefreshLayout;
 import q.rorbin.qrefreshlayout.RefreshHandler;
 
@@ -269,10 +270,10 @@ public class WaitOrderFg extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             pageIndex = 1;
-            RequestParams params = new RequestParams(BnUrl.getAllOrderUrl);
+            RequestParams params = new RequestParams(BnUrl.selfDeliveryOrderUrl);
             params.setUseCookie(false);
             params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
-            params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
+            params.addBodyParameter("userId", app.getCurrentUser().getUserId()+"");
             params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
             x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
                 @Override
@@ -460,10 +461,10 @@ public class WaitOrderFg extends Fragment {
             startActivity(intent);
             return;
         }
-        RequestParams params = new RequestParams(BnUrl.getAllOrderUrl);
+        RequestParams params = new RequestParams(BnUrl.selfDeliveryOrderUrl);
         params.setUseCookie(false);
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
-        params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
+        params.addBodyParameter("userId", app.getCurrentUser().getUserId()+"");
         params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
@@ -638,11 +639,11 @@ public class WaitOrderFg extends Fragment {
         data.clear();
         pageIndex=1;
 
-        RequestParams params = new RequestParams(BnUrl.getAllOrderUrl);
+        RequestParams params = new RequestParams(BnUrl.selfDeliveryOrderUrl);
         params.setUseCookie(false);
         params.addBodyParameter("pageSize","999");
         params.addBodyParameter("pageIndex", String.valueOf(1));
-        params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
+        params.addBodyParameter("userId", app.getCurrentUser().getUserId()+"");
         params.addBodyParameter("name",msg);
         params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
 
@@ -809,7 +810,6 @@ public class WaitOrderFg extends Fragment {
         });
 
     }
-
 
     class MyAdapter extends RecyclerView.Adapter<XHolder> {
 
@@ -986,8 +986,34 @@ public class WaitOrderFg extends Fragment {
                 default:
                     holder.mTVGeneralRemind.setText("订单状态错误" + data.get(position).getState());
                     break;
-
             }
+
+            //点击确认送达
+            holder.mBtnConfirmSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final SweetAlertDialog dialog = new SweetAlertDialog(getActivity(),SweetAlertDialog.WARNING_TYPE);
+                    dialog.setCancelable(true);
+                    dialog.setTitleText("确认送达？");
+                    dialog.setContentText("请在配送结束后点击~");
+                    dialog.setCancelText("取消");
+                    dialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        }
+                    });
+                    dialog.setConfirmText("确认");
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            confirmSend(data.get(position).getId());
+                            dialog.dismissWithAnimation();
+                        }
+                    });
+                    dialog.show();
+                }
+            });
 
             //设置下单时间
             holder.mTVPaytime.setText(data.get(position).getInsertTime());
@@ -1025,6 +1051,60 @@ public class WaitOrderFg extends Fragment {
         }
     }
 
+    //订单确认送达
+    private void confirmSend(int id) {
+        RequestParams params = new RequestParams(BnUrl.updateOrderUrl);
+        params.setUseCookie(false);
+        params.addBodyParameter("ofId", id+"");
+        params.addBodyParameter("statu", "6");
+        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject result) {
+                if(result!=null){
+                    try {
+                        boolean res = result.getBoolean("result");
+                        //收货成功
+                        if(res){
+                            initData();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                pUtil.dismissProgress();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                pUtil.dismissProgress();
+            }
+
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+                pUtil.showProgress(false);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+
+            }
+        });
+    }
+
     class XHolder extends ViewHolder {
         TextView mTVAddress, mTVConsignee, mTVPaytime, mTVOrderNum, mTVShipprice,
                 mTVGoodsPay, mTVTotalPay, mTVDisprice, mTVQueryBuyer, mTVGeneralRemind;
@@ -1039,10 +1119,11 @@ public class WaitOrderFg extends Fragment {
         TextView storeNum;
         TextView tvRemark;
         Button mBtnPrintOrder;
+        Button mBtnConfirmSend;
         public XHolder(View itemView) {
             super(itemView);
             mBtnPrintOrder = (Button) itemView.findViewById(R.id.item_of_fg_dispose_order_print_order_info);
-
+            mBtnConfirmSend = itemView.findViewById(R.id.btn_confirm_send);
             storeNum = itemView.findViewById(R.id.storeNum);
             mTVDisprice = (TextView) itemView.findViewById(R.id.item_of_fg_all_tv_disprice);
             mTVAddress = (TextView) itemView.findViewById(R.id.item_of_fg_dispose_tv_delivery_address);
@@ -1134,7 +1215,7 @@ public class WaitOrderFg extends Fragment {
      * @param ofId
      */
     public void queryBuyerDetail(String ofId) {
-        RequestParams params = new RequestParams(BnUrl.getBuyerByOrderId);
+        RequestParams params = new RequestParams(BnUrl.selfDeliveryOrderUrl);
         params.setUseCookie(false);
         params.addHeader("Cookie", app.getSpf().getString("cookie", ""));
         params.addBodyParameter("ofId", ofId);
@@ -1280,7 +1361,7 @@ public class WaitOrderFg extends Fragment {
                 act.sendPrintMessage( service, packagePrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getShipPrice()) + "\n\n";
+                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 act.sendPrintMessage(service, oriTotal);
