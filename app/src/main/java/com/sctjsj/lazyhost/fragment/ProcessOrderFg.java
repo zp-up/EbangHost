@@ -453,6 +453,7 @@ public class ProcessOrderFg extends Fragment {
                                     double totalPrice = x.getDouble("totalprice");//总价
                                     double disValue = x.getDouble("disValue");//优惠金额
                                     double packagePrice = x.getDouble("packagePrice");//包装费
+                                    double payValue = x.getDouble("payValue");
 
                                     int num = x.getInt("num");//商品总数量
                                     int state = x.getInt("state");//订单状态
@@ -532,6 +533,7 @@ public class ProcessOrderFg extends Fragment {
                                     ob.setShipPrice(shipPrice);
                                     ob.setInsertTime(paytime);
                                     ob.setGoodsBeanList(gbList);
+                                    ob.setPayValue(payValue);
                                     ob.setSendTime(distributionTime);
                                     ob.setTakeTime(takeTime);
                                     ob.setPackagePrice(packagePrice);
@@ -650,6 +652,8 @@ public class ProcessOrderFg extends Fragment {
                                 double shipPrice = x.getDouble("shipPrice");//运费
                                 double totalPrice = x.getDouble("totalprice");//总价
                                 double packagePrice = x.getDouble("packagePrice");//包装费
+                                double payValue = x.getDouble("payValue");
+
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 //购买的商品列表
@@ -719,6 +723,7 @@ public class ProcessOrderFg extends Fragment {
                                 OrderBean ob = new OrderBean();
                                 ob.setId(id);
                                 ob.setInsertTime(paytime);
+                                ob.setPayValue(payValue);
                                 ob.setName(name);
                                 ob.setDeliveryAddressBean(dab);
                                 ob.setShopBean(sb);
@@ -1991,7 +1996,7 @@ public class ProcessOrderFg extends Fragment {
                 act.sendPrintMessage( service, packagePrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
+                String oriTotal = "总额:" + orderBean.getTotalprice() + "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 act.sendPrintMessage(service, oriTotal);
@@ -2004,7 +2009,7 @@ public class ProcessOrderFg extends Fragment {
 
 
                 //总价
-                String totalPay = "实付:" + orderBean.getTotalprice() + "\n\n";
+                String totalPay = "实付:" + orderBean.getPayValue() + "\n\n";
                 service.printLeft();
                 service.printSize(2);
                 act.sendPrintMessage( service, totalPay);

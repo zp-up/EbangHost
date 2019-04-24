@@ -325,6 +325,7 @@ public class AllOrderFg extends Fragment {
                                     double shipPrice = x.getDouble("shipPrice");//运费
                                     double totalPrice = x.getDouble("totalprice");//总价
                                     double packagePrice = x.getDouble("packagePrice");//包装费
+                                    double payValue = x.getDouble("payValue");//实付
                                     int num = x.getInt("num");//商品总数量
                                     int state = x.getInt("state");//订单状态
                                     int type = x.getInt("type");
@@ -404,6 +405,7 @@ public class AllOrderFg extends Fragment {
                                     ob.setGoodsBeanList(gbList);
                                     ob.setTakeTime(takeTime);
                                     ob.setPackagePrice(packagePrice);
+                                    ob.setPayValue(payValue);
                                     ob.setSendTime(distributionTime);
                                     ob.setStoreOrderNo( storeOrderNo);
 
@@ -513,6 +515,7 @@ public class AllOrderFg extends Fragment {
                                 double shipPrice = x.getDouble("shipPrice");//运费
                                 double totalPrice = x.getDouble("totalprice");//总价
                                 double packagePrice = x.getDouble("packagePrice");//包装费
+                                double payValue = x.getDouble("payValue");
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
@@ -590,6 +593,7 @@ public class AllOrderFg extends Fragment {
                                 ob.setDisvalue(disvalue);
                                 ob.setTakeTime(takeTime);
                                 ob.setPackagePrice(packagePrice);
+                                ob.setPayValue(payValue);
                                 ob.setSendTime(distributionTime);
                                 ob.setStoreOrderNo(storeOrderNo);
                                 data.add(ob);
@@ -697,6 +701,8 @@ public class AllOrderFg extends Fragment {
                                 double shipPrice = x.getDouble("shipPrice");//运费
                                 double totalPrice = x.getDouble("totalprice");//总价
                                 double packagePrice = x.getDouble("packagePrice");//包装费
+                                double payValue = x.getDouble("payValue");
+
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
@@ -765,6 +771,7 @@ public class AllOrderFg extends Fragment {
                                 ob.setId(id);
                                 ob.setType(type);
                                 ob.setName(name);
+                                ob.setPayValue(payValue);
                                 ob.setDeliveryAddressBean(dab);
                                 ob.setState(state);
                                 ob.setTotalprice(totalPrice);
@@ -1287,7 +1294,7 @@ public class AllOrderFg extends Fragment {
                 act.sendPrintMessage( service, packagePrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
+                String oriTotal = "总额:" + orderBean.getTotalprice()+ "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 act.sendPrintMessage(service, oriTotal);
@@ -1300,7 +1307,7 @@ public class AllOrderFg extends Fragment {
 
 
                 //总价
-                String totalPay = "实付:" + orderBean.getTotalprice() + "\n\n";
+                String totalPay = "实付:" + orderBean.getPayValue() + "\n\n";
                 service.printLeft();
                 service.printSize(2);
                 act.sendPrintMessage( service, totalPay);

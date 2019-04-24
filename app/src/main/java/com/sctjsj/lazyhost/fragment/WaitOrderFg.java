@@ -319,6 +319,7 @@ public class WaitOrderFg extends Fragment {
                                     double shipPrice = x.getDouble("shipPrice");//运费
                                     double totalPrice = x.getDouble("totalprice");//总价
                                     double packagePrice = x.getDouble("packagePrice");//包装费
+                                    double payValue = x.getDouble("payValue");
                                     int num = x.getInt("num");//商品总数量
                                     int state = x.getInt("state");//订单状态
                                     int type = x.getInt("type");
@@ -385,6 +386,7 @@ public class WaitOrderFg extends Fragment {
 
                                     OrderBean ob = new OrderBean();
                                     ob.setId(id);
+                                    ob.setPayValue(payValue);
                                     ob.setType(type);
                                     ob.setName(name);
                                     ob.setDeliveryAddressBean(dab);
@@ -507,6 +509,8 @@ public class WaitOrderFg extends Fragment {
                                 double shipPrice = x.getDouble("shipPrice");//运费
                                 double totalPrice = x.getDouble("totalprice");//总价
                                 double packagePrice = x.getDouble("packagePrice");//包装费
+                                double payValue = x.getDouble("payValue");
+
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
@@ -576,6 +580,8 @@ public class WaitOrderFg extends Fragment {
                                 ob.setDeliveryAddressBean(dab);
                                 ob.setState(state);
                                 ob.setTotalprice(totalPrice);
+
+                                ob.setPayValue(payValue);
                                 ob.setNum(num);
                                 ob.setBuyerRemark(buyerRemark);
                                 ob.setShipPrice(shipPrice);
@@ -691,6 +697,8 @@ public class WaitOrderFg extends Fragment {
                                 double shipPrice = x.getDouble("shipPrice");//运费
                                 double totalPrice = x.getDouble("totalprice");//总价
                                 double packagePrice = x.getDouble("packagePrice");//包装费
+                                double payValue = x.getDouble("payValue");
+
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
@@ -766,6 +774,7 @@ public class WaitOrderFg extends Fragment {
                                 ob.setDisvalue(disValue);
                                 ob.setBuyerRemark(buyerRemark);
                                 ob.setShipPrice(shipPrice);
+                                ob.setPayValue(payValue);
                                 ob.setInsertTime(paytime);
                                 ob.setGoodsBeanList(gbList);
                                 ob.setTakeTime(takeTime);
@@ -1361,7 +1370,7 @@ public class WaitOrderFg extends Fragment {
                 act.sendPrintMessage( service, packagePrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
+                String oriTotal = "总额:" +orderBean.getTotalprice() + "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 act.sendPrintMessage(service, oriTotal);
@@ -1374,7 +1383,7 @@ public class WaitOrderFg extends Fragment {
 
 
                 //总价
-                String totalPay = "实付:" + orderBean.getTotalprice() + "\n\n";
+                String totalPay = "实付:" + orderBean.getPayValue() + "\n\n";
                 service.printLeft();
                 service.printSize(2);
                 act.sendPrintMessage( service, totalPay);

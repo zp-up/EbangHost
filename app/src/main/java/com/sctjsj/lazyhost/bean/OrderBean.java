@@ -40,8 +40,16 @@ public class OrderBean {
     private String sendTime;//送件时间
     private String takeTime;//取件时间
     private double packagePrice;
+    private double payValue;
     private int type;
 
+    public double getPayValue() {
+        return payValue;
+    }
+
+    public void setPayValue(double payValue) {
+        this.payValue = payValue;
+    }
 
     public String getStoreOrderNo() {
         return storeOrderNo;

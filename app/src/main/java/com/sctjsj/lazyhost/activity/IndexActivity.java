@@ -968,7 +968,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                 sendPrintMessage(service, shipPrice);
 
                 //原本应付的总额
-                String oriTotal = "总额:" + (oriAll + orderBean.getTotalprice()) + "\n\n";
+                String oriTotal = "总额:" + orderBean.getTotalprice() + "\n\n";
                 service.printLeft();
                 service.printSize(0);
                 sendPrintMessage(service, oriTotal);
@@ -981,7 +981,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
 
 
                 //总价
-                String totalPay = "实付:" + orderBean.getTotalprice() + "\n\n";
+                String totalPay = "实付:" + orderBean.getPayValue() + "\n\n";
                 service.printLeft();
                 service.printSize(2);
                 sendPrintMessage(service, totalPay);
