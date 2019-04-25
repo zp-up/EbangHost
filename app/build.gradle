@@ -15,8 +15,8 @@ android {
         applicationId "com.sctjsj.lazyhost"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 21
-        versionName "1.2.1"
+        versionCode 22
+        versionName "1.2.2"
         multiDexEnabled true
 
         //参数说明
