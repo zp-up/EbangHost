@@ -37,6 +37,7 @@ import com.sctjsj.lazyhost.bean.DistrictBean;
 import com.sctjsj.lazyhost.bean.GoodsBean;
 import com.sctjsj.lazyhost.bean.OrderBean;
 import com.sctjsj.lazyhost.bean.ProvinceBean;
+import com.sctjsj.lazyhost.bean.ShopBean;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.AnimationUtil;
 import com.sctjsj.lazyhost.util.DpUtils;
@@ -279,7 +280,7 @@ public class TodayOrderFg extends Fragment {
             params.addBodyParameter("pageSize", "10");
             params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
             params.addBodyParameter("storeId", String.valueOf(app.getCurrentUser().getShopId()));
-            params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+            params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
             x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
                 @Override
                 public void onWaiting() {
@@ -326,6 +327,20 @@ public class TodayOrderFg extends Fragment {
                                     int state = x.getInt("state");//订单状态
                                     int typeIn = x.getInt("type");
                                     double disValue = x.getDouble("disValue");//优惠
+
+
+                                    //店铺名
+                                    String storeName = x.getJSONObject("store").getString("storeName");
+                                    int storeId = x.getJSONObject("store").getInt("id");
+                                    String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                    int storeType = x.getJSONObject("store").getInt("type");
+                                    ShopBean sb = new ShopBean();
+                                    sb.setId(storeId);
+                                    sb.setAddress(storeAddress);
+                                    sb.setName(storeName);
+                                    sb.setType(storeType);
+
+
                                     //购买的商品列表
                                     JSONArray goodscart = x.getJSONArray("goodscart");
                                     for (int j = 0; j < goodscart.length(); j++) {
@@ -386,6 +401,7 @@ public class TodayOrderFg extends Fragment {
 
 
                                     OrderBean ob = new OrderBean();
+                                    ob.setShopBean(sb);
                                     ob.setPackagePrice(packagePrice);
                                     ob.setPayValue(payValue);
                                     ob.setId(id);
@@ -466,7 +482,7 @@ public class TodayOrderFg extends Fragment {
         params.addBodyParameter("pageSize", "10");
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("storeId", String.valueOf(app.getCurrentUser().getShopId()));
-        params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+        params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
             public void onWaiting() {
@@ -512,6 +528,21 @@ public class TodayOrderFg extends Fragment {
                                 int state = x.getInt("state");//订单状态
                                 int typeIn = x.getInt("type");
                                 double disValue = x.getDouble("disValue");//优惠
+
+
+                                //店铺名
+                                String storeName = x.getJSONObject("store").getString("storeName");
+                                int storeId = x.getJSONObject("store").getInt("id");
+                                String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                int storeType = x.getJSONObject("store").getInt("type");
+                                ShopBean sb = new ShopBean();
+                                sb.setId(storeId);
+                                sb.setAddress(storeAddress);
+                                sb.setName(storeName);
+                                sb.setType(storeType);
+
+
+
                                 //购买的商品列表
                                 JSONArray goodscart = x.getJSONArray("goodscart");
                                 for (int j = 0; j < goodscart.length(); j++) {
@@ -572,6 +603,7 @@ public class TodayOrderFg extends Fragment {
 
 
                                 OrderBean ob = new OrderBean();
+                                ob.setShopBean(sb);
                                 ob.setPackagePrice(packagePrice);
                                 ob.setId(id);
                                 ob.setType(typeIn);
@@ -653,7 +685,7 @@ public class TodayOrderFg extends Fragment {
         params.addBodyParameter("pageIndex", String.valueOf(1));
         params.addBodyParameter("storeId", String.valueOf(app.getCurrentUser().getShopId()));
         params.addBodyParameter("name", msg);
-        params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+        params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
             public void onWaiting() {
@@ -700,6 +732,18 @@ public class TodayOrderFg extends Fragment {
                                 int state = x.getInt("state");//订单状态
                                 int typeIn = x.getInt("type");
                                 double disValue = x.getDouble("disValue");//优惠
+
+                                //店铺名
+                                String storeName = x.getJSONObject("store").getString("storeName");
+                                int storeId = x.getJSONObject("store").getInt("id");
+                                String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                int storeType = x.getJSONObject("store").getInt("type");
+                                ShopBean sb = new ShopBean();
+                                sb.setId(storeId);
+                                sb.setAddress(storeAddress);
+                                sb.setName(storeName);
+                                sb.setType(storeType);
+
                                 //购买的商品列表
                                 JSONArray goodscart = x.getJSONArray("goodscart");
                                 for (int j = 0; j < goodscart.length(); j++) {
@@ -760,6 +804,7 @@ public class TodayOrderFg extends Fragment {
 
 
                                 OrderBean ob = new OrderBean();
+                                ob.setShopBean(sb);
                                 ob.setPackagePrice(packagePrice);
                                 ob.setId(id);
                                 ob.setName(name);

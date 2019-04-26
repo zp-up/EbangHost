@@ -39,6 +39,7 @@ import com.sctjsj.lazyhost.bean.DistrictBean;
 import com.sctjsj.lazyhost.bean.GoodsBean;
 import com.sctjsj.lazyhost.bean.OrderBean;
 import com.sctjsj.lazyhost.bean.ProvinceBean;
+import com.sctjsj.lazyhost.bean.ShopBean;
 import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.AnimationUtil;
 import com.sctjsj.lazyhost.util.DpUtils;
@@ -280,7 +281,7 @@ public class AllOrderFg extends Fragment {
             params.setUseCookie(false);
             params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
             params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
-            params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+            params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
             x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
                 @Override
                 public void onWaiting() {
@@ -329,6 +330,18 @@ public class AllOrderFg extends Fragment {
                                     int num = x.getInt("num");//商品总数量
                                     int state = x.getInt("state");//订单状态
                                     int type = x.getInt("type");
+
+                                    //店铺名
+                                    String storeName = x.getJSONObject("store").getString("storeName");
+                                    int storeId = x.getJSONObject("store").getInt("id");
+                                    String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                    int storeType = x.getJSONObject("store").getInt("type");
+                                    ShopBean sb = new ShopBean();
+                                    sb.setId(storeId);
+                                    sb.setAddress(storeAddress);
+                                    sb.setName(storeName);
+                                    sb.setType(storeType);
+
                                     //购买的商品列表
                                     JSONArray goodscart = x.getJSONArray("goodscart");
                                     for (int j = 0; j < goodscart.length(); j++) {
@@ -391,6 +404,7 @@ public class AllOrderFg extends Fragment {
 
 
                                     OrderBean ob = new OrderBean();
+                                    ob.setShopBean(sb);
                                     ob.setId(id);
                                     ob.setType(type);
                                     ob.setName(name);
@@ -473,7 +487,7 @@ public class AllOrderFg extends Fragment {
         params.setUseCookie(false);
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
-        params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+        params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
             public void onWaiting() {
@@ -519,6 +533,21 @@ public class AllOrderFg extends Fragment {
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
+
+
+                                //店铺名
+                                String storeName = x.getJSONObject("store").getString("storeName");
+                                int storeId = x.getJSONObject("store").getInt("id");
+                                String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                int storeType = x.getJSONObject("store").getInt("type");
+                                ShopBean sb = new ShopBean();
+                                sb.setId(storeId);
+                                sb.setAddress(storeAddress);
+                                sb.setName(storeName);
+                                sb.setType(storeType);
+
+
+
                                 //购买的商品列表
                                 JSONArray goodscart = x.getJSONArray("goodscart");
                                 for (int j = 0; j < goodscart.length(); j++) {
@@ -579,6 +608,7 @@ public class AllOrderFg extends Fragment {
 
                                 }
                                 OrderBean ob = new OrderBean();
+                                ob.setShopBean(sb);
                                 ob.setType(type);
                                 ob.setId(id);
                                 ob.setName(name);
@@ -655,7 +685,7 @@ public class AllOrderFg extends Fragment {
         params.addBodyParameter("pageIndex", String.valueOf(1));
         params.addBodyParameter("sid", app.getCurrentUser().getShopId()+"");
         params.addBodyParameter("name",msg);
-        params.addBodyParameter("jf", "goodscart|goods|addr|area|parent");
+        params.addBodyParameter("jf", "store|goodscart|goods|addr|area|parent");
 
         x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
             @Override
@@ -706,6 +736,18 @@ public class AllOrderFg extends Fragment {
                                 int num = x.getInt("num");//商品总数量
                                 int state = x.getInt("state");//订单状态
                                 int type = x.getInt("type");
+
+                                //店铺名
+                                String storeName = x.getJSONObject("store").getString("storeName");
+                                int storeId = x.getJSONObject("store").getInt("id");
+                                String storeAddress = x.getJSONObject("store").getString("storeAddress");
+                                int storeType = x.getJSONObject("store").getInt("type");
+                                ShopBean sb = new ShopBean();
+                                sb.setId(storeId);
+                                sb.setAddress(storeAddress);
+                                sb.setName(storeName);
+                                sb.setType(storeType);
+
                                 //购买的商品列表
                                 JSONArray goodscart = x.getJSONArray("goodscart");
                                 for (int j = 0; j < goodscart.length(); j++) {
@@ -768,6 +810,7 @@ public class AllOrderFg extends Fragment {
 
 
                                 OrderBean ob = new OrderBean();
+                                ob.setShopBean(sb);
                                 ob.setId(id);
                                 ob.setType(type);
                                 ob.setName(name);
@@ -1216,6 +1259,8 @@ public class AllOrderFg extends Fragment {
             }
         });
     }
+
+
 
     private void printOrder(int count, OrderBean orderBean) {
 

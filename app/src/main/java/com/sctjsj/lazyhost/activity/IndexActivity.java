@@ -1111,6 +1111,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
         }
 
 
+
     }
 
     //自动连接蓝牙设备

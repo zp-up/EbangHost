@@ -25,9 +25,7 @@ import com.sctjsj.lazyhost.url.BnUrl;
 import com.sctjsj.lazyhost.util.DpUtils;
 import com.sctjsj.lazyhost.util.LogUtil;
 import com.sctjsj.lazyhost.util.ProgressUtil;
-import com.sctjsj.lazyhost.util.RingtoneUtil;
-import com.squareup.picasso.Picasso;
-import com.tencent.bugly.crashreport.CrashReport;
+
 import com.zcw.togglebutton.ToggleButton;
 
 import org.json.JSONArray;

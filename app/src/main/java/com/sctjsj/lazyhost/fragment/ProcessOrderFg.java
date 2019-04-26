@@ -457,6 +457,7 @@ public class ProcessOrderFg extends Fragment {
 
                                     int num = x.getInt("num");//商品总数量
                                     int state = x.getInt("state");//订单状态
+
                                     //购买的商品列表
                                     JSONArray goodscart = x.getJSONArray("goodscart");
                                     for (int j = 0; j < goodscart.length(); j++) {
