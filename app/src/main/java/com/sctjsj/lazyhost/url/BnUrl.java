@@ -6,7 +6,7 @@ import com.sctjsj.lazyhost.BuildConfig;
  */
 //www.lp-kd.com
 public class BnUrl {
-    public static String ServerIp = !BuildConfig.DEBUG? "http://app.ilangou.com":"http://www.ilangou.com";//www.lp-kd.com
+    public static String ServerIp = BuildConfig.DEBUG? "http://app.ilangou.com":"http://www.ilangou.com";//www.lp-kd.com
 
     //登录接口
     public static String loginUrl=ServerIp+"/admin/login.htm?";

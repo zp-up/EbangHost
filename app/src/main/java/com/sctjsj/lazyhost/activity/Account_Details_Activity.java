@@ -42,7 +42,7 @@ public class Account_Details_Activity extends AppCompatActivity {
     private List<AccountdetailBean.ResultListBean> listBeans = new ArrayList<>();
     private int pageIndex = 1;
     private ProgressUtil pUtil;
-    private QRefreshLayout zhanghumingxishuaxinkongjian;
+    private QRefreshLayout refresh;
     private MyApp app;
     private ImageView ivBack;
 
@@ -68,100 +68,43 @@ public class Account_Details_Activity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
         app = (MyApp) getApplication();
-        //初始化数据
-        initData();
+
+       initRV();
 
 
-        zhanghumingxishuaxinkongjian = (QRefreshLayout) findViewById(R.id.zhanghumingxishuaxinkongjian);
-        zhanghumingxishuaxinkongjian.setLoadMoreEnable(true);
-        zhanghumingxishuaxinkongjian.setRefreshHandler(new RefreshHandler() {
+
+        refresh = (QRefreshLayout) findViewById(R.id.zhanghumingxishuaxinkongjian);
+        refresh.setLoadMoreEnable(true);
+        refresh.setRefreshHandler(new RefreshHandler() {
 
             @Override
             public void onRefresh(QRefreshLayout refresh) {
                 pageIndex = 1;
-                initData();
+                getData();
             }
 
             @Override
             public void onLoadMore(QRefreshLayout refresh) {
-                LoadMoreData();
+                getData();
             }
         });
 
-        for (int e = 0; e <= 10; e++) {
-            ArrayList<String> arrayList = new ArrayList<>();
-        }
+
+        getData();
+
+
     }
 
-
-    private void initData() {
-        pageIndex = 1;
-        if (listBeans.size() != 0){
-            listBeans.clear();
-            recyclerViewAdapter.notifyDataSetChanged();
+    private void initRV() {
+        if (recyclerViewAdapter == null) {
+            recyclerViewAdapter = new MyRecyclerViewAdapter(listBeans);
         }
-        RequestParams params = new RequestParams(BnUrl.ServerIp+"/user/orderDetailed$ajax.htm");
-        params.setUseCookie(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(Account_Details_Activity.this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        x.http().post(params, new Callback.ProgressCallback<JSONObject>() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                Log.e("账户明细页面返回的数据", "" + response.toString());
-                if (response != null) {
-                    try {
-                        //Toast.makeText(Account_Details_Activity.this,"执行成功：",Toast.LENGTH_SHORT).show();
-                        AccountdetailBean accountdetailBean = new Gson().fromJson(response.toString(), AccountdetailBean.class);
-                        listBeans.addAll(accountdetailBean.getResultList());
-                        recyclerView.setLayoutManager(new LinearLayoutManager(Account_Details_Activity.this, LinearLayoutManager.VERTICAL, false));
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        // jj.addItemDecoration( new DividerGridItemDecoration(this ));//设置条目分割线
-                        if (recyclerViewAdapter == null) {
-                            recyclerViewAdapter = new MyRecyclerViewAdapter(listBeans);
-                            recyclerView.setAdapter(recyclerViewAdapter);
-                        } else {
-                            recyclerViewAdapter.notifyDataSetChanged();
-                        }
+        recyclerView.setAdapter(recyclerViewAdapter);
+}
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("TAG", "错误:" + ex.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-                zhanghumingxishuaxinkongjian.LoadMoreComplete();
-                zhanghumingxishuaxinkongjian.refreshComplete();
-                pUtil.dismissProgress();
-            }
-
-            @Override
-            public void onWaiting() {
-
-            }
-
-            @Override
-            public void onStarted() {
-                pUtil.showProgress(false);
-
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isDownloading) {
-
-            }
-        });
-    }
 
 
     private class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
@@ -211,10 +154,10 @@ public class Account_Details_Activity extends AppCompatActivity {
 
 
     //滑动加载更多
-    private void LoadMoreData() {
+    private void getData() {
 
         RequestParams params = new RequestParams(BnUrl.ServerIp + "/user/orderDetailed$ajax.htm");
-        params.setUseCookie(false);
+        params.setUseCookie(true);
         params.addBodyParameter("size", "8");
         params.addBodyParameter("pageIndex", String.valueOf(pageIndex));
         params.addBodyParameter("ctype", "orderform");
@@ -237,19 +180,61 @@ public class Account_Details_Activity extends AppCompatActivity {
 
             @Override
             public void onSuccess(JSONObject response) {
-                AccountdetailBean ii = new Gson().fromJson(response.toString(), AccountdetailBean.class);
-                if (ii.getResultList().size() <= 0) {
-                    return;
-                } else {
-                    listBeans.addAll(ii.getResultList());
-                    pageIndex++;
-                }
-                if (recyclerViewAdapter == null) {
-                    recyclerViewAdapter = new MyRecyclerViewAdapter(listBeans);
-                    recyclerView.setAdapter(recyclerViewAdapter);
-                } else {
+
+                if(response!=null){
+                    AccountdetailBean ii = new Gson().fromJson(response.toString(), AccountdetailBean.class);
+                    List<AccountdetailBean.ResultListBean> data =ii.getResultList();
+
+
+
+                    //刷新或第一次加载
+                    if (pageIndex == 1) {
+                        listBeans.clear();
+                        if (data != null && data.size() > 0) {
+
+                            listBeans.addAll(data);
+
+                            //已经加载完所有数据
+                            if (data.size() < 8) {
+
+                                refresh.setLoadMoreEnable(false);
+                            } else {
+                                pageIndex++;
+                                refresh.setLoadMoreEnable(true);
+                            }
+                        } else {
+                            //刷新或首次加载失败
+
+                        }
+
+                    } else if (pageIndex > 1) {
+                        //上拉加载时
+                        if (data != null && data.size() > 0) {
+
+                            listBeans.addAll(data);
+                            if (data.size() < 8) {
+
+                                //上拉加载完所有数据，禁止上拉事件
+                                refresh.setLoadMoreEnable(false);
+                            } else {
+                                pageIndex++;
+                                refresh.setLoadMoreEnable(true);
+                            }
+                        } else {
+
+                            refresh.setLoadMoreEnable(false);
+                        }
+
+                    }
+
                     recyclerViewAdapter.notifyDataSetChanged();
+
+
+
                 }
+
+
+
             }
 
             @Override
@@ -264,8 +249,8 @@ public class Account_Details_Activity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-                zhanghumingxishuaxinkongjian.LoadMoreComplete();
-                zhanghumingxishuaxinkongjian.refreshComplete();
+                refresh.LoadMoreComplete();
+                refresh.refreshComplete();
                 pUtil.dismissProgress();
             }
         });
