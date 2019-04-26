@@ -792,6 +792,8 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                             double packagePrice = x.getDouble("packagePrice");//包装费
 
                             int num = x.getInt("num");//商品总数量
+                            double payValue = x.getDouble("payValue");
+
                             int state = x.getInt("state");//订单状态
                             //购买的商品列表
                             JSONArray goodscart = x.getJSONArray("goodscart");
@@ -864,6 +866,7 @@ public class IndexActivity extends AppCompatActivity implements MyApp.onBTStateC
                             ob.setDisvalue(disValue);
                             ob.setShopBean(sb);
                             ob.setNum(num);
+                            ob.setPayValue(payValue);
                             ob.setType(typeIn);
                             ob.setBuyerRemark(buyerRemark);
                             ob.setShipPrice(shipPrice);

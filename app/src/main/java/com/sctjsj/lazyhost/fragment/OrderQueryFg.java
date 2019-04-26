@@ -161,7 +161,7 @@ public class OrderQueryFg extends Fragment {
     private void initTablayout(){
         if(tabList==null){
             tabList=new ArrayList<>();
-            tabList.add("今日已完成订单");
+            tabList.add("今日订单");
             tabList.add("全部订单");
             tabList.add("自送订单");
         }
