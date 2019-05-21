@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-w600dp-v13/values-w600dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/values-w600dp/values.xml",
+                    "from": {
+                        "startLines": "3,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "56,121",
+                        "endColumns": "63,54",
+                        "endOffsets": "115,171"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,119",
+                        "endColumns": "63,54",
+                        "endOffsets": "114,169"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/values-w600dp-v13/values-w600dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/values-w600dp/values.xml",
+                    "from": {
+                        "startLines": "3,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "56,121",
+                        "endColumns": "63,54",
+                        "endOffsets": "115,171"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,119",
+                        "endColumns": "63,54",
+                        "endOffsets": "114,169"
+                    }
+                }
+            ]
+        }
+    ]
+}

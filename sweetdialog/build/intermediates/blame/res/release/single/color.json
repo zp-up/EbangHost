@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/color/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]

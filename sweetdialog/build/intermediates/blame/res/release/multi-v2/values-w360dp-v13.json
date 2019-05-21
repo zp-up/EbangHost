@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/res/merged/release/values-w360dp-v13/values-w360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/values-w360dp/values.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endColumns": "54",
+                        "endOffsets": "106"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "54",
+                        "endOffsets": "105"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/mayikang/github/tjsj/lazy/EBangHost/sweetdialog/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-w360dp-v13/values-w360dp-v13.xml",
+            "map": [
+                {
+                    "source": "/Users/mayikang/.gradle/caches/transforms-2/files-2.1/d6ba82a1d250b6c3f9227a47ea7b2a74/res/values-w360dp/values.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endColumns": "54",
+                        "endOffsets": "106"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "54",
+                        "endOffsets": "105"
+                    }
+                }
+            ]
+        }
+    ]
+}
